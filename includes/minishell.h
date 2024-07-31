@@ -38,5 +38,8 @@ size_t	ft_lexer(char *prompt);
 int		ft_isalnumline(int c);
 int		ft_isspace(int c);
 
+<<<<<<< HEAD
 #endif
 
+=======
+>>>>>>> 352c2df ([test])
