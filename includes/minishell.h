@@ -39,3 +39,4 @@ int		ft_isalnumline(int c);
 int		ft_isspace(int c);
 
 #endif
+
