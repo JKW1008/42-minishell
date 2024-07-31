@@ -10,7 +10,8 @@ LIBFT_DIR = ./libft
 SRCS_DIR = ./srcs
 OBJS_DIR = ./objs
 SRCS = ms_main.c \
-       ms_prompt.c
+       ms_prompt.c \
+	   ./utils/ms_parsing.c
 
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
 OBJS := $(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
