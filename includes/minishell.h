@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-# define MINISEHLL_H
+# define MINISHELL_H
 
 # include <dirent.h>
 # include <stdlib.h>

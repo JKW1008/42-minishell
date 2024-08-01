@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void	ft_parcing(char **av)
+void	ft_parcing(void)
 {
 		
 }

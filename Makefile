@@ -1,7 +1,7 @@
 .SILENT: (LIBFT)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror 
 CFLAGS_DEBUG = -fsanitize=address -g
 NAME = minishell
 HEADR = ./includes/minishell.h
@@ -11,28 +11,29 @@ SRCS_DIR = ./srcs
 OBJS_DIR = ./objs
 SRCS = ms_main.c \
        ms_prompt.c \
-	   ./utils/ms_parsing.c
+	   utils/ms_parsing.c
 
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
-OBJS := $(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
-OBJS_DEBUG := $(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%_debug.o)
-
+OBJS := $(patsubst $(SRCS_DIR)/%.c,$(OBJS_DIR)/%.o,$(SRCS))
+OBJS_DEBUG := $(patsubst $(SRCS_DIR)/%.c,$(OBJS_DIR)/%_debug.o,$(SRCS))
 
 all: $(OBJS_DIR) $(NAME)
 
 debug: CFLAGS += $(CFLAGS_DEBUG)
+
 debug: $(OBJS_DIR) $(OBJS_DEBUG) $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJS_DEBUG) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS_DEBUG) $(LIBFT) -o $(NAME) -lreadline
 	@echo "MINISHELL (Debug version) is ready!"
 
 $(NAME): $(OBJS) $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) -lreadline
 	@echo "MINISHELL is ready!"
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(HEADR) | $(OBJS_DIR)
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -I./includes -c $< -o $@
 
 $(OBJS_DIR)/%_debug.o: $(SRCS_DIR)/%.c $(HEADR) | $(OBJS_DIR)
