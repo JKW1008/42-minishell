@@ -16,8 +16,10 @@
 # include "parse.h" 
 # include "../libft/libft.h"
 # include <dirent.h>
+# include <signal.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <termios.h>
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
