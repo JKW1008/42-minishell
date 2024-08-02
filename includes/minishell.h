@@ -25,5 +25,6 @@
 # include <readline/history.h>
 
 void	ft_prompt(void);
+size_t	ft_parser(char *prompt);
 
 #endif
