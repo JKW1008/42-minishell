@@ -4,11 +4,15 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror 
 CFLAGS_DEBUG = -fsanitize=address -g
 NAME = minishell
-HEADR = ./includes/minishell.h
 LIBFT = ./libft/libft.a
 LIBFT_DIR = ./libft
+
+HEADR = ./includes/minishell.h \
+		./includes/parse.h
+
 SRCS_DIR = ./srcs
 OBJS_DIR = ./objs
+
 SRCS = ms_main.c \
        ms_prompt.c \
 	   utils/ms_parsing.c

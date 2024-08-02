@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_prompt.c                                        :+:      :+:    :+:   */
+/*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehukim <jaehukim42@student.42gyeong      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 16:06:53 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/07/31 16:06:54 by jaehukim         ###   ########.fr       */
+/*   Created: 2024/08/02 11:14:54 by jaehukim          #+#    #+#             */
+/*   Updated: 2024/08/02 11:14:56 by jaehukim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/minishell.h"
 
-static char	*ft_prompt_name(void)
+#ifndef MINISHELL_PARSE_H
+# define MINISHELL_PARSE_H
+
+typedef enum e_lr_action
 {
-	char *prompt;
-	
-	prompt = ft_strjoin("MINISHELL @", getcwd(NULL, 1024));
-	prompt = ft_strjoin(prompt, ": ");
-	return (prompt);
-}
+	SHIFT,
+	REMOVE,
+	ACCEPT,
+	ERROR,
+}	t_lr_action;
 
-void	ft_prompt(void)
-{
-	char	*input;
-	char	*shell_prompt;
+#endif
 
-	while (1)
-	{
-		shell_prompt = ft_prompt_name();
-		input = readline(shell_prompt);
-	}
-}
