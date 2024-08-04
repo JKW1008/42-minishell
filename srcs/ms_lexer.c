@@ -12,9 +12,56 @@
 
 #include "../includes/minishell.h"
 
+static void	ft_escape_append(void)
+{
+
+}
+
+ 
+// ls abc "asdf asdf zxcv qwer " \\ 
+
+static void	token_classifier(char *word)
+{
+	int	i;
+
+	i = 0;
+	while (i < ft_strlen(word))
+	{
+		if (!ft_isalnum(word[i++]))
+	}
+
+}
+
+
+static t_tkn_stk *tokenizer(char *prompt, t_tkn_stk **tkns)
+{
+	int			idx;
+	char		**words;
+	t_tkn_stk	*tokns;
+
+	idx = 0;
+	words = ft_split(prompt, ' ');
+	while (words[idx])
+	{
+
+	}
+
+}
+
+
+void	ft_init_stk_tokens(t_tkn_stk **tkns)
+{
+	*tkns = (t_tkn_stk *) malloc(sizeof(t_tkn_stk));
+	(*tkns)->head = NULL;
+	(*tkns)->tail = NULL;
+	(*tkns)->__len__ = 0;
+}
+
 size_t	ft_lexer(char *prompt)
 {
-	int	len;
+	int		len;
+	t_tkn_stk	*tokens;
 
-	len = ft_size(prompt);
+	ft_init_stk_tokens(&tokens);
+	tokens = ft_tokenizer(prompt);
 }

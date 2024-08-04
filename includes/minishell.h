@@ -24,6 +24,14 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+typedef struct s_data
+{
+	char	*current_path;
+
+}	t_data;
+
+void	ft_error(void);
+t_data *ft_initalise(t_data **data);
 void	ft_prompt(void);
 size_t	ft_parser(char *prompt);
 size_t	ft_lexer(char *prompt);

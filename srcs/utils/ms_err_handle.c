@@ -1,24 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_main.c                                          :+:      :+:    :+:   */
+/*   ms_err_handle.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehukim <jaehukim42@student.42gyeong      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 13:08:52 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/07/31 13:08:54 by jaehukim         ###   ########.fr       */
+/*   Created: 2024/08/04 17:12:28 by jaehukim          #+#    #+#             */
+/*   Updated: 2024/08/04 17:12:38 by jaehukim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-int	main(void)
+void	ft_error(void)
 {
-	t_data *data;
-
-	ft_initalise(&data);
-	printf("%s\n", (data)->current_path);
-	ft_prompt();
-
-	exit(EXIT_SUCCESS);
+	perror(NULL);
+	exit(EXIT_FAILURE);
 }

@@ -48,4 +48,21 @@ typedef	enum e_prs_tbl	// Parsing Table
 	io_here,
 	here_end
 }	t_prs_tbl;
+
+typedef	struct s_tokens
+{
+	int				tkn_idx;	// token_idx
+	t_lex_tbl 		token_type;	// Parsing Table Value
+	char 			*value;
+	struct s_tokens	*next;
+	struct s_tokens	*prev;
+}	t_tokens;
+
+typedef struct s_tkn_stk
+{
+	t_tokens	*head;
+	t_tokens	*tail;
+	size_t		__len__;
+}	t_tkn_stk;
+
 # endif
