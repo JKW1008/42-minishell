@@ -14,11 +14,10 @@
 
 int	main(void)
 {
-	t_data *data;
+	t_data	*data;
 
 	ft_initalise(&data);
-	printf("%s\n", (data)->current_path);
-	ft_prompt();
-
+	ft_prompt(&data);
+	//free(data);
 	exit(EXIT_SUCCESS);
 }

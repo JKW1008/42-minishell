@@ -32,8 +32,10 @@ typedef struct s_data
 
 void	ft_error(void);
 t_data *ft_initalise(t_data **data);
-void	ft_prompt(void);
+void	ft_prompt(t_data **data);
 size_t	ft_parser(char *prompt);
 size_t	ft_lexer(char *prompt);
+int		ft_isalnumline(int c);
+int		ft_isspace(int c);
 
 #endif

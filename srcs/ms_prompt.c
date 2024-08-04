@@ -17,19 +17,20 @@
 //	return (NULL);
 //}
 
-void	ft_prompt(void)
+void	ft_prompt(t_data **data)
 {
 	char	*input;
 
 	while (1)
 	{
-		//input = readline(get_prompt);
-		input = readline("MINISHELL> ");
+		printf("%s%s%c ", "MINISHELL:", (*data)->current_path, '>');
+		input = readline(NULL);
 		if (!input)
-			break;
+			break ;
 		ft_parser(input);
 		if (ft_strlen(input))
 			add_history(input);
 		free(input);
 	}
+	return ;
 }

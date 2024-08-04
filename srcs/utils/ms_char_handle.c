@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_init.c                                          :+:      :+:    :+:   */
+/*   ms_is_char.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehukim <jaehukim42@student.42gyeong      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/04 17:09:22 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/08/04 17:09:23 by jaehukim         ###   ########.fr       */
+/*   Created: 2024/08/04 19:27:01 by jaehukim          #+#    #+#             */
+/*   Updated: 2024/08/04 19:27:04 by jaehukim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-t_data	*ft_initalise(t_data **data)
+int	ft_isalnumline(int c)
 {
-	*data = (t_data *) malloc(sizeof(t_data));
-	if (!data)
-		ft_error();
-	(*data)->current_path = (char *) malloc(sizeof(char) * 100);
-	if (!(*data)->current_path)
-		ft_error();
-	(*data)->current_path = getcwd(NULL, 0);
-	return (*data);
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	else if (c >= '0' && c <= '9')
+		return (1);
+	else if (c == '_')
+		return (1);
+	else
+		return (0);
+}
+
+int	ft_isspace(int c)
+{
+	if (c == ' ' | c == '\t' | c == '\v' | c == '\r' | c == '\n' | c == '\f')
+		return (1);
+	return (0);
 }

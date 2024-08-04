@@ -12,42 +12,40 @@
 
 #include "../includes/minishell.h"
 
-static void	ft_escape_append(void)
-{
-
-}
-
- 
-// ls abc "asdf asdf zxcv qwer " \\ 
-
-static void	token_classifier(char *word)
+int	ft_valid_quotes(char *prompt)
 {
 	int	i;
+	int	single_qt;
+	int	double_qt;
 
 	i = 0;
-	while (i < ft_strlen(word))
+	single_qt = 0;
+	double_qt = 0;
+	while (prompt[i])
 	{
-		if (!ft_isalnum(word[i++]))
+		if (prompt[i] == '\'')
+			single_qt++;
+		else if (prompt[i] == '"')
+			double_qt++;
+		i++;
 	}
-
+	if (single_qt % 2 || double_qt % 2)
+		return (1);
+	return (0);
 }
 
-
-static t_tkn_stk *tokenizer(char *prompt, t_tkn_stk **tkns)
+static t_tkn_stk	*tokenizer(char *prompt, t_tkn_stk **tkns)
 {
 	int			idx;
 	char		**words;
-	t_tkn_stk	*tokns;
+	//t_tkn_stk	*tokns;
 
 	idx = 0;
-	words = ft_split(prompt, ' ');
-	while (words[idx])
-	{
-
-	}
-
+	if (ft_valid_quotes(prompt))
+		printf("minishell: Invalid quotes\n");
+	words = ft_split(prompt,  ' ');
+	return (*tkns);
 }
-
 
 void	ft_init_stk_tokens(t_tkn_stk **tkns)
 {
@@ -59,9 +57,9 @@ void	ft_init_stk_tokens(t_tkn_stk **tkns)
 
 size_t	ft_lexer(char *prompt)
 {
-	int		len;
 	t_tkn_stk	*tokens;
 
 	ft_init_stk_tokens(&tokens);
-	tokens = ft_tokenizer(prompt);
+	tokens = tokenizer(prompt, &tokens);
+	return (0);
 }

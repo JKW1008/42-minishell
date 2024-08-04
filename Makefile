@@ -1,8 +1,8 @@
 .SILENT: (LIBFT)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror 
-CFLAGS_DEBUG = -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror
+CFLAGS_DEBUG = -g #-fsanitize=address -g
 NAME = minishell
 LIBFT = ./libft/libft.a
 LIBFT_DIR = ./libft
@@ -13,11 +13,14 @@ HEADR = ./includes/minishell.h \
 SRCS_DIR = ./srcs
 OBJS_DIR = ./objs
 
-SRCS = ms_main.c \
-       ms_prompt.c \
-	   ms_parser.c \
-	   ms_lexer.c \
-	   #utils/ms_parsing.c
+SRCS =	ms_main.c \
+		ms_init.c \
+		ms_prompt.c \
+		ms_parser.c \
+		ms_lexer.c \
+		utils/ms_char_handle.c \
+		utils/ms_err_handle.c \
+	   # utils/ms_parsing.c
 
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
 OBJS := $(patsubst $(SRCS_DIR)/%.c,$(OBJS_DIR)/%.o,$(SRCS))
