@@ -26,5 +26,6 @@
 
 void	ft_prompt(void);
 size_t	ft_parser(char *prompt);
+size_t	ft_lexer(char *prompt);
 
 #endif

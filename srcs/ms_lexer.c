@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_parser.c                                        :+:      :+:    :+:   */
+/*   ms_lexer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehukim <jaehukim42@student.42gyeong      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/02 16:32:59 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/08/02 16:33:00 by jaehukim         ###   ########.fr       */
+/*   Created: 2024/08/04 16:46:00 by jaehukim          #+#    #+#             */
+/*   Updated: 2024/08/04 16:46:01 by jaehukim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-size_t	ft_parser(char *prompt)
+size_t	ft_lexer(char *prompt)
 {
-	
+	int	len;
+
+	len = ft_size(prompt);
 }

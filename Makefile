@@ -15,7 +15,9 @@ OBJS_DIR = ./objs
 
 SRCS = ms_main.c \
        ms_prompt.c \
-	   utils/ms_parsing.c
+	   ms_parser.c \
+	   ms_lexer.c \
+	   #utils/ms_parsing.c
 
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
 OBJS := $(patsubst $(SRCS_DIR)/%.c,$(OBJS_DIR)/%.o,$(SRCS))
