@@ -12,8 +12,11 @@
 
 #include "../../includes/minishell.h"
 
-void	ft_error(void)
+void	ft_error(char *msg)
 {
-	perror(NULL);
+	if (msg)
+		perror(msg);
+	else
+		perror(NULL);
 	exit(EXIT_FAILURE);
 }

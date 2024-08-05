@@ -1,8 +1,7 @@
-.SILENT: (LIBFT)
-
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS =
 CFLAGS_DEBUG = -g #-fsanitize=address -g
+MAKE = make --no-print-directory
 NAME = minishell
 LIBFT = ./libft/libft.a
 LIBFT_DIR = ./libft
@@ -15,6 +14,7 @@ OBJS_DIR = ./objs
 
 SRCS =	ms_main.c \
 		ms_init.c \
+		ms_signal.c \
 		ms_prompt.c \
 		ms_parser.c \
 		ms_lexer.c \

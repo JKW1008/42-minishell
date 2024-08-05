@@ -54,11 +54,9 @@ $(NAME):	$(OBJS)
 
 clean:
 	@ rm -f $(OBJS)
-	@echo .o Bye
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo .a Bye Bye
 
 re: fclean all
 	

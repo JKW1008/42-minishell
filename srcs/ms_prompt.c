@@ -11,23 +11,18 @@
 /* ************************************************************************** */
 #include "../includes/minishell.h"
 
-//char	*get_prompt(void)
-//{
-
-//	return (NULL);
-//}
-
-void	ft_prompt(t_data **data)
+void	ft_prompt(void)
 {
 	char	*input;
 
 	while (1)
 	{
-		printf("%s%s%c ", "MINISHELL:", (*data)->current_path, '>');
-		input = readline(NULL);
+		ft_ctrl_signal();
+		//printf("%s%s%c ", "MINISHELL:", (*data)->current_path, '>');
+		input = readline("$ ");
 		if (!input)
-			break ;
-		ft_parser(input);
+			break;
+		//ft_parser(input);
 		if (ft_strlen(input))
 			add_history(input);
 		free(input);
