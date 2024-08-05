@@ -12,32 +12,47 @@
 
 #include "../includes/minishell.h"
 
+extern volatile sig_atomic_t g_signal_received;
+
 void	sig_ctrl(int sig)
 {
-	g_signal_received = sig;
 	if (sig == SIGINT)
 	{
-		printf("CTRL+C\n");
-		ft_prompt();
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		printf("^C\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
-	else if (sig == SIGTSTP)
-    {
-        printf("CTRL+Z \n");
-        exit(EXIT_FAILURE);
-    }
+	else if (sig == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+       return ;
 		
 }
 
+
+
 void	ft_ctrl_signal(void)
 {
-	struct sigaction set;
+	int					rc;
+	struct sigaction	sa;
+	struct termios		term;
 
-	set.sa_handler = sig_ctrl;
-	if (sigemptyset(&set.sa_mask) == -1)
+	//set_termios(&term);
+	sa.sa_handler = sig_ctrl;
+	if (sigemptyset(&sa.sa_mask) == -1)
 		ft_error("SigEmptySet Error");
-	set.sa_flags = SA_RESTART; 
-    if (sigaction(SIGINT, &set, NULL) == -1)
+	sa.sa_flags = SA_RESTART;
+	if (sigaction(SIGINT, &sa, 0) == -1)
         ft_error("SigAction Error");
-    if (sigaction(SIGTSTP, &set, NULL) == -1)
+    if (sigaction(SIGQUIT, &sa, NULL) == -1)
+        ft_error("SigAction Error");
+	if (sigaction(SIGQUIT, &sa, NULL) == -1)
         ft_error("SigAction Error");
 }

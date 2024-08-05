@@ -12,6 +12,7 @@
 
 #include "../includes/minishell.h"
 
+
 size_t	ft_parser(char *prompt)
 {
 	

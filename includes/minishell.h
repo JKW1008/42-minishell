@@ -25,9 +25,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-
-extern volatile sig_atomic_t g_signal_received = 0;
-
 typedef struct s_data
 {
 	char	*current_path;

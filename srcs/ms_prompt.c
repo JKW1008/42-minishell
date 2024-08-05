@@ -17,7 +17,6 @@ void	ft_prompt(void)
 
 	while (1)
 	{
-		ft_ctrl_signal();
 		//printf("%s%s%c ", "MINISHELL:", (*data)->current_path, '>');
 		input = readline("$ ");
 		if (!input)

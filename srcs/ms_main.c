@@ -12,12 +12,13 @@
 
 #include "../includes/minishell.h"
 
-extern volatile sig_atomic_t g_signal_received = 0;
+volatile sig_atomic_t g_signal_received = 0;
 
 int	main(void)
 {
 	t_data	*data;
-
+	
+	
 	ft_initalise(&data);
 	ft_ctrl_signal();
 	ft_prompt();
