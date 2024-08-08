@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_prompt.c                                        :+:      :+:    :+:   */
+/*   ms_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 16:06:53 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/08/06 20:56:51 by kjung            ###   ########.fr       */
+/*   Created: 2024/08/04 17:09:22 by jaehukim          #+#    #+#             */
+/*   Updated: 2024/08/06 20:57:19 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_prompt(void)
+t_data	*ft_initalise(t_data **data)
 {
-	char	*input;
-	size_t	i;
-
-	while (1)
-	{
-		// printf("%s%s%c ", "MINISHELL:", (*data)->current_path, '>');
-		input = readline("$ ");
-		if (!input)
-			break;
-		if (!(i = ft_parser(input)))
-			ft_error(NULL);
-		if (ft_strlen(input))
-			add_history(input);
-		free(input);
-	}
-	return ;
+	*data = (t_data *) malloc(sizeof(t_data));
+	if (!data)
+		ft_error(NULL);
+	(*data)->current_path = (char *) malloc(sizeof(char) * 100);
+	if (!(*data)->current_path)
+		ft_error(NULL);
+	(*data)->current_path = getcwd(NULL, 0);
+	return (*data);
 }

@@ -1,37 +1,48 @@
-.SILENT: (LIBFT)
-
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
-CFLAGS_DEBUG = -fsanitize=address -g
+CFLAGS =
+CFLAGS_DEBUG = -g #-fsanitize=address -g
+MAKE = make --no-print-directory
 NAME = minishell
-HEADR = ./includes/minishell.h
 LIBFT = ./libft/libft.a
 LIBFT_DIR = ./libft
+
+HEADR = ./includes/minishell.h \
+		./includes/parse.h
+
 SRCS_DIR = ./srcs
 OBJS_DIR = ./objs
-SRCS = ms_main.c \
-       ms_prompt.c
+
+SRCS =	ms_main.c \
+		ms_init.c \
+		ms_signal.c \
+		ms_prompt.c \
+		parsing/ms_parsing.c \
+		ms_lexer.c \
+		utils/ms_char_handle.c \
+		utils/ms_err_handle.c \
+	   # utils/ms_parsing.c
 
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
-OBJS := $(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
-OBJS_DEBUG := $(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%_debug.o)
-
+OBJS := $(patsubst $(SRCS_DIR)/%.c,$(OBJS_DIR)/%.o,$(SRCS))
+OBJS_DEBUG := $(patsubst $(SRCS_DIR)/%.c,$(OBJS_DIR)/%_debug.o,$(SRCS))
 
 all: $(OBJS_DIR) $(NAME)
 
 debug: CFLAGS += $(CFLAGS_DEBUG)
+
 debug: $(OBJS_DIR) $(OBJS_DEBUG) $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJS_DEBUG) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS_DEBUG) $(LIBFT) -o $(NAME) -lreadline
 	@echo "MINISHELL (Debug version) is ready!"
 
 $(NAME): $(OBJS) $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) -lreadline
 	@echo "MINISHELL is ready!"
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(HEADR) | $(OBJS_DIR)
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -I./includes -c $< -o $@
 
 $(OBJS_DIR)/%_debug.o: $(SRCS_DIR)/%.c $(HEADR) | $(OBJS_DIR)

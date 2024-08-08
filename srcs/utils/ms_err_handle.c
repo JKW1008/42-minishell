@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_main.c                                          :+:      :+:    :+:   */
+/*   ms_err_handle.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jaehukim <jaehukim42@student.42gyeong      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 13:08:52 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/08/06 20:56:25 by kjung            ###   ########.fr       */
+/*   Created: 2024/08/04 17:12:28 by jaehukim          #+#    #+#             */
+/*   Updated: 2024/08/04 17:12:38 by jaehukim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-volatile sig_atomic_t g_signal_received = 0;
-
-int	main(void)
+void	ft_error(char *msg)
 {
-	t_data	*data;
-	size_t	i;
-	
-	ft_initalise(&data);
-	ft_ctrl_signal();
-	ft_prompt();
-	//free(data);
-	return (EXIT_SUCCESS);
+	if (msg)
+		perror(msg);
+	else
+		perror(NULL);
+	exit(EXIT_FAILURE);
 }
