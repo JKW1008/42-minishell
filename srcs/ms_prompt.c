@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ms_prompt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehukim <jaehukim42@student.42gyeong      +#+  +:+       +#+        */
+/*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:06:53 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/07/31 16:06:54 by jaehukim         ###   ########.fr       */
+/*   Updated: 2024/08/08 15:23:53 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/minishell.h"
+
 
 void	ft_prompt(void)
 {
@@ -21,7 +21,8 @@ void	ft_prompt(void)
 		input = readline("$ ");
 		if (!input)
 			break;
-		ft_parser(input);
+		ft_tokenize(input);
+		// ft_parser(input);
 		if (ft_strlen(input))
 			add_history(input);
 		free(input);

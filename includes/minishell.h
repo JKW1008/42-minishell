@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 14:23:02 by kjung             #+#    #+#             */
-/*   Updated: 2024/07/31 15:01:07 by jaehukim         ###   ########.fr       */
+/*   Updated: 2024/08/08 15:41:17 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ size_t	ft_parser(char *prompt);
 size_t	ft_lexer(char *prompt);
 int		ft_isalnumline(int c);
 int		ft_isspace(int c);
+t_tkn_stk	ft_tokenize(char *prompt);
 
 #endif
 
