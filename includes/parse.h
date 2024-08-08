@@ -21,6 +21,13 @@ typedef enum e_lr_action // LR parser actions
 	lr_error
 }	t_lr_action;
 
+typedef enum e_quote_tbl
+{
+	normal,
+	in_single,
+	in_double
+}	t_quote_tbl;
+
 typedef enum e_lex_tbl	// Lexer Table
 {
 	l_word,			// [0-9a-zA-Z_]+
@@ -54,23 +61,24 @@ typedef	enum e_prs_tbl	// Parsing Table
 	io_file,
 	filename,
 	io_here,
-	here_end
+	here_end,
+
 }	t_prs_tbl;
 
-typedef	struct s_tokens
+typedef	struct s_token
 {
 	int				tkn_idx;	// token_idx
 	t_lex_tbl 		token_type;	// Parsing Table Value
+	t_quote_tbl		qt_status;
 	char 			*value;
 	struct s_tokens	*next;
 	struct s_tokens	*prev;
-}	t_tokens;
+}	t_token;
 
 typedef struct s_tkn_stk
 {
-	t_tokens	*head;
-	t_tokens	*tail;
-	int		__len__;
+	t_token	*head;
+	int		len;
 }	t_tkn_stk;
 
 # endif

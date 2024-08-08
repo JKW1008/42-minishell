@@ -15,6 +15,6 @@
 
 size_t	ft_parser(char *prompt)
 {
-	
+	ft_lexer(prompt);
 	return (ft_strlen(prompt)); // temporary return for -Wall -Werror -Wextra
 }

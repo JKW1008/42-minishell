@@ -34,25 +34,12 @@ int	ft_valid_quotes(char *prompt)
 	return (0);
 }
 
-static t_tkn_stk	*tokenizer(char *prompt, t_tkn_stk **tkns)
-{
-	int			idx;
-	char		**words;
-	//t_tkn_stk	*tokns;
-
-	idx = 0;
-	if (ft_valid_quotes(prompt))
-		printf("minishell: Invalid quotes\n");
-	words = ft_split(prompt,  ' ');
-	return (*tkns);
-}
 
 void	ft_init_stk_tokens(t_tkn_stk **tkns)
 {
 	*tkns = (t_tkn_stk *) malloc(sizeof(t_tkn_stk));
 	(*tkns)->head = NULL;
-	(*tkns)->tail = NULL;
-	(*tkns)->__len__ = 0;
+	(*tkns)->len = 0;
 }
 
 size_t	ft_lexer(char *prompt)
@@ -60,6 +47,10 @@ size_t	ft_lexer(char *prompt)
 	t_tkn_stk	*tokens;
 
 	ft_init_stk_tokens(&tokens);
-	tokens = tokenizer(prompt, &tokens);
+	if (ft_valid_quotes(prompt))
+	{
+		printf("minishell: Invalid quotes\n");
+		return (1);
+	}
 	return (0);
 }

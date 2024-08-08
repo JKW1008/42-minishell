@@ -1,3 +1,4 @@
-#include "../../incldues/minishell.h"
 
-void init_table()
+#include "../../includes/minishell.h"
+
+void init_table();

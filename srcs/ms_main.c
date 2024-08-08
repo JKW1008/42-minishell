@@ -18,7 +18,6 @@ int	main(void)
 {
 	t_data	*data;
 	
-	
 	ft_initalise(&data);
 	ft_ctrl_signal();
 	ft_prompt();
