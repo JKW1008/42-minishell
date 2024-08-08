@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_signal.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehukim <jaehukim42@student.42gyeong      +#+  +:+       +#+        */
+/*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 09:39:57 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/08/05 09:39:58 by jaehukim         ###   ########.fr       */
+/*   Updated: 2024/08/07 17:27:15 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,8 @@ void	sig_ctrl(int sig)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-       return ;
-		
+	return ;
 }
-
-
 
 void	ft_ctrl_signal(void)
 {
@@ -50,9 +47,9 @@ void	ft_ctrl_signal(void)
 		ft_error("SigEmptySet Error");
 	sa.sa_flags = SA_RESTART;
 	if (sigaction(SIGINT, &sa, 0) == -1)
-        ft_error("SigAction Error");
-    if (sigaction(SIGQUIT, &sa, NULL) == -1)
-        ft_error("SigAction Error");
+		ft_error("SigAction Error");
 	if (sigaction(SIGQUIT, &sa, NULL) == -1)
-        ft_error("SigAction Error");
+		ft_error("SigAction Error");
+	if (sigaction(SIGQUIT, &sa, NULL) == -1)
+		ft_error("SigAction Error");
 }

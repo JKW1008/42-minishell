@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehukim <jaehukim42@student.42gyeong      +#+  +:+       +#+        */
+/*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 11:14:54 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/08/02 11:14:56 by jaehukim         ###   ########.fr       */
+/*   Updated: 2024/08/07 17:26:10 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ typedef enum e_lex_tbl	// Lexer Table
 	l_greater,		// >
 	l_dbl_less,		// <<
 	l_dbl_greater,	// >>
-	l_bck_tick,		// `
-	l_bck_slash,	// "\"
-	l_semicolon,	// ;
+	// l_bck_tick,		// `
+	// l_bck_slash,	// "\"
+	// l_semicolon,	// ;
 	l_space,		// space, tab, newline
-	l_comment,		// #
-	l_ampersand,	// & --> Bonus
-	l_popen,		// ( --> Bonus
-	l_pclose,		// ) --> Bonus
+	// l_comment,		// #
+	// l_ampersand,	// & --> Bonus
+	// l_popen,		// ( --> Bonus
+	// l_pclose,		// ) --> Bonus
 	l_eof			// End of File
 }	t_lex_tbl;
 
