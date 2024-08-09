@@ -32,17 +32,14 @@ void	sig_ctrl(int sig)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-       return ;
-		
+       return ;	
 }
-
-
 
 void	ft_ctrl_signal(void)
 {
-	int					rc;
+	//int					rc;
 	struct sigaction	sa;
-	struct termios		term;
+	// struct termios		term;
 
 	//set_termios(&term);
 	sa.sa_handler = sig_ctrl;
@@ -52,7 +49,5 @@ void	ft_ctrl_signal(void)
 	if (sigaction(SIGINT, &sa, 0) == -1)
         ft_error("SigAction Error");
     if (sigaction(SIGQUIT, &sa, NULL) == -1)
-        ft_error("SigAction Error");
-	if (sigaction(SIGQUIT, &sa, NULL) == -1)
-        ft_error("SigAction Error");
+		ft_error("SigAction Error");
 }

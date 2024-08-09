@@ -1,6 +1,6 @@
 CC = cc
-CFLAGS =
-CFLAGS_DEBUG = -g #-fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror
+CFLAGS_DEBUG = -fsanitize=address -g
 MAKE = make --no-print-directory
 NAME = minishell
 LIBFT = ./libft/libft.a

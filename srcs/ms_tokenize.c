@@ -23,6 +23,8 @@ t_token	*creat_token(int idx, t_lex_tbl type, t_quote_tbl qt_status, char *value
     token->value = strdup(value);
     token->next = NULL;
     token->prev = NULL;
+
+	return (token);
 }
 
 void	add_token(t_token **tokens, t_token *new_token)
@@ -52,7 +54,7 @@ void	tokenize(const char *input, t_token **tokens)
 	char	current_token[256];
 	int	token_index;
 	int	current_token_length;
-	t_lex_tbl	token_type;
+	//t_lex_tbl	token_type;
 	int	i;
 	char	c;
 
@@ -64,7 +66,6 @@ void	tokenize(const char *input, t_token **tokens)
 	while (input[i] != '\0')
 	{
 		c = input[i];
-
 		if (state == normal)
 		{
 			if (ft_isspace(c))
@@ -81,7 +82,8 @@ void	tokenize(const char *input, t_token **tokens)
 	}
 }
 
-t_tkn_stk	ft_tokenize(char *prompt)
+t_tkn_stk	*ft_tokenize(char *prompt)
 {
 	printf("%s\n", prompt);
+	return ((t_tkn_stk*)NULL);
 }

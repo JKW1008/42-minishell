@@ -39,7 +39,7 @@ size_t	ft_parser(char *prompt);
 size_t	ft_lexer(char *prompt);
 int		ft_isalnumline(int c);
 int		ft_isspace(int c);
-t_tkn_stk	ft_tokenize(char *prompt);
+t_tkn_stk	*ft_tokenize(char *prompt);
 
 #endif
 

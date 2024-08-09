@@ -71,8 +71,8 @@ typedef	struct s_token
 	t_lex_tbl 		token_type;	// Parsing Table Value
 	t_quote_tbl		qt_status;
 	char 			*value;
-	struct s_tokens	*next;
-	struct s_tokens	*prev;
+	struct s_token	*next;
+	struct s_token	*prev;
 }	t_token;
 
 typedef struct s_tkn_stk
