@@ -31,4 +31,9 @@ int	ft_isspace(int c)
 	return (0);
 }
 
+int	ft_is_metachar(char c)
+{
+	return (c == '|' || c == '<' || c == '>' || c == '&' || c == '=');
+}
+
 

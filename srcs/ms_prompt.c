@@ -21,8 +21,7 @@ void	ft_prompt(void)
 		input = readline("$ ");
 		if (!input)
 			break;
-		ft_tokenize(input);
-		// ft_parser(input);
+		ft_parser(input);
 		if (ft_strlen(input))
 			add_history(input);
 		free(input);

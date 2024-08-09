@@ -35,22 +35,15 @@ int	ft_valid_quotes(char *prompt)
 }
 
 
-void	ft_init_stk_tokens(t_tkn_stk **tkns)
-{
-	*tkns = (t_tkn_stk *) malloc(sizeof(t_tkn_stk));
-	(*tkns)->head = NULL;
-	(*tkns)->len = 0;
-}
-
 size_t	ft_lexer(char *prompt)
 {
 	t_tkn_stk	*tokens;
 
-	ft_init_stk_tokens(&tokens);
 	if (ft_valid_quotes(prompt))
 	{
 		printf("minishell: Invalid quotes\n");
 		return (1);
 	}
+	tokens = ft_tokenize(prompt);
 	return (0);
 }
