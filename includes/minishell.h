@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 14:23:02 by kjung             #+#    #+#             */
-/*   Updated: 2024/08/08 15:41:17 by kjung            ###   ########.fr       */
+/*   Updated: 2024/08/11 00:27:48 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,13 @@ int		ft_isalnumline(int c);
 int		ft_is_metachar(char c);
 int		ft_isspace(int c);
 t_tkn_stk	*ft_tokenize(char *prompt);
+
+void	free_split(char **str);
+char	*check_access(char *split, char *str);
+char	*fp_while(char **divided, char *str);
+char	*find_path(char **envp, char *str);
+
+void	ft_identify_token_type(t_token *token, char **envp);
 
 #endif
 

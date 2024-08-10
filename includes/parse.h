@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehukim <jaehukim42@student.42gyeong      +#+  +:+       +#+        */
+/*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 11:14:54 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/08/02 11:14:56 by jaehukim         ###   ########.fr       */
+/*   Updated: 2024/08/11 00:20:25 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,15 @@ typedef	struct s_token
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
+
+typedef enum e_token_type
+{
+	TOKEN_BUILTIN,
+	TOKEN_COMMAND,
+	TOKEN_REDIRECTION,
+	TOKEN_PIPE,
+	TOKEN_ARGUMENT
+} t_token_type;
 
 typedef struct s_tkn_stk
 {

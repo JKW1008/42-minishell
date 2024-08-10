@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_lexer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehukim <jaehukim42@student.42gyeong      +#+  +:+       +#+        */
+/*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 16:46:00 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/08/04 16:46:01 by jaehukim         ###   ########.fr       */
+/*   Updated: 2024/08/11 00:28:55 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,32 @@ int	ft_valid_quotes(char *prompt)
 }
 
 
-size_t	ft_lexer(char *prompt)
+
+size_t	ft_lexer(char *prompt, char **envp)
 {
 	t_tkn_stk	*tokens;
+	t_token		*current;
+	size_t		error_code;
 
+	error_code = 0;
 	if (ft_valid_quotes(prompt))
 	{
 		printf("minishell: Invalid quotes\n");
 		return (1);
 	}
 	tokens = ft_tokenize(prompt);
+	if (!tokens)
+	{
+		printf("minishell: Tokenization failed\n");
+		return (2);
+	}
+	current = tokens->head;
+	while (current)
+	{
+		ft_identify_token_type(current, envp);
+		if (current->token_type == l_word)
+		{
+		}
+	}
 	return (0);
 }
