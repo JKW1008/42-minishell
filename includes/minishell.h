@@ -28,15 +28,16 @@
 typedef struct s_data
 {
 	char	*current_path;
-
+	char	**envp;
+	char	*prompt;
 }	t_data;
 
 void	ft_error(char *msg);
-t_data *ft_initalise(t_data **data);
+t_data *ft_initalise(t_data **data, char **envp);
 void	ft_ctrl_signal(void);
-void	ft_prompt(void);
-size_t	ft_parser(char *prompt);
-size_t	ft_lexer(char *prompt);
+void	ft_prompt(t_data **data);
+size_t	ft_parser(t_data **data);
+size_t	ft_lexer(t_data **data);
 int		ft_isalnumline(int c);
 int		ft_is_metachar(char c);
 int		ft_isspace(int c);

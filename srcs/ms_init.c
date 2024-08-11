@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-t_data	*ft_initalise(t_data **data)
+t_data	*ft_initalise(t_data **data, char **envp)
 {
 	*data = (t_data *) malloc(sizeof(t_data));
 	if (!data)
@@ -21,5 +21,7 @@ t_data	*ft_initalise(t_data **data)
 	if (!(*data)->current_path)
 		ft_error(NULL);
 	(*data)->current_path = getcwd(NULL, 0);
+	(*data)->prompt = NULL;
+	(*data)->envp = envp;
 	return (*data);
 }

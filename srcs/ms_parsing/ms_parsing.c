@@ -12,9 +12,9 @@
 
 #include "../../includes/minishell.h"
 
-size_t	ft_parser(char *prompt)
+size_t	ft_parser(t_data **data)
 {
-	if (ft_lexer(prompt))
+	if (ft_lexer(data))
 		return (-1);
-	return (ft_strlen(prompt)); // temporary return for -Wall -Werror -Wextra
+	return (ft_strlen((*data)->prompt)); // temporary return for -Wall -Werror -Wextra
 }

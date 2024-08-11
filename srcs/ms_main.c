@@ -14,13 +14,14 @@
 
 volatile sig_atomic_t g_signal_received = 0;
 
-int	main(void)
+int	main(int ac, char **av, char **envp)
 {
 	t_data	*data;
 	
-	ft_initalise(&data);
+	if (ac != 1 && !*av)
+		return (-1);
+	ft_initalise(&data, envp);
 	ft_ctrl_signal();
-	ft_prompt();
-	//ree(data);
+	ft_prompt(&data);
 	return (EXIT_SUCCESS);
 }

@@ -85,9 +85,9 @@ char	*find_path(char **envp, char *str)
 	i = 0;
 	if (!str || str[0] == '\0')
 		return (NULL);
-	res = check_absolute_or_home_path(str);
-	if (res)
-		return (res);
+	//res = check_absolute_or_home_path(str);
+	//if (res)
+	//	return (res);
 	while (ft_strnstr(envp[i], "PATH=", 5) == NULL)
 		i++;
 	divided = ft_split(envp[i], '=');

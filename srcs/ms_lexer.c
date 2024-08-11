@@ -34,21 +34,19 @@ int	ft_valid_quotes(char *prompt)
 	return (0);
 }
 
-
-
-size_t	ft_lexer(char *prompt, char **envp)
+size_t	ft_lexer(t_data **data)
 {
 	t_tkn_stk	*tokens;
 	t_token		*current;
 	size_t		error_code;
 
 	error_code = 0;
-	if (ft_valid_quotes(prompt))
+	if (ft_valid_quotes((*data)->prompt))
 	{
 		printf("minishell: Invalid quotes\n");
 		return (1);
 	}
-	tokens = ft_tokenize(prompt);
+	tokens = ft_tokenize((*data)->prompt);
 	if (!tokens)
 	{
 		printf("minishell: Tokenization failed\n");
@@ -57,7 +55,7 @@ size_t	ft_lexer(char *prompt, char **envp)
 	current = tokens->head;
 	while (current)
 	{
-		ft_identify_token_type(current, envp);
+		ft_identify_token_type(current, (*data)->envp);
 		if (current->token_type == l_word)
 		{
 		}

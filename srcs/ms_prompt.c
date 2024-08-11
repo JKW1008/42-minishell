@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "../includes/minishell.h"
 
-void	ft_prompt(void)
+void	ft_prompt(t_data **data)
 {
 	char	*input;
 
@@ -21,7 +21,8 @@ void	ft_prompt(void)
 		input = readline("$ ");
 		if (!input)
 			break;
-		ft_parser(input);
+		(*data)->prompt = input;
+		ft_parser(data);
 		if (ft_strlen(input))
 			add_history(input);
 		free(input);
