@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 23:12:56 by kjung             #+#    #+#             */
-/*   Updated: 2024/08/11 00:25:58 by kjung            ###   ########.fr       */
+/*   Updated: 2024/08/11 18:26:51 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,20 @@ void	ft_identify_token_type(t_token *token, char **envp)
 		token->token_type = l_pclose;
 	else
 		token->token_type = l_word;
+}
+
+void	ft_free_tokens(t_tkn_stk *tokens)
+{
+	t_token *current;
+	t_token *next;
+
+	current = tokens->head;
+	while (current)
+	{
+		next = current->next;
+		free(current->value);
+		free(current);
+		current = next;
+	}
+	free(tokens);
 }

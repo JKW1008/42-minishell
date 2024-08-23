@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 14:03:33 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/08/08 21:59:03 by kjung            ###   ########.fr       */
+/*   Updated: 2024/08/21 21:01:59 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ void	ft_init_stk_tokens(t_tkn_stk **tkns)
 void	ft_add_token(char *prompt, int cnt, t_tkn_stk **tkns)
 {
 	t_token	*tok;
-	t_token *tmp;
+	t_token	*tmp;
 
-	tok = (t_token *) ft_calloc(sizeof(t_token), 1);
+	tok = (t_token *)ft_calloc(sizeof(t_token), 1);
 	tok->value = ft_substr(prompt, 0, cnt);
 	tok->next = NULL;
 	if (!(*tkns)->head)
@@ -106,8 +106,9 @@ void	ft_add_token(char *prompt, int cnt, t_tkn_stk **tkns)
 			tmp = tmp->next;
 		tmp->next = tok;
 		tok->prev = tmp;
-		tok->tkn_idx = tmp->tkn_idx++;
+		tok->tkn_idx = tmp->tkn_idx + 1;
 	}
+	(*tkns)->len++;
 	printf("tok %d: %s\n", tok->tkn_idx, tok->value);
 }
 
@@ -127,7 +128,21 @@ t_tkn_stk	*ft_tokenize(char *prompt)
 		if (ft_isspace(prompt[i]))
 			i++;
 		else if (ft_is_metachar(prompt[i]))
+		{
+			if (i + 1 < len && ft_is_metachar(prompt[i + 1]))
+			{
+				if ((prompt[i] == '>' && prompt[i + 1] == '>') || \
+				(prompt[i] == '<' && prompt[i + 1] == '<') || \
+				(prompt[i] == '|' && prompt[i + 1] == '|') || \
+				(prompt[i] == '&' && prompt[i + 1] == '&'))
+				{
+					ft_add_token(prompt + i, 2, &tokens);
+					i += 2;
+					continue;
+				}
+			}
 			ft_add_token(prompt + i++, cnt, &tokens);
+		}
 		else if (prompt[i] == '"')
 		{
 			while (prompt[i + cnt] != '"')

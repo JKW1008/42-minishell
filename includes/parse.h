@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 11:14:54 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/08/11 00:20:25 by kjung            ###   ########.fr       */
+/*   Updated: 2024/08/20 18:35:23 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,21 @@ typedef struct s_tkn_stk
 	t_token	*head;
 	int		len;
 }	t_tkn_stk;
+
+typedef enum e_node_type
+{
+	NODE_COMMAND,
+	NODE_PIPE,
+	NODE_REDIRECT,
+	NODE_ARGUMENT
+}	t_node_type;
+
+typedef struct s_ast_node
+{
+	t_node_type	type;
+	char		*value;
+	struct s_ast_node	*left;
+	struct s_ast_node	*right;
+}	t_ast_node;
 
 # endif
