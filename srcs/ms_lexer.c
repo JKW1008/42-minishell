@@ -45,7 +45,6 @@ size_t	ft_lexer(t_data **data)
 	t_tkn_stk	*tokens;
 	t_token		*current;
 	size_t		error_code;
-	// char		*res;
 
 	error_code = 0;
 	if (ft_valid_quotes((*data)->prompt))
@@ -53,6 +52,7 @@ size_t	ft_lexer(t_data **data)
 	tokens = ft_tokenize((*data)->prompt);
 	if (!tokens)
 		return (ft_print_ret("minishell: Tokenization failed\n", 2));
+	(*data)->tkn = tokens;
 	current = tokens->head;
 	while (current)
 	{
@@ -68,12 +68,5 @@ size_t	ft_lexer(t_data **data)
 		}
 		current = current->next;
 	}
-	if (ft_validate_token_structure(tokens))
-	{
-		printf("minishell: Invalid token structure\n");
-		ft_free_tokens(tokens);
-		return (error_code);
-	}
-	ft_free_tokens(tokens);
 	return (0);
 }

@@ -65,6 +65,13 @@ t_ast_node	*parse(t_tkn_stk *tokens)
     t_token *current;
 
 	current = tokens->head;
+	if (ft_validate_token_structure(tokens))
+	{
+		printf("minishell: Invalid token structure\n");
+		ft_free_tokens(tokens);
+		return (errno_);
+	}
+	ft_free_tokens(tokens);
     return (parse_pipeline(&current));
 }
 
