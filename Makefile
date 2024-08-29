@@ -18,7 +18,7 @@ SRCS =	ms_main.c \
 		ms_prompt.c \
 		ms_lexer.c \
 		ms_tokenize.c \
-		ms_parsing/ms_parsing.c \
+		ms_parse/ms_parse.c \
 		utils/ms_char_handle.c \
 		utils/ms_err_handle.c \
 		utils/ms_lex_util.c \

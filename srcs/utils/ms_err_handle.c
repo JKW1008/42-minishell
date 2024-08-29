@@ -20,3 +20,9 @@ void	ft_error(char *msg)
 		perror(NULL);
 	exit(EXIT_FAILURE);
 }
+
+size_t	ft_print_ret(char *msg, int value)
+{
+	printf("%s", msg);
+	return (value);
+}
