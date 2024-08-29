@@ -27,9 +27,11 @@
 
 typedef struct s_data
 {
-	char	*current_path;
-	char	**envp;
-	char	*prompt;
+	int			errno_;
+	char		*current_path;
+	char		**envp;
+	char		*prompt;
+	t_tkn_stk	*tkn;
 }	t_data;
 
 void	ft_error(char *msg);
