@@ -12,6 +12,12 @@
 
 #include "../includes/minishell.h"
 
+int	ft_print_ret(char *msg, int value)
+{
+	printf("%s", msg);
+	return (value);
+}
+
 int	ft_valid_quotes(char *prompt)
 {
 	int	i;
@@ -43,24 +49,17 @@ size_t	ft_lexer(t_data **data)
 
 	error_code = 0;
 	if (ft_valid_quotes((*data)->prompt))
-	{
-		printf("minishell: Invalid quotes\n");
-		return (1);
-	}
+		return (ft_print_ret("minishell: Invalid quotes\n", 1));
 	tokens = ft_tokenize((*data)->prompt);
 	if (!tokens)
-	{
-		printf("minishell: Tokenization failed\n");
-		return (2);
-	}
+		return (ft_print_ret("minishell: Tokenization failed\n", 2));
 	current = tokens->head;
 	while (current)
 	{
 		ft_identify_token_type(current, (*data)->envp);
 		if (current->token_type == l_word)
 		{
-			error_code = ft_expand_env_vars(current, (*data)->envp);
-			if (error_code)
+			if (ft_expand_env_vars(current, (*data)->envp))
 			{
 				printf("minishell: Error in environment variable expansion\n");
 				ft_free_tokens(tokens);
@@ -69,8 +68,7 @@ size_t	ft_lexer(t_data **data)
 		}
 		current = current->next;
 	}
-	error_code = ft_validate_token_structure(tokens);
-	if (error_code)
+	if (ft_validate_token_structure(tokens))
 	{
 		printf("minishell: Invalid token structure\n");
 		ft_free_tokens(tokens);

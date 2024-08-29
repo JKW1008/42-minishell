@@ -14,7 +14,7 @@
 
 size_t	ft_process_env_var(char **expanded, char **start, char **evnp);
 
-char	*ft_replace_substring(const char *str, const char *start, const char *end, const char *replacement)
+char	*ft_replace_substring(char *str, char *start, char *end, char *replacement)
 {
 	size_t	prefix_len;
 	size_t	suffix_len;
