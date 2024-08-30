@@ -26,10 +26,10 @@ int	ft_valid_quotes(char *prompt)
 
 	i = 0;
 	len = ft_strlen(prompt);
-	if (len < 2)
-		return (1);
 	if (prompt[0] == '\'' || prompt[0] == '"')
 	{
+		if (len < 2)
+			return (1);
 		if (prompt[0] == '\'' && prompt[len - 1] != '\'')
 			return (1);
 		if (prompt[0] == '"' && prompt[len - 1] != '"')
@@ -62,10 +62,8 @@ int	ft_add_token(char *prompt, int cnt, t_tkn_stk **tkns)
 			tmp = tmp->next;
 		tmp->next = tok;
 		tok->prev = tmp;
-		tok->tkn_idx = tmp->tkn_idx + 1;
 	}
 	(*tkns)->len++;
-	printf("tok: %s\n", tok->value);
 	return (0);
 }
 
@@ -95,13 +93,11 @@ int	ft_token_quote(char *prompt, t_tkn_stk **tkns, char quote)
 	len = ft_strlen(prompt);
 	while (i < len && prompt[i] != quote)
 		i++;
-	//while (i < len && !ft_isspace(prompt[i]) \
-	//	&& prompt[i + 1] != '\'' && prompt[i + 1] != '"')
-	//	i++;
 	if (i > len)
 		return (-1);
 	ft_add_token(prompt, ++i, tkns);
 	return (i);
+
 }
 
 t_tkn_stk	*ft_tokenize(char *prompt)
@@ -120,10 +116,6 @@ t_tkn_stk	*ft_tokenize(char *prompt)
 			i++;
 		else if (ft_is_metachar(prompt[i]))
 		{
-			//cnt = ft_token_metachar(prompt + i, &tokens);
-			//if (cnt == -1)
-			//	return (ft_free_tokens(tokens));
-			//i += cnt;
 			cnt = ft_token_metachar(prompt + i, &tokens);
 			if (cnt == -1)
 				return (ft_free_tokens(tokens));
@@ -139,7 +131,9 @@ t_tkn_stk	*ft_tokenize(char *prompt)
 		else
 		{
 			cnt = 0;
-			while (i + cnt < len && ft_isalnumline(prompt[i]))
+			while (i + cnt < len && !ft_is_metachar(prompt[i + cnt]) && \
+					prompt[i + cnt] != '\'' && prompt[i + cnt] != '"' && \
+					!ft_isspace(prompt[i + cnt]))
 				cnt++;
 			if (ft_add_token(prompt + i, cnt, &tokens) == -1)
 				return (ft_free_tokens(tokens)); 
