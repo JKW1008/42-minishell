@@ -26,10 +26,15 @@ int	ft_valid_quotes(char *prompt)
 
 	i = 0;
 	len = ft_strlen(prompt);
-	if (prompt[0] == '\'' && prompt[len] != '\'')
+	if (len < 2)
 		return (1);
-	if (prompt[0] == '"' && prompt[len] != '"')
-		return(1);
+	if (prompt[0] == '\'' || prompt[0] == '"')
+	{
+		if (prompt[0] == '\'' && prompt[len - 1] != '\'')
+			return (1);
+		if (prompt[0] == '"' && prompt[len - 1] != '"')
+			return(1);
+	}
 	return (0);
 }
 
@@ -40,13 +45,10 @@ int	ft_add_token(char *prompt, int cnt, t_tkn_stk **tkns)
 
 	tok = (t_token *)ft_calloc(sizeof(t_token), 1);
 	tok->value = ft_substr(prompt, 0, cnt);
-	if (ft_valid_quotes(tok->value))
-	{
-		printf("hello\n");
-		return (-1);
-	}
-
+	tok->qt_status = ft_quote(tok->value);
 	tok->next = NULL;
+	if (ft_valid_quotes(tok->value))
+		return (1);
 	if (!(*tkns)->head)
 	{
 		(*tkns)->head = tok;
@@ -63,7 +65,7 @@ int	ft_add_token(char *prompt, int cnt, t_tkn_stk **tkns)
 		tok->tkn_idx = tmp->tkn_idx + 1;
 	}
 	(*tkns)->len++;
-	printf("tok %d: %s\n", tok->tkn_idx, tok->value);
+	printf("tok: %s\n", tok->value);
 	return (0);
 }
 
@@ -93,10 +95,13 @@ int	ft_token_quote(char *prompt, t_tkn_stk **tkns, char quote)
 	len = ft_strlen(prompt);
 	while (i < len && prompt[i] != quote)
 		i++;
-	if (i == len)
+	//while (i < len && !ft_isspace(prompt[i]) \
+	//	&& prompt[i + 1] != '\'' && prompt[i + 1] != '"')
+	//	i++;
+	if (i > len)
 		return (-1);
 	ft_add_token(prompt, ++i, tkns);
-		return (i);
+	return (i);
 }
 
 t_tkn_stk	*ft_tokenize(char *prompt)
@@ -111,19 +116,33 @@ t_tkn_stk	*ft_tokenize(char *prompt)
 	ft_init_stk_tokens(&tokens);
 	while (i < len)
 	{
-		cnt = 1;
 		if (ft_isspace(prompt[i]))
 			i++;
 		else if (ft_is_metachar(prompt[i]))
-			i += ft_token_metachar(prompt + i, &tokens);
+		{
+			//cnt = ft_token_metachar(prompt + i, &tokens);
+			//if (cnt == -1)
+			//	return (ft_free_tokens(tokens));
+			//i += cnt;
+			cnt = ft_token_metachar(prompt + i, &tokens);
+			if (cnt == -1)
+				return (ft_free_tokens(tokens));
+			i += cnt;
+		}
 		else if (prompt[i] == '"' || prompt[i] == '\'')
-			i += ft_token_quote(prompt + i, &tokens, prompt[i]);
+		{
+			cnt = ft_token_quote(prompt + i, &tokens, prompt[i]);
+			if (cnt == -1)
+				return (ft_free_tokens(tokens));
+			i += cnt;
+		}
 		else
 		{
-			while (!ft_isspace(prompt[i + cnt]))
+			cnt = 0;
+			while (i + cnt < len && ft_isalnumline(prompt[i]))
 				cnt++;
-			if (ft_add_token(prompt + i, ++cnt, &tokens))
-				ft_error("minishell : Not Valid Quotes");
+			if (ft_add_token(prompt + i, cnt, &tokens) == -1)
+				return (ft_free_tokens(tokens)); 
 			i += cnt;
 		}
 	}

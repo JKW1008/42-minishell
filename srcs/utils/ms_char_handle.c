@@ -36,4 +36,15 @@ int	ft_is_metachar(char c)
 	return (c == '|' || c == '<' || c == '>' || c == '&' || c == '=');
 }
 
+t_quote_tbl ft_quote(char *str)
+{
+	int	len;
 
+	len = ft_strlen(str);
+	if (str[0] == '\'' && str[len - 1] == '\'')
+		return (in_single);
+	else if (str[0] == '"' && str[len - 1] == '"')
+		return (in_double);
+	else
+		return (normal);
+}

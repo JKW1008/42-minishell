@@ -89,7 +89,7 @@ void	ft_identify_token_type(t_token *token, char **envp)
 		token->token_type = l_word;
 }
 
-void	ft_free_tokens(t_tkn_stk *tokens)
+t_tkn_stk	*ft_free_tokens(t_tkn_stk *tokens)
 {
 	t_token *current;
 	t_token *next;
@@ -103,4 +103,5 @@ void	ft_free_tokens(t_tkn_stk *tokens)
 		current = next;
 	}
 	free(tokens);
+	return (NULL);
 }
