@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 14:22:47 by kjung             #+#    #+#             */
-/*   Updated: 2024/08/28 21:14:12 by kjung            ###   ########.fr       */
+/*   Updated: 2024/08/29 16:25:06 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,6 @@ t_ast_node	*parse(t_tkn_stk *tokens)
     t_token *current;
 
 	current = tokens->head;
-	if (ft_validate_token_structure(tokens))
-	{
-		printf("minishell: Invalid token structure\n");
-		ft_free_tokens(tokens);
-		return (errno_);
-	}
-	ft_free_tokens(tokens);
     return (parse_pipeline(&current));
 }
 

@@ -24,6 +24,7 @@ SRCS =	ms_main.c \
 		utils/ms_lex_util.c \
 		utils/ms_find_path.c \
 		utils/ms_vars_structure.c \
+		excute/ms_execute.c \
 	   # utils/ms_parsing.c
 
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))

@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_prompt.c                                        :+:      :+:    :+:   */
+/*   ms_excute_handle.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 16:06:53 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/08/29 16:25:53 by kjung            ###   ########.fr       */
+/*   Created: 2024/09/01 16:59:41 by kjung             #+#    #+#             */
+/*   Updated: 2024/09/02 14:56:34 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void	ft_prompt(t_data **data)
+void	cd_cmd(t_data **data, char **evnp)
 {
-	char	*input;
-
-	while (1)
-	{
-		//printf("%s%s%c ", "MINISHELL:", (*data)->current_path, '>');
-		input = readline("$ ");
-		if (!input)
-			break;
-		(*data)->prompt = input;
-		ft_parser(data);
-		if (ft_strlen(input))
-			add_history(input);
-		ms_execute(data);
-		free(input);
-	}
-	return ;
+	
 }
