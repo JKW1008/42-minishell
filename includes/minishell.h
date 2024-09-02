@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 14:23:02 by kjung             #+#    #+#             */
-/*   Updated: 2024/08/29 16:25:36 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/02 15:46:21 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ size_t		ft_expand_env_vars(t_token *token, char **envp);
 size_t		ft_process_env_var(char **expanded, char **start, char **envp);
 size_t		ft_validate_token_structure(t_tkn_stk *tokens);
 
+
 void	ms_execute(t_data **data);
+void	cd_cmd(t_data **data);
 
 #endif
 
