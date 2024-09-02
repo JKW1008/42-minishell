@@ -12,72 +12,6 @@
 
 #include "../includes/minishell.h"
 
-//t_token	*creat_token(int idx, t_lex_tbl type, t_quote_tbl qt_status, char *value)
-//{
-//	t_token	*token;
-
-//	token = (t_token *)malloc(sizeof(t_token));
-//    token->tkn_idx = idx;
-//    token->token_type = type;
-//    token->qt_status = qt_status;
-//    token->value = strdup(value);
-//    token->next = NULL;
-//    token->prev = NULL;
-
-//	return (token);
-//}
-
-//void	add_token(t_token **tokens, t_token *new_token)
-//{
-//	t_token	*tmp;
-
-//	if (*tokens == NULL)
-//		*tokens = new_token;
-//	else
-//	{
-//		tmp = *tokens;
-//		while (tmp->next != NULL)
-//			tmp = tmp->next;
-//		tmp->next = new_token;
-//		new_token->prev = tmp;
-//	}
-//}
-
-//void	tokenize(const char *input, t_token **tokens)
-//{
-//	int	state;
-//	char	current_token[256];
-//	int	token_index;
-//	int	current_token_length;
-//	//t_lex_tbl	token_type;
-//	int	i;
-//	char	c;
-
-//	state = normal;
-//	token_index = 0;
-//	current_token_length = 0;
-//	i = 0;
-
-//	while (input[i] != '\0')
-//	{
-//		c = input[i];
-//		if (state == normal)
-//		{
-//			if (ft_isspace(c))
-//			{
-//				if (current_token_length > 0)
-//				{
-//					current_token[current_token_length] = '\0';
-//					add_token(tokens, creat_token(token_index++, l_word, normal, current_token));
-//					current_token_length = 0;
-//				}
-//			}
-//		}
-//		i++;
-//	}
-//}
-
-
 void	ft_init_stk_tokens(t_tkn_stk **tkns)
 {
 	*tkns = (t_tkn_stk *) malloc(sizeof(t_tkn_stk));
@@ -85,14 +19,36 @@ void	ft_init_stk_tokens(t_tkn_stk **tkns)
 	(*tkns)->len = 0;
 }
 
-void	ft_add_token(char *prompt, int cnt, t_tkn_stk **tkns)
+int	ft_valid_quotes(char *prompt)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = ft_strlen(prompt);
+	if (prompt[0] == '\'' || prompt[0] == '"')
+	{
+		if (len < 2)
+			return (1);
+		if (prompt[0] == '\'' && prompt[len - 1] != '\'')
+			return (1);
+		if (prompt[0] == '"' && prompt[len - 1] != '"')
+			return(1);
+	}
+	return (0);
+}
+
+int	ft_add_token(char *prompt, int cnt, t_tkn_stk **tkns)
 {
 	t_token	*tok;
 	t_token	*tmp;
 
 	tok = (t_token *)ft_calloc(sizeof(t_token), 1);
 	tok->value = ft_substr(prompt, 0, cnt);
+	tok->qt_status = ft_quote(tok->value);
 	tok->next = NULL;
+	if (ft_valid_quotes(tok->value))
+		return (1);
 	if (!(*tkns)->head)
 	{
 		(*tkns)->head = tok;
@@ -106,10 +62,42 @@ void	ft_add_token(char *prompt, int cnt, t_tkn_stk **tkns)
 			tmp = tmp->next;
 		tmp->next = tok;
 		tok->prev = tmp;
-		tok->tkn_idx = tmp->tkn_idx + 1;
 	}
 	(*tkns)->len++;
-	printf("tok %d: %s\n", tok->tkn_idx, tok->value);
+	return (0);
+}
+
+int	ft_token_metachar(char *prompt, t_tkn_stk **tkns)
+{
+	int	len;
+	
+	len = ft_strlen(prompt);
+	if (len > 1 && ft_is_metachar(prompt[1]))
+	{
+		if (prompt[0] == prompt[1])
+		{
+			ft_add_token(prompt, 2, tkns);
+			return (2);
+		}
+	}
+	ft_add_token(prompt, 1, tkns);
+	return (1);	
+}
+
+int	ft_token_quote(char *prompt, t_tkn_stk **tkns, char quote)
+{
+	int	i;
+	int	len;
+
+	i = 1;
+	len = ft_strlen(prompt);
+	while (i < len && prompt[i] != quote)
+		i++;
+	if (i > len)
+		return (-1);
+	ft_add_token(prompt, ++i, tkns);
+	return (i);
+
 }
 
 t_tkn_stk	*ft_tokenize(char *prompt)
@@ -124,37 +112,31 @@ t_tkn_stk	*ft_tokenize(char *prompt)
 	ft_init_stk_tokens(&tokens);
 	while (i < len)
 	{
-		cnt = 1;
 		if (ft_isspace(prompt[i]))
 			i++;
 		else if (ft_is_metachar(prompt[i]))
 		{
-			if (i + 1 < len && ft_is_metachar(prompt[i + 1]))
-			{
-				if ((prompt[i] == '>' && prompt[i + 1] == '>') || \
-				(prompt[i] == '<' && prompt[i + 1] == '<') || \
-				(prompt[i] == '|' && prompt[i + 1] == '|') || \
-				(prompt[i] == '&' && prompt[i + 1] == '&'))
-				{
-					ft_add_token(prompt + i, 2, &tokens);
-					i += 2;
-					continue;
-				}
-			}
-			ft_add_token(prompt + i++, cnt, &tokens);
+			cnt = ft_token_metachar(prompt + i, &tokens);
+			if (cnt == -1)
+				return (ft_free_tokens(tokens));
+			i += cnt;
 		}
-		else if (prompt[i] == '"')
+		else if (prompt[i] == '"' || prompt[i] == '\'')
 		{
-			while (prompt[i + cnt] != '"')
-				cnt++;
-			ft_add_token(prompt + i, ++cnt, &tokens);
+			cnt = ft_token_quote(prompt + i, &tokens, prompt[i]);
+			if (cnt == -1)
+				return (ft_free_tokens(tokens));
 			i += cnt;
 		}
 		else
 		{
-			while (!ft_isspace(prompt[i + cnt]))
+			cnt = 0;
+			while (i + cnt < len && !ft_is_metachar(prompt[i + cnt]) && \
+					prompt[i + cnt] != '\'' && prompt[i + cnt] != '"' && \
+					!ft_isspace(prompt[i + cnt]))
 				cnt++;
-			ft_add_token(prompt + i, ++cnt, &tokens);
+			if (ft_add_token(prompt + i, cnt, &tokens) == -1)
+				return (ft_free_tokens(tokens)); 
 			i += cnt;
 		}
 	}

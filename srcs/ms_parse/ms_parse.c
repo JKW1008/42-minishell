@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_parsing.c                                       :+:      :+:    :+:   */
+/*   ms_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 14:22:47 by kjung             #+#    #+#             */
-/*   Updated: 2024/08/29 16:25:06 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/02 15:00:17 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,18 @@ t_ast_node	*parse_pipeline(t_token **current)
 	return (left);
 }
 
-t_ast_node	*parse(t_tkn_stk *tokens)
+t_ast_node	*parse(t_data **data)
 {
     t_token *current;
 
-	current = tokens->head;
+	current = (*data)->tkn->head;
+	if (ft_validate_token_structure((*data)->tkn))
+	{
+		printf("minishell: Invalid token structure\n");
+		ft_free_tokens((*data)->tkn);
+		return (0);
+	}
+	ft_free_tokens((*data)->tkn);
     return (parse_pipeline(&current));
 }
 

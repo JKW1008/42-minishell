@@ -100,8 +100,8 @@ typedef enum e_node_type
 
 typedef struct s_ast_node
 {
-	t_node_type	type;
-	char		*value;
+	t_node_type			type;
+	char				*value;
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
 }	t_ast_node;
