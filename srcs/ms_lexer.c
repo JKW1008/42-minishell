@@ -25,17 +25,20 @@ void	ft_set_qt_value(t_token *tkn)
 size_t	 ft_lexer(t_data **data)
 {
 	t_token		*current;
+	int			idx;
 
 	(*data)->tkn = ft_tokenize((*data)->prompt);
 	if (!(*data)->tkn)
 		return (ft_print_ret("minishell: Tokenization failed\n", 2));
+	idx = 0;
 	current = (*data)->tkn->head;
 	while (current)
 	{
 		ft_identify_token_type(current, (*data)->envp);
 		if (current->qt_status != normal)
 			ft_set_qt_value(current);
-		printf("val:%s\n", current->value);
+		current->tkn_idx = idx++;
+		printf("val:%s %d\n", current->value, current->tkn_idx);
 		current = current->next;
 	}
 	return (0);

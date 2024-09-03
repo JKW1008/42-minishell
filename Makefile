@@ -19,14 +19,13 @@ SRCS =	ms_main.c \
 		ms_lexer.c \
 		ms_tokenize.c \
 		ms_parse/ms_parse.c \
+		ms_parse/ms_vars_structure.c \
 		utils/ms_char_handle.c \
 		utils/ms_err_handle.c \
 		utils/ms_lex_util.c \
 		utils/ms_find_path.c \
-		utils/ms_vars_structure.c \
 		utils/ms_excute_handle.c \
 		excute/ms_execute.c \
-	   # utils/ms_parsing.c
 
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
 OBJS := $(patsubst $(SRCS_DIR)/%.c,$(OBJS_DIR)/%.o,$(SRCS))
