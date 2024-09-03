@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:59:41 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/02 16:30:24 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/03 11:27:11 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	cd_cmd(t_data **data)
 				{
 					tmp = ft_strjoin(tmp, "/");
 					tmp = ft_strjoin(tmp, path[i]);
+					printf("%s\n", tmp);
 				}
 			}
 			i++;
@@ -79,11 +80,5 @@ void	cd_cmd(t_data **data)
 	}
 	if (chdir(tmp) == -1)
 		printf("minishell: cd: %s: No such file or directory\n", cd[1]);
-	else
-	{
-		free(tmp);
-		tmp = getcwd(NULL, BUFSIZ);
-		printf("minishell: %s\n", tmp);
-	}
 	free_split(cd);
 }
