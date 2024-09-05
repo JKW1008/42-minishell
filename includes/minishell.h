@@ -32,6 +32,7 @@ typedef struct s_data
 	char		**envp;
 	char		*prompt;
 	t_tkn_stk	*tkn;
+	t_cmdline	*cmdline;
 }	t_data;
 
 void		ft_error(char *msg);
