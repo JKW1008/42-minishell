@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 14:03:33 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/08/21 21:01:59 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/05 21:50:54 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ t_tkn_stk	*ft_tokenize(char *prompt)
 	ft_init_stk_tokens(&tokens);
 	while (i < len)
 	{
-		if (ft_isspace(prompt[i]))
+		if (ms_ft_isspace(prompt[i]))
 			i++;
 		else if (ft_is_metachar(prompt[i]))
 		{
@@ -133,7 +133,7 @@ t_tkn_stk	*ft_tokenize(char *prompt)
 			cnt = 0;
 			while (i + cnt < len && !ft_is_metachar(prompt[i + cnt]) && \
 					prompt[i + cnt] != '\'' && prompt[i + cnt] != '"' && \
-					!ft_isspace(prompt[i + cnt]))
+					!ms_ft_isspace(prompt[i + cnt]))
 				cnt++;
 			if (ft_add_token(prompt + i, cnt, &tokens) == -1)
 				return (ft_free_tokens(tokens)); 
