@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 14:23:02 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/02 15:46:21 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/05 21:50:18 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <limits.h>
 
 typedef struct s_data
 {
@@ -44,7 +45,7 @@ size_t		ft_parser(t_data **data);
 size_t		ft_lexer(t_data **data);
 int			ft_isalnumline(int c);
 int			ft_is_metachar(char c);
-int			ft_isspace(int c);
+int			ms_ft_isspace(int c);
 t_quote_tbl ft_quote(char *str);
 t_tkn_stk	*ft_tokenize(char *prompt);
 
@@ -56,14 +57,15 @@ char		*find_path(char **envp, char *str);
 void		ft_identify_token_type(t_token *token, char **envp);
 t_tkn_stk	*ft_free_tokens(t_tkn_stk *tokens);
 
-char		*ft_replace_substring(const char *str, const char *start, const char *end, const char *replacement);
-size_t		ft_expand_env_vars(t_token *token, char **envp);
-size_t		ft_process_env_var(char **expanded, char **start, char **envp);
-size_t		ft_validate_token_structure(t_tkn_stk *tokens);
-
+// char		*ft_replace_substring(const char *str, const char *start, const char *end, const char *replacement);
+// size_t		ft_expand_env_vars(t_token *token, char **envp);
+// size_t		ft_process_env_var(char **expanded, char **start, char **envp);
+// size_t		ft_validate_token_structure(t_tkn_stk *tokens);
 
 void	ms_execute(t_data **data);
 void	cd_cmd(t_data **data);
+void	printenv(char **envp);
+void	do_exit(char *prompt);
 
 #endif
 

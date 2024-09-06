@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_is_char.c                                       :+:      :+:    :+:   */
+/*   ms_char_handle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehukim <jaehukim42@student.42gyeong      +#+  +:+       +#+        */
+/*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 19:27:01 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/08/04 19:27:04 by jaehukim         ###   ########.fr       */
+/*   Updated: 2024/09/05 21:50:07 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_isalnumline(int c)
 		return (0);
 }
 
-int	ft_isspace(int c)
+int	ms_ft_isspace(int c)
 {
 	if (c == ' ' | c == '\t' | c == '\v' | c == '\r' | c == '\n' | c == '\f')
 		return (1);
