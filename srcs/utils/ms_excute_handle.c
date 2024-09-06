@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:59:41 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/05 21:59:52 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/06 17:20:36 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,19 @@
 char	*find_home_path(char **envp)
 {
 	int		i;
+	char	*home;
 	
 	i = 0;
-	while (ft_strnstr(envp[i], "HOME=", 5) == NULL)
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], "HOME=", 5) == 0)
+		{
+			home = envp[i] + 5;
+			return (ft_strdup(home));
+		}
 		i++;
-	return (envp[i]);
+	}
+	return (NULL);
 }
 
 char	*find_dir(char *path)
@@ -40,43 +48,43 @@ void	cd_cmd(t_data **data)
 	char	*tmp;
 	char	**cd;
 	char	cwd[PATH_MAX];
+	char	*home;
 
 	cd = ft_split((*data)->prompt, ' ');
-	if (cd[1] == NULL)
-		tmp = ft_strdup(find_home_path((*data)->envp));
+	home = find_home_path((*data)->envp);
+	printf("%s\n", home);
+	if (cd[1] == NULL || !ft_strncmp(cd[1], "~", 2))
+		tmp = ft_strdup(home);
 	else if (cd[2] != NULL)
 	{
 		printf("minishell: cd: too many arguments\n");
 		free_split(cd);
+		free(home);
 		return ;
 	}
-	else if (!ft_strncmp(cd[1], "..", 2))
-	{
-		if (getcwd(cwd, sizeof(cwd)) == NULL)
-		{
-			perror("getcwd");
-			free_split(cd);
-			return ;
-		}
-		tmp = ft_strdup(find_dir(cwd));
-	}
-	else if (cd[1][0] == '/')
-		tmp = ft_strdup(cd[1]);
 	else
 	{
-		if (getcwd(cwd, sizeof(cwd)) == NULL)
+		if (cd[1][0] == '~')
+			tmp = ft_strjoin(home, cd[1] + 1);
+		else if (cd[1][0] == '/')
+			tmp = ft_strdup(cd[1]);
+		else
 		{
-			perror("getcwd");
-			free_split(cd);
-			return ;
+			if (getcwd(cwd, sizeof(cwd)) == NULL)
+			{
+				perror("getcwd");
+				free_split(cd);
+				free(home);
+				return ;
+			}
+			tmp = ft_strjoin(cwd, "/");
+			tmp = ft_strjoin(tmp, cd[1]);
 		}
-		tmp = ft_strjoin(cwd, "/");
-		tmp = ft_strjoin(tmp, cd[1]);
 	}
 	if (chdir(tmp) == -1)
 		printf("minishell: cd: %s: No such file or directory\n", cd[1]);
 	else if (getcwd(cwd, sizeof(cwd)) != NULL)
-		printf("%s\n", cwd);  // 새로운 현재 디렉토리 출력
+		printf("%s\n", cwd);
 	free(tmp);
 	free_split(cd);
 }

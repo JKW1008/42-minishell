@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 14:22:47 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/04 16:59:02 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/06 15:54:03 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,15 @@
 //	return (0);
 //}
 
-int	parse(t_data **data)
-{
-	t_token *tkn;
-	t_token	*current;
-	int		counter;
+// int	parse(t_data **data)
+// {
+// 	t_token *tkn;
+// 	t_token	*current;
+// 	int		counter;
 
-	tkn = (*data)->tkn->head;
-	current = tkn;
-}
+// 	tkn = (*data)->tkn->head;
+// 	current = tkn;
+// }
 
 
 size_t	ft_parser(t_data **data)
