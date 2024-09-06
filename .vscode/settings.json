@@ -6,6 +6,10 @@
 		"signal.h": "c",
 		"history.h": "c",
 		"readline.h": "c",
+<<<<<<< HEAD
+		"termios.h": "c"
+=======
 		"libft.h": "c"
+>>>>>>> 6c3b3656f86edbba8c5542889764a1bf71e2c4c1
 	}
 }

@@ -11,77 +11,61 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-//t_ast_node	*create_node(t_node_type type)
+ 
+//int	ft_init_cmdline(t_data **data)
 //{
-//	t_ast_node	*node;
+//	t_cmdline *cmdline;
+
+//	cmdline = (t_cmdline *) malloc(sizeof(t_cmdline));
+//	if (!cmdline)
+//		return (1);
+//	cmdline->count = 0;
+//	cmdline->head = NULL;
+//	(*data)->cmdline = cmdline;
+//	return (0);
+//}
+
+//int	ft_cmd_simplecmd(t_cmd *cmd, t_token *tkn)
+//{
+//	t_token *current;
+//	int		counter;
 	
-//	node = malloc(sizeof(t_ast_node));
-//	node->type = type;
-//	node->value = ft_strdup(value);
-//	node->tkn_idx = idx;
-//	node->left = NULL;
-//	node->right = NULL;
-//	return (node);
+//	cmd->args = (t_args **) malloc(sizeof(t_args *));
+//	current = tkn;
+//	while (tkn->token_type == l_word || tkn->next)
+//		tkn = tkn->next;
+//	counter = current->tkn_idx - tkn->tkn_idx;
 //}
 
-////t_ast_node	*parse_command(t_token **current)
-////{
-////	t_ast_node	*cmd_node;
-////	t_ast_node	*arg_node;
-////	cmd_node = create_node(NODE_COMMAND, (*current)->value);
-////	*current = (*current)->next;
-////	while (*current && (*current)->token_type == l_word)
-////	{
-////		arg_node = create_node(NODE_ARGUMENT, (*current)->value);
-////		arg_node->left = cmd_node->left;
-////		cmd_node->left = arg_node;
-////		*current = (*current)->next;
-////	}
-////	return (cmd_node);
-////}
-////t_ast_node	*parse_pipeline(t_token **current)
-////{
-////	t_ast_node	*left;
-////	t_ast_node	*pipe_node;
-////	t_ast_node	*right;
-////	left = parse_command(current);
-////	while (*current && (*current)->token_type == l_pipe)
-////	{
-////		pipe_node = create_node(NODE_PIPE, "|");
-////		*current = (*current)->next;
-////		right = parse_command(current);
-////		pipe_node->left = left;
-////		pipe_node->right = right;
-////		left = pipe_node;
-////	}
-////	return (left);
-////}
-
-//t_ast_node	*ft_find_pipe(t_data **data)
+//int	ft_cmd_rdr(t_cmd *cmd, t_token *tkn)
 //{
-//	t_token		*current;
-//	t_ast_node	*node;
-
-//	current = (*data)->tkn->head;
-//	while (current || current->token_type != l_pipe)
-//		current = current->next;
-//	if (!current)
-//		return (NULL);
-//	else
-//	{
-//		create_node(NODE_PIPE, current);
-//	}
-	
-
+//	// 먼저 리다이렉션 갯수 세야함
 //}
 
-//t_ast_node	*parse(t_data **data)
+//int	ft_create_cmd(t_data **data, t_token *tkn, int counter)
 //{
-//	t_ast_node *head_node;
+//	t_cmd	*cmd;
 
-//	ft_find_pipe()
+//	cmd = (t_cmd *) malloc(sizeof(t_cmd));
+//	if (!cmd)
+//		exit(EXIT_FAILURE);
+//	if (tkn->token_type >= 4 || tkn->token_type <= 7)
+//		ft_cmd_rdr(cmd, tkn);
+//	else if (tkn->token_type == l_word)
+//		ft_cmd_simplecmd(cmd, tkn);
+//	return (0);
 //}
+
+int	parse(t_data **data)
+{
+	t_token *tkn;
+	t_token	*current;
+	int		counter;
+
+	tkn = (*data)->tkn->head;
+	current = tkn;
+}
+
 
 size_t	ft_parser(t_data **data)
 {

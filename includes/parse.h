@@ -49,21 +49,6 @@ typedef enum e_lex_tbl	// Lexer Table
 	l_eof			// End of File
 }	t_lex_tbl;
 
-typedef	enum e_prs_tbl	// Parsing Table
-{
-	command,
-	simple_cmd,
-	cmd_name,
-	cmd_word,
-	cmd_prefix,
-	cmd_suffix,
-	io_rdr,
-	io_file,
-	filename,
-	io_here,
-	here_end,
-
-}	t_prs_tbl;
 
 typedef	struct s_token
 {
@@ -90,21 +75,43 @@ typedef struct s_tkn_stk
 	int		len;
 }	t_tkn_stk;
 
-typedef enum e_node_type
+typedef enum e_redir_type
 {
-	NODE_COMMAND,
-	NODE_PIPE,
-	NODE_REDIRECT,
-	NODE_ARGUMENT
-}	t_node_type;
+	RD_IN, // <
+	RD_OUT, // >
+	RD_APPEND, // >>
+	RD_HEREDOC, // <
+	RD_EOF,
+} t_redir_type;
 
-typedef struct s_ast_node
+typedef struct s_redir
 {
-	t_node_type			type;
-	char				*value;
-	int					tkn_idx;
-	struct s_ast_node	*left;
-	struct s_ast_node	*right;
-}	t_ast_node;
+	t_redir_type	type;
+	char			*file;
+	struct s_redir	*next;
+}	t_rdr;	
+
+typedef	struct s_args
+{
+	char	*og;
+	char	*ex;
+}	t_args;
+
+typedef	struct s_cmd
+{
+	char			*cmd;
+	int				is_heredoc;
+	t_args			**args;
+	int				arg_cnt;
+	t_rdr			**rdr;
+	struct s_cmd	*next;
+}	t_cmd;
+
+typedef struct	s_cmdline
+{
+	t_cmd	*head;
+	int		count;
+}	t_cmdline;
+
 
 # endif
