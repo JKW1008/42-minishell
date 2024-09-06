@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 22:38:00 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/06 14:28:11 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/06 19:49:02 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	ms_execute(t_data **data)
 {
-	if ((*data)->prompt[0] == 'c' && (*data)->prompt[1] == 'd')
-	{
+	if ((*data)->prompt[0] == 'c' && (*data)->prompt[1] == 'd' && ((*data)->prompt[2] == ' ' || (*data)->prompt[2] == '\0'))
 		cd_cmd(data);
-	}
 	else if (!ft_strncmp((*data)->prompt, "pwd", 4))
 	{
 		char	*tmp;
@@ -26,17 +24,13 @@ void	ms_execute(t_data **data)
 		free(tmp);
 	}
 	else if (!ft_strncmp((*data)->prompt, "env", 4))
-	{
 		printenv((*data)->envp);
-	}
 	else if (!ft_strncmp((*data)->prompt, "exit", 5) || !ft_strncmp((*data)->prompt, "exit ", 5))
-	{
 		do_exit((*data)->prompt);
-	}
-	else if (!ft_strncmp((*data)->prompt, "ls", 2))
-	{
+	// else if (!ft_strncmp((*data)->prompt, "ls", 2))
+	// {
 		
-	}
+	// }
 }
 
 //void	execute_cd(t_data **data)
