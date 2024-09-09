@@ -37,33 +37,72 @@
 //	counter = current->tkn_idx - tkn->tkn_idx;
 //}
 
-//int	ft_cmd_rdr(t_cmd *cmd, t_token *tkn)
+//int ft_alloc_rdr(t_cmd *cmd, t_token *tkn)
 //{
-//	// 먼저 리다이렉션 갯수 세야함
+//	int cnt;
+	
+//	cnt = 0;
+//	while (tkn->token_type != l_pipe && tkn->next)
+//	{
+//		if (tkn->token_type >= 4 && tkn->token_type <= 7)
+//			cnt++;
+//		tkn = tkn->next;
+//	}
+//	cmd->rdr = (t_args *) malloc(sizeof(t_args) * cnt);
+//	if (!cmd->args)
+//		exit(EXIT_FAILURE);
+//	return (cnt);
 //}
 
-//int	ft_create_cmd(t_data **data, t_token *tkn, int counter)
+//int	ft_get_rdr(t_cmd *cmd, t_token *tkn)
+//{
+		
+//}
+
+//int	ft_cmd_rdr(t_cmd *cmd, t_token *tkn)
+//{
+//	int	idx;
+//	int	cnt;
+
+//	idx = 0;
+//	cnt = ft_alloc_rdr(cmd, tkn);
+//	while (idx < cnt)
+//	{
+		
+//	}
+
+
+//}
+
+//int	ft_create_cmd(t_data **data, t_token **tkn)
 //{
 //	t_cmd	*cmd;
+//	struct	idx;
+	
 
 //	cmd = (t_cmd *) malloc(sizeof(t_cmd));
 //	if (!cmd)
 //		exit(EXIT_FAILURE);
-//	if (tkn->token_type >= 4 || tkn->token_type <= 7)
-//		ft_cmd_rdr(cmd, tkn);
-//	else if (tkn->token_type == l_word)
-//		ft_cmd_simplecmd(cmd, tkn);
+//	ft_alloc_rdr(cmd, tkn);
+//	while ((*tkn)->token_type != l_pipe && (*tkn)->next)
+//	{
+//		if ((*tkn)->token_type >= 4 && (*tkn)->token_type <= 7)
+//			ft_cmd_rdr(cmd, (*tkn));
+//		else if ((*tkn)->token_type == l_word)
+//			ft_cmd_simplecmd(cmd, (*tkn));
+//	}
 //	return (0);
 //}
 
 // int	parse(t_data **data)
 // {
 // 	t_token *tkn;
-// 	t_token	*current;
-// 	int		counter;
 
 // 	tkn = (*data)->tkn->head;
-// 	current = tkn;
+//	while (tkn)
+//		ft_create_cmd(data, &tkn);
+	
+//	return (0);
 // }
 
 
@@ -71,5 +110,6 @@ size_t	ft_parser(t_data **data)
 {
 	if (ft_lexer(data))
 		return (-1);
+	parse(data);
 	return (ft_strlen((*data)->prompt)); // temporary return for -Wall -Werror -Wextra
 }
