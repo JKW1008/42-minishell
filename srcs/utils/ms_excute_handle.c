@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:59:41 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/06 17:20:36 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/10 20:58:03 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	*find_dir(char *path)
 		*last = '\0';
 	return (ft_strdup(path));
 }
-
 
 void	cd_cmd(t_data **data)
 {
@@ -89,15 +88,37 @@ void	cd_cmd(t_data **data)
 	free_split(cd);
 }
 
-void	printenv(char **envp)
+int		check_eqaul(char *env)
 {
-	int	i;
+	if (ft_strchr(env, '=') != NULL)
+		return (1);
+	else
+		return (0);
+}
 
-	i = 0;
-	while (envp[i])	
+void	printenv(char **envp, int flag)
+{
+	while (*envp != NULL)
 	{
-		printf("%s\n", envp[i]);
-		i++;
+		if (flag == 1)
+		{
+			if (check_eqaul(*envp) == 1)
+			{
+				ft_putstr_fd("declare -x ", 1);
+				write(1, *envp, ft_strchr(*envp, '=') - *envp);
+				write(1, "=\"", 2);
+				ft_putstr_fd(ft_strchr(*envp, '=') + 1, 1);
+				write(1, "\"\n", 2);
+			}
+			else if (check_eqaul(*envp) == 0)
+				printf("declare -x %s\n", *envp);
+		}
+		else
+		{
+			if (check_eqaul(*envp) == 1)
+				printf("%s\n", *envp);
+		}
+		envp++;
 	}
 }
 
@@ -137,3 +158,197 @@ void	do_exit(char *prompt)
 	exit((unsigned char)ft_atoi(tmp[1]));
 }
 
+int	is_env_name(char *str)
+{
+    int	i;
+
+	if (!str || !*str)
+		return (0);
+	if (!ft_isalpha(str[0]) && str[0] != '_')
+		return (0);
+	i = 1;
+	while (str[i])
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	export(t_data **data)
+{
+	char	**cd;
+	char	*eq;
+	char	*env;
+	char	**new_envp;
+	int		i;
+	int		cnt;
+
+	cd = ft_split((*data)->prompt, ' ');
+	if (!cd || !cd[1])
+	{
+		printenv((*data)->envp, 1);
+		free_split(cd);
+		return ;
+	}
+	eq = ft_strchr(cd[1], '=');
+	if (eq)
+		env = ft_substr(cd[1], 0, eq - cd[1]);
+	else
+		env = cd[1];
+	if (!is_env_name(env))
+	{
+		printf("Invalid environment variable name: %s\n", cd[1]);
+		free_split(cd);
+		if (eq)
+			free(env);
+		return ;
+	}	
+	i = 0;
+	while ((*data)->envp[i])
+	{
+		if (eq && ft_strncmp((*data)->envp[i], cd[1], eq - cd[1]) == 0 && (*data)->envp[i][eq - cd[1]] == '=')
+		{
+			free((*data)->envp[i]);
+			(*data)->envp[i] = ft_strdup(cd[1]);
+			free_split(cd);
+			return ;
+		}
+		else if (!eq && ft_strncmp((*data)->envp[i], cd[1], ft_strlen(cd[1])) == 0 && (*data)->envp[i][ft_strlen(cd[1])] == '=')
+		{
+			free_split(cd);
+			return ;
+		}
+		i++;
+	}
+	cnt = i;
+	new_envp = malloc((cnt + 2) * sizeof(char *));
+	if (new_envp == NULL)
+	{
+		perror("malloc");
+		free_split(cd);
+		return ;
+	}
+	i = 0;
+	while (i < cnt)
+	{
+		new_envp[i] = ft_strdup((*data)->envp[i]);
+		i++;
+	}
+	if (eq)
+		new_envp[cnt] = ft_strdup(cd[1]);
+	else
+		new_envp[cnt] = ft_strjoin(cd[1], "=");
+	new_envp[cnt + 1] = NULL;
+	free_envp((*data)->envp);
+	(*data)->envp = new_envp;
+	free_split(cd);
+}
+
+void free_envp(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		free(envp[i]);
+		i++;
+	}
+	free(envp);
+}
+
+void	env_command(t_data **data)
+{
+    printenv((*data)->envp, 0);
+}
+
+void	do_unset(t_data **data)
+{
+	char	**divided;
+	int		i;
+	int		j;
+	int		k;
+
+	divided = ft_split((*data)->prompt, ' ');
+	if (!divided || !divided[1])
+	{
+		printf("unset: not enough arguments\n");
+		free_split(divided);
+		return ;
+	}
+	i = 1;
+	while (divided[i])
+	{
+		if (is_env_name(divided[i]))
+		{
+			j = 0;
+			while ((*data)->envp[i])
+			{
+				if (ft_strncmp((*data)->envp[j], divided[i], ft_strlen(divided[i])) == 0 && (*data)->envp[j][ft_strlen(divided[i])] == '=')
+				{
+					free((*data)->envp[j]);
+					k = j;
+					while ((*data)->envp[k])
+					{
+						(*data)->envp[k] = (*data)->envp[k + 1];
+						k++;
+					}
+					j--;
+					break ;
+				}
+				j++;
+			}
+		}
+		else
+		{
+			printf("unset: '%s': not a valid identifier\n", divided[i]);
+		}
+		i++;
+	}
+	free_split(divided);
+}
+
+char	*expand_env(char *arg, t_data **data)
+{
+	char	*result;
+	char	*tmp;
+	int		i;
+	int		j;
+
+	i = 0;
+	while (arg[i])
+	{
+		if (arg[i] == '$' && arg[i + 1] && (ft_isalpha(arg[i + 1]) || arg[i + 1] == '_'))
+		{
+			j = i + 1;
+			while (arg[j] && (ft_isalnum(arg[j]) || arg[j] == '_'))
+				j++;
+			
+		}
+	}
+}
+
+void	do_echo(t_data **data)
+{
+	char	**divided;
+	char	*expand
+	int		i;
+	int		check_n;
+
+	divided = ft_split((*data)->prompt, ' ');
+	i = 1;
+	check_n = 1;
+	if (!divided)
+		return ;
+	if (divided[1] && ft_strncmpI(divided[1], "-n", 2) == 0)
+	{
+		check_n = 0;
+		i = 2;
+	}
+	while (divided[i])
+	{
+		expand = 
+	}
+}

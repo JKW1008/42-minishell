@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 14:03:33 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/09/05 21:50:54 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/09 15:48:43 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	ft_init_stk_tokens(t_tkn_stk **tkns)
 
 int	ft_valid_quotes(char *prompt)
 {
-	int	i;
+	// int	i;
 	int	len;
 
-	i = 0;
+	// i = 0;
 	len = ft_strlen(prompt);
 	if (prompt[0] == '\'' || prompt[0] == '"')
 	{
