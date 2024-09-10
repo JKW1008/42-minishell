@@ -48,15 +48,29 @@
 //			cnt++;
 //		tkn = tkn->next;
 //	}
-//	cmd->rdr = (t_args *) malloc(sizeof(t_args) * cnt);
+//	cmd->rdr = malloc(sizeof(t_args) * cnt);
 //	if (!cmd->args)
 //		exit(EXIT_FAILURE);
 //	return (cnt);
 //}
 
-//int	ft_get_rdr(t_cmd *cmd, t_token *tkn)
+//int	ft_get_rdr(t_cmd *cmd, t_token **tkn, int idx)
 //{
-		
+	
+//	cmd->rdr[idx] = (t_rdr *) malloc(sizeof(t_rdr));
+//	if (!cmd->rdr[idx])
+//		exit(EXIT_FAILURE);
+//	if ((*tkn)->token_type == l_less)
+//		cmd->rdr[idx]->type = RD_IN;
+//	else if ((*tkn)->token_type == l_greater)
+//		cmd->rdr[idx]->type = RD_OUT;
+//	else if ((*tkn)->token_type == l_dbl_less)
+//		cmd->rdr[idx]->type = RD_HEREDOC;
+//	else if ((*tkn)->token_type == l_dbl_greater)
+//		cmd->rdr[idx]->type = RD_APPEND;
+//	(*tkn) = (*tkn)->next;
+//	cmd->rdr[idx]->file = (*tkn)->value;
+//	return (0);
 //}
 
 //int	ft_cmd_rdr(t_cmd *cmd, t_token *tkn)
@@ -66,45 +80,63 @@
 
 //	idx = 0;
 //	cnt = ft_alloc_rdr(cmd, tkn);
+//	if (!cnt)
+//		return (0);
 //	while (idx < cnt)
 //	{
-		
+//		while (tkn->token_type >= 4 && tkn->token_type <= 7)
+//			tkn = tkn->next;
+//		ft_get_rdr(cmd, &tkn, idx++);
+//		tkn = tkn->next;
 //	}
-
+//	return (0);
 
 //}
 
-//int	ft_create_cmd(t_data **data, t_token **tkn)
+//t_cmd	*ft_create_cmd(t_token **tkn)
 //{
 //	t_cmd	*cmd;
 //	struct	idx;
 	
-
 //	cmd = (t_cmd *) malloc(sizeof(t_cmd));
 //	if (!cmd)
 //		exit(EXIT_FAILURE);
-//	ft_alloc_rdr(cmd, tkn);
+//	ft_alloc_rdr(cmd, *tkn);
 //	while ((*tkn)->token_type != l_pipe && (*tkn)->next)
 //	{
 //		if ((*tkn)->token_type >= 4 && (*tkn)->token_type <= 7)
 //			ft_cmd_rdr(cmd, (*tkn));
-//		else if ((*tkn)->token_type == l_word)
-//			ft_cmd_simplecmd(cmd, (*tkn));
+//		//else if ((*tkn)->token_type == l_word)
+//		//	ft_cmd_simplecmd(cmd, (*tkn));
+//		(*tkn) = (*tkn)->next;
 //	}
-//	return (0);
+//	return (cmd);
 //}
 
-// int	parse(t_data **data)
-// {
+//int	parse(t_data **data)
+//{
 // 	t_token *tkn;
+//	t_cmd 	*new;
+//	t_cmd	*cmd;
 
+//	(*data)->cmdline = ft_calloc(sizeof(t_cmdline), 1);
 // 	tkn = (*data)->tkn->head;
 //	while (tkn)
-//		ft_create_cmd(data, &tkn);
-	
+//	{
+//		new = ft_create_cmd(&tkn);
+//		if ((*data)->cmdline->head)
+//		{
+//			cmd = (*data)->cmdline->head;
+//			while (!cmd->next)
+//				cmd = cmd->next;
+//			cmd->next = new;
+//		}
+//		else
+//			(*data)->cmdline->head = new;
+//		(*data)->cmdline->count++;
+//	}
 //	return (0);
 // }
-
 
 size_t	ft_parser(t_data **data)
 {

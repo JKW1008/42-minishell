@@ -26,7 +26,8 @@ int	ft_isalnumline(int c)
 
 int	ms_ft_isspace(int c)
 {
-	if (c == ' ' | c == '\t' | c == '\v' | c == '\r' | c == '\n' | c == '\f')
+	if (c == ' ' || c == '\t' || c == '\v' || c == '\r' || c == '\n' \
+	|| c == '\f')
 		return (1);
 	return (0);
 }
