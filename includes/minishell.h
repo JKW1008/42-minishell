@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 14:23:02 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/10 16:21:37 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/11 12:40:17 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,6 @@ void	do_exit(char *prompt);
 void	free_envp(char **envp);
 char **copy_envp(char **envp);
 void	do_unset(t_data **data);
-
+void	do_echo(t_data **data);
 #endif
 

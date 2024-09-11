@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 22:38:00 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/10 16:14:46 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/11 12:40:27 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	ms_execute(t_data **data)
 		export(data);
 	else if (!ft_strncmp((*data)->prompt, "unset ", 5))
 		do_unset(data);
+	else if (!ft_strncmp((*data)->prompt, "echo ", 5))
+		do_echo(data);
 	// else if (!ft_strncmp((*data)->prompt, "ls", 2))
 	// {
 		
