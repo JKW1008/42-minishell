@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 14:23:02 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/05 21:50:18 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/10 16:21:37 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,13 @@ t_tkn_stk	*ft_free_tokens(t_tkn_stk *tokens);
 
 void	ms_execute(t_data **data);
 void	cd_cmd(t_data **data);
-void	printenv(char **envp);
+void	env_command(t_data **data);
+void	printenv(char **envp, int flag);
+void	export(t_data **data);
 void	do_exit(char *prompt);
+void	free_envp(char **envp);
+char **copy_envp(char **envp);
+void	do_unset(t_data **data);
 
 #endif
 

@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 22:38:00 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/06 19:49:02 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/10 16:14:46 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,13 @@ void	ms_execute(t_data **data)
 		free(tmp);
 	}
 	else if (!ft_strncmp((*data)->prompt, "env", 4))
-		printenv((*data)->envp);
+		env_command(data);
 	else if (!ft_strncmp((*data)->prompt, "exit", 5) || !ft_strncmp((*data)->prompt, "exit ", 5))
 		do_exit((*data)->prompt);
+	else if (!ft_strncmp((*data)->prompt, "export ", 6))
+		export(data);
+	else if (!ft_strncmp((*data)->prompt, "unset ", 5))
+		do_unset(data);
 	// else if (!ft_strncmp((*data)->prompt, "ls", 2))
 	// {
 		
