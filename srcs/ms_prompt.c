@@ -24,7 +24,7 @@ void	ft_prompt(t_data **data)
 			break;
 		(*data)->prompt = input;
 		ft_parser(data);
-		ms_execute(data);
+		//ms_execute(data);
 		if (ft_strlen(input))
 			add_history(input);
 		free(input);

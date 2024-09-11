@@ -100,7 +100,7 @@ typedef	struct s_cmd
 {
 	char			*cmd;
 	int				is_heredoc;
-	t_args			**args;
+	t_args			*args;
 	int				arg_cnt;
 	t_rdr			**rdr;
 	struct s_cmd	*next;

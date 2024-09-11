@@ -21,17 +21,10 @@ void	ft_init_stk_tokens(t_tkn_stk **tkns)
 
 int	ft_valid_quotes(char *prompt)
 {
-<<<<<<< HEAD
-	//int	i;
-	int	len;
-
-	//i = 0;
-=======
 	// int	i;
 	int	len;
 
 	// i = 0;
->>>>>>> 912444e72f80a48cff34c9dbdb8ef90de3cfffd8
 	len = ft_strlen(prompt);
 	if (prompt[0] == '\'' || prompt[0] == '"')
 	{
