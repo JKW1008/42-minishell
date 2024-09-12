@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:59:41 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/11 12:39:36 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/12 16:34:01 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ void	do_exit(char *prompt)
 
 int	is_env_name(char *str)
 {
-    int	i;
+   int	i;
 
 	if (!str || !*str)
 		return (0);
@@ -261,7 +261,7 @@ void free_envp(char **envp)
 
 void	env_command(t_data **data)
 {
-    printenv((*data)->envp, 0);
+   printenv((*data)->envp, 0);
 }
 
 void	do_unset(t_data **data)
@@ -309,6 +309,7 @@ void	do_unset(t_data **data)
 	}
 	free_split(divided);
 }
+
 
 char	*get_env(char **envp, char *name)
 {

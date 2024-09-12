@@ -52,7 +52,7 @@ int	main(int ac, char **av, char **envp)
 	ft_initalise(&data, envp);
 	ft_ctrl_signal();
 	ft_prompt(&data);
-	free_envp(data->envp);
+	//free_envp(data->envp);
 	free(data);
 	return (EXIT_SUCCESS);
 }

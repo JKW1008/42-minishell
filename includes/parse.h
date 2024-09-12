@@ -88,7 +88,6 @@ typedef struct s_redir
 {
 	t_redir_type	type;
 	char			*file;
-	struct s_redir	*next;
 }	t_rdr;	
 
 typedef	struct s_args
@@ -101,7 +100,7 @@ typedef	struct s_cmd
 {
 	char			*cmd;
 	int				is_heredoc;
-	t_args			**args;
+	t_args			*args;
 	int				arg_cnt;
 	t_rdr			**rdr;
 	struct s_cmd	*next;
