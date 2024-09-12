@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:59:41 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/12 16:34:01 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/12 16:56:59 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,10 +333,10 @@ char	*ft_charjoin(char *s, char c)
 	int		len;
 
 	len = ft_strlen(s);
-	result = (char *)malloc(sizeof(char) * len + 1);
+	result = (char *)malloc(sizeof(char) * (len + 2));
 	if (!result)
 		return (NULL);
-	ft_strlcpy(result, s, ft_strlen(s));
+	ft_strlcpy(result, s, len + 1);
 	result[len] = c;
 	result[len + 1] = '\0';
 	return (result);
@@ -351,6 +351,9 @@ char	*expand_env(char *arg, t_data **data)
 	char	*var_name;
 	char	*value;
 
+	result = ft_strdup("");
+	if (!result)
+		return (NULL);
 	i = 0;
 	while (arg[i])
 	{
@@ -360,19 +363,34 @@ char	*expand_env(char *arg, t_data **data)
 			while (arg[j] && (ft_isalnum(arg[j]) || arg[j] == '_'))
 				j++;
 			var_name = ft_substr(arg, i + 1, j - i - 1);
+			if (!var_name)
+			{
+				free(result);
+				return (NULL);
+			}
 			value = get_env((*data)->envp, var_name);
 			if (value)
 				tmp = ft_strjoin(result, value);
 			else
-				tmp = ft_strjoin(result, "");
+				tmp = ft_strdup(result);
+			free(var_name);
+			if (!tmp)
+			{
+				free(result);
+				return (NULL);
+			}
 			free(result);
 			result = tmp;
-			free(var_name);
 			i = j - 1;
 		}
 		else
 		{
 			tmp = ft_charjoin(result, arg[i]);
+			if (!tmp)
+			{
+				free(result);
+				return (NULL);
+			}
 			free(result);
 			result = tmp;
 		}
@@ -388,7 +406,6 @@ void	do_echo(t_data **data)
 	int		i;
 	int		check_n;
 
-	printf("fuck");
 	divided = ft_split((*data)->prompt, ' ');
 	i = 1;
 	check_n = 1;

@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 13:08:52 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/09/09 20:07:29 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/12 17:22:35 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int	main(int ac, char **av, char **envp)
 	ft_ctrl_signal();
 	ft_prompt(&data);
 	//free_envp(data->envp);
+	free_split(data->envp);
+	free(data->current_path);
 	free(data);
 	return (EXIT_SUCCESS);
 }
