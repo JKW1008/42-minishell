@@ -37,7 +37,7 @@ int ft_alloc_rdr(t_cmd *cmd, t_token *tkn)
 			cnt++;
 		tkn = tkn->next;
 	}
-	cmd->rdr = malloc(sizeof(t_rdr *) * (cnt + 1));
+	cmd->rdr = (t_rdr **) malloc(sizeof(t_rdr *) * (cnt + 1));
 	if (!cmd->rdr)
 		exit(EXIT_FAILURE);
 	while (idx < cnt)
@@ -85,14 +85,14 @@ int	ft_get_args(t_cmd *cmd, t_token *tkn, t_data **data)
 
 int	ft_alloc_simplecmd(t_cmd *cmd, t_token *tkn, t_data **data)
 {
-	while (tkn || tkn->token_type != l_pipe)
+	while (tkn && tkn->token_type != l_pipe)
 	{
 		if (tkn->token_type >= 4 && tkn->token_type <= 7)
 		{
 			tkn = tkn->next;
 			tkn = tkn->next;
 		}
-		if (tkn->token_type == l_word)
+		if (tkn && tkn->token_type == l_word)
 		{
 			if (cmd->cmd == NULL)
 			{
