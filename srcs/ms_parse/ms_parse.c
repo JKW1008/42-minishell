@@ -50,18 +50,6 @@ int ft_alloc_rdr(t_cmd *cmd, t_token *tkn)
 	cmd->rdr[idx] = NULL;
 	return (cnt);
 }
-//char *ft_get_envp_arg(char *val, t_data **data)
-//{
-//	int	i;
-//	char **tmp;
-
-//	i = 0;
-//	while ((*data)->envp[i])
-//	{
-//		tmp = ft_split((*data)->envp[i], '=');
-//		i++;
-//	}
-//}
 
 int	ft_get_args(t_cmd *cmd, t_token *tkn, t_data **data)
 {
@@ -178,11 +166,27 @@ t_cmd	*ft_create_cmd(t_token **tkn, t_data **data)
 	return (cmd);
 }
 
+int	ft_append_cmd(t_cmd *cmd, t_cmdline *cmdline)
+{
+	t_cmd	*tmp;
+
+	if (cmdline->head)
+	{
+		tmp = cmdline->head;
+		while (tmp->next)
+			tmp = tmp->next;
+		cmd->next = cmd;
+	}
+	else
+		cmdline->head = cmd;
+	cmdline->count++;
+	return (0);
+}
+
 int	parse(t_data **data)
 {
  	t_token *tkn;
 	t_cmd 	*new;
-	t_cmd	*cmd;
 
 	(*data)->cmdline = ft_calloc(sizeof(t_cmdline), 1);
  	tkn = (*data)->tkn->head;
@@ -191,15 +195,7 @@ int	parse(t_data **data)
 		if (tkn->tkn_idx == 0 || tkn->token_type == l_pipe)
 		{
 			new = ft_create_cmd(&tkn, data);
-			if ((*data)->cmdline->head)
-			{
-				cmd = (*data)->cmdline->head;
-				while (cmd->next)
-					cmd = cmd->next;
-				cmd->next = new;
-			}
-			else
-				(*data)->cmdline->head = new;
+			ft_append_cmd(new, (*data)->cmdline);
 		}
 		if (tkn->next)
 			tkn = tkn->next;

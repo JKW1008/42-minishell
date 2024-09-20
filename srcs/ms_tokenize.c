@@ -97,7 +97,6 @@ int	ft_token_quote(char *prompt, t_tkn_stk **tkns, char quote)
 		return (-1);
 	ft_add_token(prompt, ++i, tkns);
 	return (i);
-
 }
 
 t_tkn_stk	*ft_tokenize(char *prompt)

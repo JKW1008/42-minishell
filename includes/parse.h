@@ -56,6 +56,8 @@ typedef	struct s_token
 	t_lex_tbl 		token_type;	// Parsing Table Value
 	t_quote_tbl		qt_status;
 	char 			*value;
+	char			*valex;
+	char			pre_sep;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;

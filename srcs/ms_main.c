@@ -29,6 +29,7 @@ char **copy_envp(char **envp)
     while (envp[i])
     {
         new_envp[i] = ft_strdup(envp[i]);
+		printf("%s\n", new_envp[i]);
         if (!new_envp[i])
 		{
             while (i-- > 0)
@@ -38,7 +39,7 @@ char **copy_envp(char **envp)
         }
         i++;
     }
-    new_envp[i] = '\0';
+    new_envp[i] = NULL;
     return (new_envp);
 }
 
@@ -51,6 +52,7 @@ int	main(int ac, char **av, char **envp)
 		return (-1);
 	ft_initalise(&data, envp);
 	ft_ctrl_signal();
+
 	ft_prompt(&data);
 	//free_envp(data->envp);
 	free(data);
