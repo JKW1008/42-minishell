@@ -27,8 +27,9 @@ int	ft_is_command(const char *token, char **envp)
 
 int	ft_is_builtin(const char *token)
 {
-	const char *builtins[] = {"echo", "cd", "pwd", "export", "unset", "env", "exit", NULL};
-	int	i;
+	int			i;
+	const char	*builtins[] = \
+		{"echo", "cd", "pwd", "export", "unset", "env", "exit", NULL};
 
 	i = 0;
 	while (builtins[i])
@@ -40,34 +41,16 @@ int	ft_is_builtin(const char *token)
 	return (0);
 }
 
-int ft_is_redirection(const char *token)
+int	ft_is_redirection(const char *token)
 {
-	return (ft_strncmp(token, "<", 2) == 0 || 
-			ft_strncmp(token, ">", 2) == 0 || 
+	return (ft_strncmp(token, "<", 2) == 0 || \
+			ft_strncmp(token, ">", 2) == 0 || \
 			ft_strncmp(token, ">>", 2) == 0);
 }
-void	ft_identify_token_type(t_token *token, char **envp)
-{
-    size_t len;
 
-	len = ft_strlen(token->value);
-	if (ft_is_builtin(token->value))
-		token->token_type = l_word;
-	else if (ft_is_command(token->value, envp))
-		token->token_type = l_word;
-	else if (len >= 2 && token->value[0] == '"' && token->value[len - 1] == '"')
-		token->token_type = l_quot_dbl;
-	else if (len >= 2 && token->value[0] == '\'' && token->value[len - 1] == '\'')
-		token->token_type = l_quot_sgl;
-	else if (ft_strncmp(token->value, "|", 1) == 0)
-		token->token_type = l_pipe;
-	else if (ft_strncmp(token->value, "<", 1) == 0)
-		token->token_type = l_less;
-	else if (ft_strncmp(token->value, ">", 1) == 0)
-		token->token_type = l_greater;
-	else if (ft_strncmp(token->value, "<<", 2) == 0)
-		token->token_type = l_dbl_less;
-	else if (ft_strncmp(token->value, ">>", 2) == 0)
+void	ft_identify_token_type2(t_token *token)
+{
+	if (ft_strncmp(token->value, ">>", 2) == 0)
 		token->token_type = l_dbl_greater;
 	else if (ft_strncmp(token->value, "`", 1) == 0)
 		token->token_type = l_bck_tick;
@@ -75,7 +58,7 @@ void	ft_identify_token_type(t_token *token, char **envp)
 		token->token_type = l_bck_slash;
 	else if (ft_strncmp(token->value, ";", 1) == 0)
 		token->token_type = l_semicolon;
-	else if (ms_ft_isspace(token->value[0]))
+	else if (ft_isspace(token->value[0]))
 		token->token_type = l_space;
 	else if (token->value[0] == '#')
 		token->token_type = l_comment;
@@ -89,10 +72,36 @@ void	ft_identify_token_type(t_token *token, char **envp)
 		token->token_type = l_word;
 }
 
+void	ft_identify_token_type(t_token *token, char **envp)
+{
+	size_t	len;
+
+	len = ft_strlen(token->value);
+	if (ft_is_builtin(token->value))
+		token->token_type = l_word;
+	else if (ft_is_command(token->value, envp))
+		token->token_type = l_word;
+	else if (len >= 2 && token->value[0] == '"' && token->value[len - 1] == '"')
+		token->token_type = l_quot_dbl;
+	else if (len >= 2 && token->value[0] == '\'' && \
+			token->value[len - 1] == '\'')
+		token->token_type = l_quot_sgl;
+	else if (ft_strncmp(token->value, "|", 1) == 0)
+		token->token_type = l_pipe;
+	else if (ft_strncmp(token->value, "<", 1) == 0)
+		token->token_type = l_less;
+	else if (ft_strncmp(token->value, ">", 1) == 0)
+		token->token_type = l_greater;
+	else if (ft_strncmp(token->value, "<<", 2) == 0)
+		token->token_type = l_dbl_less;
+	else
+		ft_identify_token_type2(token);
+}
+
 t_tkn_stk	*ft_free_tokens(t_tkn_stk *tokens)
 {
-	t_token *current;
-	t_token *next;
+	t_token	*current;
+	t_token	*next;
 
 	current = tokens->head;
 	while (current)

@@ -16,13 +16,14 @@ SRCS =	ms_main.c \
 		ms_init.c \
 		ms_signal.c \
 		ms_prompt.c \
-		ms_lexer.c \
-		ms_tokenize.c \
+		ms_parse/ms_lexer.c \
+		ms_parse/ms_lex_util.c \
+		ms_parse/ms_tokenize.c \
 		ms_parse/ms_parse.c \
-		ms_parse/ms_vars_structure.c \
+		ms_parse/ms_alloc_simplecmd.c \
+		ms_parse/ms_alloc_rdr.c \
 		utils/ms_char_handle.c \
 		utils/ms_err_handle.c \
-		utils/ms_lex_util.c \
 		utils/ms_find_path.c \
 		utils/ms_excute_handle.c \
 		excute/ms_execute.c \

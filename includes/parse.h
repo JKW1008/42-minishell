@@ -13,14 +13,6 @@
 #ifndef MINISHELL_PARSE_H
 # define MINISHELL_PARSE_H
 
-typedef enum e_lr_action // LR parser actions
-{
-	lr_shift,
-	lr_remove,
-	lr_accept,
-	lr_error
-}	t_lr_action;
-
 typedef enum e_quote_tbl
 {
 	normal,
@@ -56,20 +48,10 @@ typedef	struct s_token
 	t_lex_tbl 		token_type;	// Parsing Table Value
 	t_quote_tbl		qt_status;
 	char 			*value;
-	char			*valex;
 	char			pre_sep;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
-
-typedef enum e_token_type
-{
-	TOKEN_BUILTIN,
-	TOKEN_COMMAND,
-	TOKEN_REDIRECTION,
-	TOKEN_PIPE,
-	TOKEN_ARGUMENT
-} t_token_type;
 
 typedef struct s_tkn_stk
 {
@@ -92,17 +74,13 @@ typedef struct s_redir
 	char			*file;
 }	t_rdr;	
 
-typedef	struct s_args
-{
-	char	*og;
-	char	*ex;
-}	t_args;
-
 typedef	struct s_cmd
 {
+	int				ord;
 	char			*cmd;
 	int				is_heredoc;
-	t_args			*args;
+	int				is_builtin;
+	char			**args;
 	int				arg_cnt;
 	t_rdr			**rdr;
 	struct s_cmd	*next;

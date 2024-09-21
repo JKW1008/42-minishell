@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	ft_set_qt_value(t_token *tkn)
 {
@@ -22,9 +22,9 @@ void	ft_set_qt_value(t_token *tkn)
 	tkn->value[len - 1] = 0;
 }
 
-int ft_split_free(char ***sp)
+int	ft_split_free(char ***sp)
 {
-	int idx;
+	int	idx;
 
 	idx = 0;
 	while ((*sp)[idx])
@@ -39,15 +39,15 @@ int ft_split_free(char ***sp)
 size_t	ft_replace_envp_val(char *str, int i, char **item)
 {
 	int		dstlen;
-	char 	*dst;
+	char	*dst;
 
 	dstlen = ft_strlen(str) + ft_strlen(item[1]) - (ft_strlen(item[0]) + 1);
 	dst = (char *) ft_calloc(sizeof(char), (dstlen + 1));
 	ft_strlcpy(dst, str, i + 1);
 	ft_strlcpy(dst + i, item[1], ft_strlen(item[1]) + 1);
 	ft_strlcpy(dst + i + ft_strlen(item[1]), \
-               str + i + ft_strlen(item[0]) + 1, \
-               dstlen - (i + ft_strlen(item[1])) + 1);
+				str + i + ft_strlen(item[0]) + 1, \
+				dstlen - (i + ft_strlen(item[1])) + 1);
 	free(str);
 	str = ft_strdup(dst);
 	free(dst);
@@ -69,15 +69,13 @@ size_t	ft_search_envp(t_token *tkn, int i, t_data *data)
 			ft_replace_envp_val(tkn->value, idx, item);
 		envp_ord++;
 	}
-	printf("%s\n", tkn->value);
 	return (0);
 }
 
-
 void	ft_set_valex(t_token *tkn, t_data *data)
 {
-	int 	idx;
-	char 	*val;
+	int		idx;
+	char	*val;
 
 	idx = 0;
 	val = tkn->value;
@@ -86,17 +84,15 @@ void	ft_set_valex(t_token *tkn, t_data *data)
 		tkn->valex = NULL;
 		return ;
 	}
-		
 	while (val[idx])
 	{
 		if (val[idx] == '$')
 			ft_search_envp(tkn, idx, data);
 		idx++;
 	}
-	printf("---\n");
 }
 
-size_t	 ft_lexer(t_data **data)
+size_t	ft_lexer(t_data **data)
 {
 	t_token		*current;
 	int			idx;

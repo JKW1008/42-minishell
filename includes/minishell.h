@@ -45,10 +45,11 @@ size_t		ft_parser(t_data **data);
 size_t		ft_lexer(t_data **data);
 int			ft_isalnumline(int c);
 int			ft_is_metachar(char c);
-int			ms_ft_isspace(int c);
+int			ft_isspace(int c);
 t_quote_tbl ft_quote(char *str);
 t_tkn_stk	*ft_tokenize(char *prompt);
-
+int			ft_alloc_simplecmd(t_cmd *cmd, t_token *tkn);
+int			ft_cmd_rdr(t_cmd *cmd, t_token *tkn);
 void		free_split(char **str);
 char		*check_access(char *split, char *str);
 char		*fp_while(char **divided, char *str);
