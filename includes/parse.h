@@ -6,12 +6,12 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 11:14:54 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/08/20 18:35:23 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/19 19:22:03 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_PARSE_H
-# define MINISHELL_PARSE_H
+#ifndef PARSE_H
+# define PARSE_H
 
 typedef enum e_lr_action // LR parser actions
 {
@@ -19,46 +19,45 @@ typedef enum e_lr_action // LR parser actions
 	lr_remove,
 	lr_accept,
 	lr_error
-}	t_lr_action;
+}		t_lr_action;
 
 typedef enum e_quote_tbl
 {
 	normal,
 	in_single,
 	in_double
-}	t_quote_tbl;
+}		t_quote_tbl;
 
-typedef enum e_lex_tbl	// Lexer Table
+typedef enum e_lex_tbl
 {
-	l_word,			// [0-9a-zA-Z_]+
-	l_quot_dbl,		// ""
-	l_quot_sgl,		// ''
-	l_pipe,			// |
-	l_less,			// <
-	l_greater,		// >
-	l_dbl_less,		// <<
-	l_dbl_greater,	// >>
-	l_bck_tick,		// `
-	l_bck_slash,	// "\"
-	l_semicolon,	// ;
-	l_space,		// space, tab, newline
-	l_comment,		// #
-	l_ampersand,	// & --> Bonus
-	l_popen,		// ( --> Bonus
-	l_pclose,		// ) --> Bonus
-	l_eof			// End of File
-}	t_lex_tbl;
+	l_word,
+	l_quot_dbl,
+	l_quot_sgl,
+	l_pipe,
+	l_less,
+	l_greater,
+	l_dbl_less,
+	l_dbl_greater,
+	l_bck_tick,
+	l_bck_slash,
+	l_semicolon,
+	l_space,
+	l_comment,
+	l_ampersand,
+	l_popen,
+	l_pclose,
+	l_eof
+}		t_lex_tbl;
 
-
-typedef	struct s_token
+typedef struct s_token
 {
-	int				tkn_idx;	// token_idx
-	t_lex_tbl 		token_type;	// Parsing Table Value
+	int				tkn_idx;
+	t_lex_tbl		token_type;
 	t_quote_tbl		qt_status;
-	char 			*value;
+	char			*value;
 	struct s_token	*next;
 	struct s_token	*prev;
-}	t_token;
+}		t_token;
 
 typedef enum e_token_type
 {
@@ -67,7 +66,7 @@ typedef enum e_token_type
 	TOKEN_REDIRECTION,
 	TOKEN_PIPE,
 	TOKEN_ARGUMENT
-} t_token_type;
+}		t_token_type;
 
 typedef struct s_tkn_stk
 {
@@ -77,12 +76,12 @@ typedef struct s_tkn_stk
 
 typedef enum e_redir_type
 {
-	RD_IN, // <
-	RD_OUT, // >
-	RD_APPEND, // >>
-	RD_HEREDOC, // <
+	RD_IN,
+	RD_OUT,
+	RD_APPEND,
+	RD_HEREDOC,
 	RD_EOF,
-} t_redir_type;
+}		t_redir_type;
 
 typedef struct s_redir
 {
@@ -90,13 +89,13 @@ typedef struct s_redir
 	char			*file;
 }	t_rdr;	
 
-typedef	struct s_args
+typedef struct s_args
 {
 	char	*og;
 	char	*ex;
-}	t_args;
+}		t_args;
 
-typedef	struct s_cmd
+typedef struct s_cmd
 {
 	char			*cmd;
 	int				is_heredoc;
@@ -104,13 +103,12 @@ typedef	struct s_cmd
 	int				arg_cnt;
 	t_rdr			**rdr;
 	struct s_cmd	*next;
-}	t_cmd;
+}		t_cmd;
 
-typedef struct	s_cmdline
+typedef struct s_cmdline
 {
 	t_cmd	*head;
 	int		count;
-}	t_cmdline;
+}		t_cmdline;
 
-
-# endif
+#endif
