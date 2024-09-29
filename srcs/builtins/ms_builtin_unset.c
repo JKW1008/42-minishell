@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:38:09 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/30 02:27:24 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/30 03:14:09 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	env_cnt(char **envp, char *name)
 {
 	int	i;
 
-	i = 0;	
+	i = 0;
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], name, ft_strlen(name)) == 0 && \
