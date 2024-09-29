@@ -6,13 +6,47 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:11:26 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/29 23:29:19 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/30 01:57:20 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int		check_eqaul(char *env)
+int	is_env_name(char *str)
+{
+	int	i;
+
+	if (!str || !*str)
+		return (0);
+	if (!ft_isalpha(str[0]) && str[0] != '_')
+		return (0);
+	i = 1;
+	while (str[i])
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	validate_env_name(char *cd, char **env, char *eq)
+{
+	if (!eq)
+		*env = cd;
+	else
+		*env = ft_substr(cd, 0, eq - cd);
+	if (!is_env_name(*env))
+	{
+		printf("Invalid environment variable name: %s\n", cd);
+		if (eq)
+			free(*env);
+		return (0);
+	}
+	return (1);
+}
+
+int	check_eqaul(char *env)
 {
 	if (ft_strchr(env, '=') != NULL)
 		return (1);

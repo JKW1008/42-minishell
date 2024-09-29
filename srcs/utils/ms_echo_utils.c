@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_main.c                                          :+:      :+:    :+:   */
+/*   ms_echo_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 13:08:52 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/09/30 03:03:24 by kjung            ###   ########.fr       */
+/*   Created: 2024/09/30 01:40:34 by kjung             #+#    #+#             */
+/*   Updated: 2024/09/30 01:46:44 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-volatile sig_atomic_t g_signal_received = 0;
-
-int	main(int ac, char **av, char **envp)
+char	*init_result(void)
 {
-	t_data	*data;
+	char	*result;
 
-	if (ac != 1 && !*av)
-		return (-1);
-	ft_initalise(&data, envp);
-	ft_ctrl_signal();
-	ft_prompt(&data);
-	free_envp(data->envp);
-	free_split(data->envp);
-	free(data->current_path);
-	free(data);
-	return (EXIT_SUCCESS);
+	result = ft_strdup("");
+	if (!result)
+		return (NULL);
+	return (result);
+}
+
+int	is_valid_var_start(char c)
+{
+	return (ft_isalpha(c) || c == '_');
+}
+
+int	is_valid_var_char(char c)
+{
+	return (ft_isalnum(c) || c == '_');
 }

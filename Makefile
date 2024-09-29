@@ -16,17 +16,23 @@ SRCS =	ms_main.c \
 		ms_init.c \
 		ms_signal.c \
 		ms_prompt.c \
+		ms_execute.c \
 		ms_parse/ms_lexer.c \
 		ms_parse/ms_lex_util.c \
 		ms_parse/ms_tokenize.c \
 		ms_parse/ms_parse.c \
 		ms_parse/ms_alloc_simplecmd.c \
 		ms_parse/ms_alloc_rdr.c \
+		ms_parse/ms_tokens_type_utils.c \
 		utils/ms_char_handle.c \
 		utils/ms_err_handle.c \
 		utils/ms_find_path.c \
 		utils/ms_excute_utils.c \
-		excute/ms_execute.c \
+		utils/ms_free_utils.c \
+		utils/ms_tokens_utils.c \
+		utils/ms_token_list_utils.c \
+		utils/ms_echo_utils.c \
+		utils/ms_envp_utils.c \
 		builtins/ms_builtin_cd.c \
 		builtins/ms_builtin_pwd.c \
 		builtins/ms_builtin_env.c \

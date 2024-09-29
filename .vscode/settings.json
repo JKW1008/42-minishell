@@ -6,6 +6,10 @@
 		"signal.h": "c",
 		"history.h": "c",
 		"readline.h": "c",
-		"termios.h": "c"
+		"termios.h": "c",
+		"libft.h": "c",
+		"builtins.h": "c",
+		"parse.h": "c",
+		"struct.h": "c"
 	}
 }

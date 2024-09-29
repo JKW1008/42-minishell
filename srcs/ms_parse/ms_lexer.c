@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 16:46:00 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/09/23 16:19:38 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/29 23:53:56 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,6 @@ void	ft_set_qt_value(t_token *tkn)
 	ft_memmove(tkn->value, tkn->value + 1, len - 2);
 	tkn->value[len - 2] = 0;
 	tkn->value[len - 1] = 0;
-}
-
-int	ft_split_free(char ***sp)
-{
-	int	idx;
-
-	idx = 0;
-	while ((*sp)[idx])
-	{
-		free((*sp)[idx]);
-		idx++;
-	}
-	free(*sp);
-	return (0);
 }
 
 size_t	ft_replace_envp_val(char *str, int i, char **item)

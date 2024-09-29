@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 14:03:33 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/09/23 22:04:33 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/30 00:53:18 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,13 @@ void	ft_init_stk_tokens(t_tkn_stk **tkns)
 	(*tkns)->len = 0;
 }
 
-int	ft_valid_quotes(char *prompt)
-{
-	int	len;
-
-	len = ft_strlen(prompt);
-	if (prompt[0] == '\'' || prompt[0] == '"')
-	{
-		if (len < 2)
-			return (1);
-		if (prompt[0] == '\'' && prompt[len - 1] != '\'')
-			return (1);
-		if (prompt[0] == '"' && prompt[len - 1] != '"')
-			return (1);
-	}
-	return (0);
-}
-
-int	ft_add_token(char *prompt, int start, int cnt, t_tkn_stk **tkns)
+t_token	*ft_creat_token(char *prompt, int start, int cnt)
 {
 	t_token	*tok;
-	t_token	*tmp;
 
 	tok = (t_token *)ft_calloc(sizeof(t_token), 1);
+	if (!tok)
+		return (NULL);
 	tok->value = ft_substr(prompt, start, cnt);
 	tok->qt_status = ft_quote(tok->value);
 	if (start > 0)
@@ -49,12 +33,23 @@ int	ft_add_token(char *prompt, int start, int cnt, t_tkn_stk **tkns)
 	else
 		tok->pre_sep = '\0';
 	tok->next = NULL;
+	tok->prev = NULL;
 	if (ft_valid_quotes(tok->value))
-		return (1);
+	{
+		free(tok->value);
+		free(tok);
+		return (NULL);
+	}
+	return (tok);
+}
+
+void	ft_add_token_for_list(t_token *tok, t_tkn_stk **tkns)
+{
+	t_token	*tmp;
+
 	if (!(*tkns)->head)
 	{
 		(*tkns)->head = tok;
-		tok->prev = NULL;
 		tok->tkn_idx = 0;
 	}
 	else
@@ -66,80 +61,26 @@ int	ft_add_token(char *prompt, int start, int cnt, t_tkn_stk **tkns)
 		tok->prev = tmp;
 	}
 	(*tkns)->len++;
+}
+
+int	ft_add_token(char *prompt, int start, int cnt, t_tkn_stk **tkns)
+{
+	t_token	*tok;
+
+	tok = ft_creat_token(prompt, start, cnt);
+	if (!tok)
+		return (1);
+	ft_add_token_for_list(tok, tkns);
 	return (0);
-}
-
-int	ft_token_metachar(char *prompt, t_tkn_stk **tkns)
-{
-	int	len;
-
-	len = ft_strlen(prompt);
-	if (len > 1 && ft_is_metachar(prompt[1]))
-	{
-		if (prompt[0] == prompt[1])
-		{
-			ft_add_token(prompt, 0, 2, tkns);
-			return (2);
-		}
-	}
-	ft_add_token(prompt, 0, 1, tkns);
-	return (1);
-}
-
-int	ft_token_quote(char *prompt, t_tkn_stk **tkns, char quote)
-{
-	int	i;
-	int	len;
-
-	i = 1;
-	len = ft_strlen(prompt);
-	while (i < len && prompt[i] != quote)
-		i++;
-	if (i > len)
-		return (-1);
-	ft_add_token(prompt, 0, ++i, tkns);
-	return (i);
 }
 
 t_tkn_stk	*ft_tokenize(char *prompt)
 {
-	int			i;
 	int			len;
-	int			cnt;
 	t_tkn_stk	*tokens;
 
-	i = 0;
 	len = ft_strlen(prompt);
 	ft_init_stk_tokens(&tokens);
-	while (i < len)
-	{
-		if (ms_ft_isspace(prompt[i]))
-			i++;
-		else if (ft_is_metachar(prompt[i]))
-		{
-			cnt = ft_token_metachar(prompt + i, &tokens);
-			if (cnt == -1)
-				return (ft_free_tokens(tokens));
-			i += cnt;
-		}
-		else if (prompt[i] == '"' || prompt[i] == '\'')
-		{
-			cnt = ft_token_quote(prompt + i, &tokens, prompt[i]);
-			if (cnt == -1)
-				return (ft_free_tokens(tokens));
-			i += cnt;
-		}
-		else
-		{
-			cnt = 0;
-			while (i + cnt < len && !ft_is_metachar(prompt[i + cnt]) && \
-					prompt[i + cnt] != '\'' && prompt[i + cnt] != '"' && \
-					!ms_ft_isspace(prompt[i + cnt]))
-				cnt++;
-			if (ft_add_token(prompt, i, cnt, &tokens) == -1)
-				return (ft_free_tokens(tokens));
-			i += cnt;
-		}
-	}
+	ft_tokenize_of_while(prompt, len, &tokens);
 	return (tokens);
 }

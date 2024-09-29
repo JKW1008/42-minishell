@@ -6,25 +6,35 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 00:13:47 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/29 17:27:33 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/30 01:38:47 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*check_absolute_or_home_path(char *str);
-
-void	free_split(char **str)
+char	*check_absolute_or_home_path(char *str)
 {
-	int	i;
+	char	*home_path;
+	char	*res;
 
-	i = 0;
-	while (str[i])
+	if (str[0] == '/' || ft_strncmp(str, "./", 2) == 0)
+		res = ft_strdup(str);
+	else if (ft_strncmp(str, "~/", 2) == 0)
 	{
-		free(str[i]);
-		i++;
+		home_path = getenv("HOME");
+		if (!home_path)
+			return (NULL);
+		res = ft_strjoin(home_path, str + 1);
 	}
-	free(str);
+	else
+		return (NULL);
+	if (access(res, F_OK | X_OK) == 0)
+		return (res);
+	else
+	{
+		free(res);
+		return (NULL);
+	}
 }
 
 char	*check_access(char *split, char *str)
@@ -101,29 +111,4 @@ char	*find_path(char **envp, char *str)
 	}
 	free_split(divided);
 	return (NULL);
-}
-
-char	*check_absolute_or_home_path(char *str)
-{
-	char	*home_path;
-	char	*res;
-
-	if (str[0] == '/' || ft_strncmp(str, "./", 2) == 0)
-		res = ft_strdup(str);
-	else if (ft_strncmp(str, "~/", 2) == 0)
-	{
-		home_path = getenv("HOME");
-		if (!home_path)
-			return (NULL);
-		res = ft_strjoin(home_path, str + 1);
-	}
-	else
-		return (NULL);
-	if (access(res, F_OK | X_OK) == 0)
-		return (res);
-	else
-	{
-		free(res);
-		return (NULL);
-	}
 }

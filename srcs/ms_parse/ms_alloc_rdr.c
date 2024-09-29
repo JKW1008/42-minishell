@@ -3,13 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ms_alloc_rdr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehukim <jaehukim42@student.42gyeong      +#+  +:+       +#+        */
+/*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 11:09:45 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/09/21 11:09:45 by jaehukim         ###   ########.fr       */
+/*   Updated: 2024/09/30 02:05:39 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../includes/minishell.h"
+#include "../../includes/parse.h"
 
 static size_t	alloc_rdr(t_cmd *cmd, t_token *tkn)
 {

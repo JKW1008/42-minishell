@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 19:27:01 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/09/29 23:45:27 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/30 02:12:21 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,19 @@ t_quote_tbl	ft_quote(char *str)
 		return (in_double);
 	else
 		return (normal);
+}
+
+char	*ft_charjoin(char *s, char c)
+{
+	char	*result;
+	int		len;
+
+	len = ft_strlen(s);
+	result = (char *)malloc(sizeof(char) * (len + 2));
+	if (!result)
+		return (NULL);
+	ft_strlcpy(result, s, len + 1);
+	result[len] = c;
+	result[len + 1] = '\0';
+	return (result);
 }

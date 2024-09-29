@@ -6,11 +6,11 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 22:38:00 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/29 23:39:25 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/30 02:11:40 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
 void	ms_execute(t_cmd *node, t_data **data)
 {

@@ -1,49 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_builtin_exit.c                                  :+:      :+:    :+:   */
+/*   ms_free_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/29 23:33:16 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/30 02:26:57 by kjung            ###   ########.fr       */
+/*   Created: 2024/09/29 23:53:04 by kjung             #+#    #+#             */
+/*   Updated: 2024/09/30 01:13:13 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	check_digit(char *str)
+int	ft_split_free(char ***sp)
+{
+	int	idx;
+
+	idx = 0;
+	while ((*sp)[idx])
+	{
+		free((*sp)[idx]);
+		idx++;
+	}
+	free(*sp);
+	return (0);
+}
+
+void	free_split(char **str)
 {
 	int	i;
 
 	i = 0;
 	while (str[i])
 	{
-		if (!ft_isdigit(str[i]))
-			return (0);
+		free(str[i]);
 		i++;
 	}
-	return (1);
+	free(str);
 }
 
-void	do_exit(char *prompt)
+void	print_and_free(char **cd, char **envp)
 {
-	char	**tmp;
+	printenv(envp, 1);
+	free_split(cd);
+}
 
-	tmp = ft_split(prompt, ' ');
-	printf("exit\n");
-	if (tmp[1] == NULL)
-		exit(0);
-	else if (!check_digit(tmp[1]))
-	{
-		printf("tmp = %d\n", ft_atoi(tmp[1]));
-		printf("numeric argument required");
-		exit(2);
-	}
-	else if (tmp[2] != NULL)
-	{
-		printf("too many arguments");
-		return ;
-	}
-	exit((unsigned char)ft_atoi(tmp[1]));
+void	print_error_and_free(char **divided, const char *message)
+{
+	printf("%s\n", message);
+	free_split(divided);
 }

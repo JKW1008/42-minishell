@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:08:19 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/29 23:09:22 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/30 02:26:37 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	construct_cd_path(char **cd, char **tmp, char *home)
 int	check_cd_arg(char **tmp, char **cd, char *home)
 {
 	int	result;
-	
+
 	result = check_cd_args(cd, tmp, home);
 	if (result != 2)
 		return (result);

@@ -6,112 +6,47 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 11:14:54 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/09/29 17:22:14 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/30 03:12:08 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
 
-typedef enum e_lr_action // LR parser actions
-{
-	lr_shift,
-	lr_remove,
-	lr_accept,
-	lr_error
-}		t_lr_action;
+# include "struct.h"
+# include <stdlib.h>
 
-typedef enum e_quote_tbl
-{
-	normal,
-	in_single,
-	in_double
-}		t_quote_tbl;
+//	ms_alloc_rdr.c
+int			ft_cmd_rdr(t_cmd *cmd, t_token *tkn);
 
-typedef enum e_lex_tbl
-{
-	l_word,
-	l_quot_dbl,
-	l_quot_sgl,
-	l_pipe,
-	l_less,
-	l_greater,
-	l_dbl_less,
-	l_dbl_greater,
-	l_bck_tick,
-	l_bck_slash,
-	l_semicolon,
-	l_space,
-	l_comment,
-	l_ampersand,
-	l_popen,
-	l_pclose,
-	l_eof
-}		t_lex_tbl;
+//	ms_alloc_simplecmd.c
+int			ft_alloc_simplecmd(t_cmd *cmd, t_token *tkn);
 
-typedef struct s_token
-{
-	int				tkn_idx;
-	t_lex_tbl		token_type;
-	t_quote_tbl		qt_status;
-	char			*value;
-	char			pre_sep;
-	struct s_token	*next;
-	struct s_token	*prev;
-}		t_token;
+//	ms_lex_utils.c
+int			ft_is_command(const char *token, char **envp);
+int			ft_is_builtin(const char *token);
+int			ft_is_redirection(const char *token);
 
-typedef enum e_token_type
-{
-	TOKEN_BUILTIN,
-	TOKEN_COMMAND,
-	TOKEN_REDIRECTION,
-	TOKEN_PIPE,
-	TOKEN_ARGUMENT
-}		t_token_type;
+//	ms_lexer.c
+void		ft_set_qt_value(t_token *tkn);
+size_t		ft_replace_envp_val(char *str, int i, char **item);
+size_t		ft_search_envp(t_token *tkn, int i, t_data *data);
+void		ft_set_valex(t_token *tkn, t_data *data);
+size_t		ft_lexer(t_data **data);
 
-typedef struct s_tkn_stk
-{
-	t_token	*head;
-	int		len;
-}	t_tkn_stk;
+//	ms_parse.c
+int			ft_init_cmdline(t_data **data);
+size_t		ft_parser(t_data **data);
 
-typedef enum e_redir_type
-{
-	RD_IN,
-	RD_OUT,
-	RD_APPEND,
-	RD_HEREDOC,
-	RD_EOF,
-}		t_redir_type;
+//	ms_tokenize.c
+void		ft_init_stk_tokens(t_tkn_stk **tkns);
+t_token		*ft_creat_token(char *prompt, int start, int cnt);
+void		ft_add_token_for_list(t_token *tok, t_tkn_stk **tkns);
+int			ft_add_token(char *prompt, int start, int cnt, t_tkn_stk **tkns);
+t_tkn_stk	*ft_tokenize(char *prompt);
 
-typedef struct s_redir
-{
-	t_redir_type	type;
-	char			*file;
-}	t_rdr;	
-
-typedef struct s_args
-{
-	char	*og;
-	char	*ex;
-}		t_args;
-
-typedef struct s_cmd
-{
-	int				ord;
-	char			*cmd;
-	int				is_heredoc;
-	int				is_builtin;
-	char			**args;
-	int				arg_cnt;
-	t_rdr			**rdr;
-	struct s_cmd	*next;
-}		t_cmd;
-
-typedef struct s_cmdline
-{
-	t_cmd	*head;
-	int		count;
-}		t_cmdline;
+//	ms_tokens_type_utils.c
+void		ft_identify_token_type2(t_token *token);
+void		ft_identify_token_type(t_token *token, char **envp);
 
 #endif
