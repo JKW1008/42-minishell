@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ms_alloc_simplecmd.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehukim <jaehukim42@student.42gyeong      +#+  +:+       +#+        */
+/*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 10:43:49 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/09/21 10:43:50 by jaehukim         ###   ########.fr       */
+/*   Updated: 2024/09/23 19:47:29 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 static t_token	*move_next(t_token *tkn, int cnt)
@@ -28,6 +29,8 @@ static size_t	count_args(t_cmd *cmd, t_token *tkn)
 		cmd->arg_cnt++;
 		if (!tmp->next)
 			break ;
+		else
+			tmp = tmp->next;
 	}
 	return (cmd->arg_cnt);
 }

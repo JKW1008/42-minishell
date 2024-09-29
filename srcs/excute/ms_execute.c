@@ -6,31 +6,26 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 22:38:00 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/12 16:39:17 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/29 23:39:25 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ms_execute(t_data **data)
+void	ms_execute(t_cmd *node, t_data **data)
 {
-	if ((*data)->prompt[0] == 'c' && (*data)->prompt[1] == 'd' && ((*data)->prompt[2] == ' ' || (*data)->prompt[2] == '\0'))
+	if (!ft_strncmp(node->cmd, "cd", 2))
 		cd_cmd(data);
-	else if (!ft_strncmp((*data)->prompt, "pwd", 4))
-	{
-		char	*tmp;
-		tmp = getcwd(NULL, BUFSIZ);
-		printf("%s\n", tmp);
-		free(tmp);
-	}
-	else if (!ft_strncmp((*data)->prompt, "env", 4))
+	else if (!ft_strncmp(node->cmd, "pwd", 4))
+		print_dir();
+	else if (!ft_strncmp(node->cmd, "env", 4))
 		env_command(data);
-	else if (!ft_strncmp((*data)->prompt, "exit", 5) || !ft_strncmp((*data)->prompt, "exit ", 5))
+	else if (!ft_strncmp(node->cmd, "exit", 4))
 		do_exit((*data)->prompt);
-	else if (!ft_strncmp((*data)->prompt, "export ", 6))
+	else if (!ft_strncmp(node->cmd, "export", 6))
 		export(data);
-	else if (!ft_strncmp((*data)->prompt, "unset ", 5))
+	else if (!ft_strncmp(node->cmd, "unset ", 5))
 		do_unset(data);
-	else if (!ft_strncmp((*data)->prompt, "echo", 4))
+	else if (!ft_strncmp(node->cmd, "echo", 4))
 		do_echo(data);
 }

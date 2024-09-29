@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 23:12:56 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/05 21:51:14 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/23 22:04:06 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_identify_token_type2(t_token *token)
 		token->token_type = l_bck_slash;
 	else if (ft_strncmp(token->value, ";", 1) == 0)
 		token->token_type = l_semicolon;
-	else if (ft_isspace(token->value[0]))
+	else if (ms_ft_isspace(token->value[0]))
 		token->token_type = l_space;
 	else if (token->value[0] == '#')
 		token->token_type = l_comment;

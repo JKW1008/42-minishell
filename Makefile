@@ -25,8 +25,15 @@ SRCS =	ms_main.c \
 		utils/ms_char_handle.c \
 		utils/ms_err_handle.c \
 		utils/ms_find_path.c \
-		utils/ms_excute_handle.c \
+		utils/ms_excute_utils.c \
 		excute/ms_execute.c \
+		builtins/ms_builtin_cd.c \
+		builtins/ms_builtin_pwd.c \
+		builtins/ms_builtin_env.c \
+		builtins/ms_builtin_exit.c \
+		builtins/ms_builtin_export.c \
+		builtins/ms_builtin_unset.c \
+		builtins/ms_builtin_echo.c \
 
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
 OBJS := $(patsubst $(SRCS_DIR)/%.c,$(OBJS_DIR)/%.o,$(SRCS))

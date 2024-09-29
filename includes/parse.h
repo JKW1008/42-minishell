@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 11:14:54 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/09/23 16:18:16 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/29 17:22:14 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_token
 	int				tkn_idx;
 	t_lex_tbl		token_type;
 	t_quote_tbl		qt_status;
-	char 			*value;
+	char			*value;
 	char			pre_sep;
 	struct s_token	*next;
 	struct s_token	*prev;
@@ -96,7 +96,7 @@ typedef struct s_args
 	char	*ex;
 }		t_args;
 
-typedef	struct s_cmd
+typedef struct s_cmd
 {
 	int				ord;
 	char			*cmd;

@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 16:46:00 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/09/02 16:06:43 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/23 16:19:38 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	ft_set_valex(t_token *tkn, t_data *data)
 	val = tkn->value;
 	if (tkn->qt_status == 1)
 	{
-		tkn->valex = NULL;
+		tkn->value = NULL;
 		return ;
 	}
 	while (val[idx])

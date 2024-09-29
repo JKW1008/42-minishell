@@ -6,12 +6,14 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 00:13:47 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/09 19:56:09 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/29 17:27:33 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
 char	*check_absolute_or_home_path(char *str);
+
 void	free_split(char **str)
 {
 	int	i;
