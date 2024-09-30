@@ -17,6 +17,7 @@ SRCS =	ms_main.c \
 		ms_signal.c \
 		ms_prompt.c \
 		ms_execute.c \
+		ms_cmd.c \
 		ms_parse/ms_lexer.c \
 		ms_parse/ms_lex_util.c \
 		ms_parse/ms_tokenize.c \

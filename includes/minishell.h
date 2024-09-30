@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 14:23:02 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/30 03:03:46 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/30 07:25:04 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # include "builtins.h"
 # include "utils.h"
 # include "../libft/libft.h"
+
+//	ms_cmd.c
+void	ms_cmd(t_data **data);
 
 //	ms_execute.c
 void	ms_execute(t_cmd *node, t_data **data);

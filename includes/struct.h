@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 02:45:35 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/30 02:59:09 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/30 07:58:55 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_data
 	int			errno_;
 	char		*current_path;
 	char		**envp;
+	char		**av;
 	char		*prompt;
 	t_tkn_stk	*tkn;
 	t_cmdline	*cmdline;

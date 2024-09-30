@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 17:09:22 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/09/30 03:03:20 by kjung            ###   ########.fr       */
+/*   Updated: 2024/09/30 07:59:13 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ char	**copy_envp(char **envp)
 	while (envp[i])
 	{
 		new_envp[i] = ft_strdup(envp[i]);
-		printf("%s\n", new_envp[i]);
 		if (!new_envp[i])
 		{
 			while (i-- > 0)
@@ -41,7 +40,7 @@ char	**copy_envp(char **envp)
 	return (new_envp);
 }
 
-t_data	*ft_initalise(t_data **data, char **envp)
+t_data	*ft_initalise(t_data **data, char **envp, char **av)
 {
 	*data = (t_data *) malloc(sizeof(t_data));
 	if (!(*data))
