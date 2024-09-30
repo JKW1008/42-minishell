@@ -34,6 +34,10 @@ size_t		ft_search_envp(t_token *tkn, int i, t_data *data);
 void		ft_set_valex(t_token *tkn, t_data *data);
 size_t		ft_lexer(t_data **data);
 
+// ms_merge_tokens.c
+size_t	ft_merge_tokens(t_data **data);
+
+
 //	ms_parse.c
 int			ft_init_cmdline(t_data **data);
 size_t		ft_parser(t_data **data);
@@ -48,5 +52,8 @@ t_tkn_stk	*ft_tokenize(char *prompt);
 //	ms_tokens_type_utils.c
 void		ft_identify_token_type2(t_token *token);
 void		ft_identify_token_type(t_token *token, char **envp);
+
+// ms_sort_ord.c
+size_t		ft_sort_ord(t_data **data);
 
 #endif

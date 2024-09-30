@@ -48,11 +48,25 @@ size_t	ft_search_envp(t_token *tkn, int i, t_data *data)
 
 	idx = i;
 	envp_ord = 0;
+	if (ft_strncmp(tkn->value + idx, "$?", 2) == 0)
+	{
+		item = (char **) malloc(sizeof(char *) * 3);
+		item[0] = ft_strdup("$?");
+		item[1] = ft_itoa(data->errno_); // check memory leak
+		ft_replace_envp_val(tkn->value, idx, item);
+		return (2);
+	}
 	while (data->envp[envp_ord])
 	{
 		item = ft_split(data->envp[envp_ord], '=');
 		if (ft_strncmp(tkn->value + idx + 1, item[0], ft_strlen(item[0])) == 0)
+		{
 			ft_replace_envp_val(tkn->value, idx, item);
+			return (ft_strlen(item[0]));
+		}	
+		free(item[0]);
+		free(item[1]);
+		free(item);
 		envp_ord++;
 	}
 	return (0);
@@ -61,20 +75,23 @@ size_t	ft_search_envp(t_token *tkn, int i, t_data *data)
 void	ft_set_valex(t_token *tkn, t_data *data)
 {
 	int		idx;
+	int		len_val;
 	char	*val;
 
 	idx = 0;
 	val = tkn->value;
+	len_val = (int) ft_strlen(val);
 	if (tkn->qt_status == 1)
 	{
 		tkn->value = NULL;
 		return ;
 	}
-	while (val[idx])
+	while (val[idx] < len_val)
 	{
 		if (val[idx] == '$')
-			ft_search_envp(tkn, idx, data);
-		idx++;
+			idx += ft_search_envp(tkn, idx, data);
+		else
+			idx++;
 	}
 }
 

@@ -40,7 +40,7 @@ char	**copy_envp(char **envp)
 	return (new_envp);
 }
 
-t_data	*ft_initalise(t_data **data, char **envp, char **av)
+t_data	*ft_initalise(t_data **data, char **envp)
 {
 	*data = (t_data *) malloc(sizeof(t_data));
 	if (!(*data))

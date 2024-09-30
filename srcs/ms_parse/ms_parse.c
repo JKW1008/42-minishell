@@ -25,7 +25,7 @@ int	ft_init_cmdline(t_data **data)
 	return (0);
 }
 
-static t_cmd	*ft_create_cmd(t_token **tkn)
+static t_cmd	*ft_create_cmd(t_token **tkn, t_data **data)
 {
 	t_cmd	*cmd;
 
@@ -36,6 +36,7 @@ static t_cmd	*ft_create_cmd(t_token **tkn)
 		(*tkn) = (*tkn)->next;
 	ft_cmd_rdr(cmd, *tkn);
 	ft_alloc_simplecmd(cmd, *tkn);
+	cmd->prompt = ft_strdup((*data)->prompt);
 	return (cmd);
 }
 
@@ -48,7 +49,7 @@ static int	ft_append_cmd(t_cmd *cmd, t_cmdline *cmdline)
 		tmp = cmdline->head;
 		while (tmp->next)
 			tmp = tmp->next;
-		cmd->next = cmd;
+		tmp->next = cmd;
 	}
 	else
 		cmdline->head = cmd;
@@ -56,17 +57,38 @@ static int	ft_append_cmd(t_cmd *cmd, t_cmdline *cmdline)
 	return (0);
 }
 
+static size_t	ft_check_tknlen(t_token *tkn)
+{
+	t_token *tmp;
+	size_t	token_count;
+
+	tmp = tkn;
+	token_count = 0;
+	if (tmp->token_type == l_pipe && tmp->next)
+		tmp = tmp->next;
+	while (tmp && tmp->token_type != l_pipe)
+	{
+		tmp = tmp->next;
+		token_count++;
+	}
+	return (token_count);
+}
+
 static size_t	parse(t_data **data)
 {
 	t_token	*token;
-
+	
 	(*data)->cmdline = ft_calloc(sizeof(t_cmdline), 1);
 	token = (*data)->tkn->head;
 	while (token->tkn_idx < (*data)->tkn->len)
 	{
 		if (token->tkn_idx == 0 || token->token_type == l_pipe)
-			ft_append_cmd(ft_create_cmd(&token), \
+		{
+			if (ft_check_tknlen(token) == 0)
+				return (2);
+			ft_append_cmd(ft_create_cmd(&token, data), \
 				(*data)->cmdline);
+		}
 		if (token->next)
 			token = token->next;
 		else
@@ -77,8 +99,12 @@ static size_t	parse(t_data **data)
 
 size_t	ft_parser(t_data **data)
 {
-	if (ft_lexer(data))
-		return (1);
-	parse(data);
+	(*data)->errno_ = 0;
+	(*data)->errno_ = ft_lexer(data);
+	(*data)->errno_ = ft_merge_tokens(data);
+	(*data)->errno_ = parse(data);
+	(*data)->errno_ = ft_sort_ord(data);
+	if ((*data)->errno_)
+		printf("minishell: syntax error\n");
 	return (ft_strlen((*data)->prompt));
 }

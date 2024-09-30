@@ -21,12 +21,6 @@ typedef struct s_redir
 	char			*file;
 }	t_rdr;	
 
-typedef struct s_args
-{
-	char	*og;
-	char	*ex;
-}		t_args;
-
 typedef struct s_cmd
 {
 	int				ord;
@@ -36,6 +30,8 @@ typedef struct s_cmd
 	char			**args;
 	int				arg_cnt;
 	t_rdr			**rdr;
+	int				rdr_cnt;
+	char			*prompt;
 	struct s_cmd	*next;
 }		t_cmd;
 
@@ -54,7 +50,7 @@ typedef struct s_token
 	char			pre_sep;
 	struct s_token	*next;
 	struct s_token	*prev;
-}		t_token;
+}	t_token;
 
 typedef struct s_tkn_stk
 {

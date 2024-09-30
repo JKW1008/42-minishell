@@ -14,8 +14,8 @@
 
 void	ft_identify_token_type2(t_token *token)
 {
-	if (ft_strncmp(token->value, ">>", 2) == 0)
-		token->token_type = l_dbl_greater;
+	if (ft_strncmp(token->value, ">", 1) == 0)
+		token->token_type = l_greater;
 	else if (ft_strncmp(token->value, "`", 1) == 0)
 		token->token_type = l_bck_tick;
 	else if (ft_strncmp(token->value, "\\", 1) == 0)
@@ -52,12 +52,12 @@ void	ft_identify_token_type(t_token *token, char **envp)
 		token->token_type = l_quot_sgl;
 	else if (ft_strncmp(token->value, "|", 1) == 0)
 		token->token_type = l_pipe;
-	else if (ft_strncmp(token->value, "<", 1) == 0)
-		token->token_type = l_less;
-	else if (ft_strncmp(token->value, ">", 1) == 0)
-		token->token_type = l_greater;
 	else if (ft_strncmp(token->value, "<<", 2) == 0)
 		token->token_type = l_dbl_less;
+	else if (ft_strncmp(token->value, "<", 1) == 0)
+		token->token_type = l_less;
+	else if (ft_strncmp(token->value, ">>", 2) == 0)
+		token->token_type = l_dbl_greater;
 	else
 		ft_identify_token_type2(token);
 }

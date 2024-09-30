@@ -12,10 +12,10 @@
 
 #include "../includes/minishell.h"
 
-char	*setup_here_doc(t_cmd *cmd)
-{
+//char	*setup_here_doc(t_cmd *cmd)
+//{
 
-}
+//}
 
 void	find_heredoc(t_cmd *token)
 {
@@ -28,28 +28,40 @@ void	find_heredoc(t_cmd *token)
 			
 		tmp = tmp->next;
 	}
-	return (0);
+	return ;
 }
 
 void	ms_cmd(t_data **data)
 {
-	// t_cmd	*tmp;
-	// int		i;
+	 t_cmd	*tmp;
+	 int		i;
 
-	// tmp = (*data)->cmdline->head;
-	// while (tmp)
-	// {
-	// 	printf("ord = %d\n", tmp->ord);
-	// 	printf("cmd = %s\n", tmp->cmd);
-	// 	printf("in_here_doc = %d\n", tmp->is_heredoc);
-	// 	printf("is_builtin = %d\n", tmp->is_builtin);
-	// 	i = 0;
-	// 	while (tmp->args[i])
-	// 	{
-	// 		printf("args[%d] = %s\n", i, tmp->args[i]);
-	// 		i++;
-	// 	}
-	// 	printf("%d\n", tmp->arg_cnt);
-	// 	tmp = tmp->next;
-	// }
+	const char* redir_type_strings[] = { \
+    	[RD_IN] = "RD_IN", \
+    	[RD_OUT] = "RD_OUT", \
+    	[RD_APPEND] = "RD_APPEND", \
+    	[RD_HEREDOC] = "RD_HEREDOC", \
+    	[RD_EOF] = "RD_EOF"}; 
+
+	 tmp = (*data)->cmdline->head;
+	 while (tmp)
+	 {
+	 	printf("ord = %d\n", tmp->ord);
+		if (tmp->cmd)
+	 		printf("cmd = %s\n", tmp->cmd);
+	 	printf("in_here_doc = %d\n", tmp->is_heredoc);
+	 	printf("is_builtin = %d\n", tmp->is_builtin);
+	 	i = 0;
+	 	while (i < tmp->arg_cnt)
+	 	{
+	 		printf("args[%d] = %s\n", i, tmp->args[i]);
+	 		i++;
+	 	}
+		for (int i = 0; i < tmp->rdr_cnt; i++)
+    		printf("rdr[%d]: %s %s\n", i, redir_type_strings[tmp->rdr[i]->type], tmp->rdr[i]->file);
+		tmp = tmp->next;
+		printf("-------------------------------------------\n");
+	 }
+	 printf("-------------------------------------------\n");
+	
 }

@@ -25,6 +25,8 @@ SRCS =	ms_main.c \
 		ms_parse/ms_alloc_simplecmd.c \
 		ms_parse/ms_alloc_rdr.c \
 		ms_parse/ms_tokens_type_utils.c \
+		ms_parse/ms_merge_tokens.c \
+		ms_parse/ms_sort_ord.c \
 		utils/ms_char_handle.c \
 		utils/ms_err_handle.c \
 		utils/ms_find_path.c \

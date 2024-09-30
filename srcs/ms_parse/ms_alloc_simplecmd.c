@@ -12,82 +12,65 @@
 
 #include "../../includes/minishell.h"
 
-static t_token	*move_next(t_token *tkn, int cnt)
-{
-	while (cnt--)
-		tkn = tkn->next;
-	return (tkn);
-}
-
 static size_t	count_args(t_cmd *cmd, t_token *tkn)
 {
+	int		total;
 	t_token	*tmp;
-
+	
+	total = 0;
 	tmp = tkn;
-	while (tmp->token_type == l_word)
+	while (tmp && tmp->token_type != l_pipe)
 	{
-		cmd->arg_cnt++;
-		if (!tmp->next)
-			break ;
-		else
+		if (tmp->token_type == l_word)
+			total++;
+		else if (tmp->token_type >= 4 && tmp->token_type <= 7)
 			tmp = tmp->next;
+		tmp = tmp->next;
 	}
-	return (cmd->arg_cnt);
-}
+	cmd->arg_cnt = total - 1;
+	if (cmd->arg_cnt < 0)
+		return (1);
+	cmd->args = (char **) ft_calloc(sizeof(char **), cmd->arg_cnt + 1);
+	return (0);
+} 
 
-static size_t	get_args(t_cmd *cmd, t_token *tkn)
+static size_t get_args(t_cmd *cmd, t_token *tkn)
 {
-	int	idx;
+    int idx;
+    t_token *tmp;
 
 	idx = 0;
-	cmd->args = malloc(sizeof(char *) * (cmd->arg_cnt + 1));
-	if (!cmd->args)
-		exit(EXIT_FAILURE);
-	while (idx < cmd->arg_cnt)
-	{
-		cmd->args[idx] = ft_strdup(tkn->value);
-		tkn = tkn->next;
-		idx++;
-	}
-	cmd->args[idx] = NULL;
-	return (idx);
+	tmp = tkn;
+    while (tmp && tmp->token_type != l_word && tmp->token_type != l_pipe)
+        tmp = tmp->next;
+    if (tmp && tmp->token_type == l_word)
+    {
+        cmd->cmd = ft_strdup(tmp->value);
+        tmp = tmp->next;
+    }
+    while (tmp && tmp->token_type != l_pipe)
+    {
+        if (tmp->token_type == l_word)
+        {
+            cmd->args[idx] = ft_strdup(tmp->value);
+            idx++;
+        }
+        else if (tmp->token_type >= 4 && tmp->token_type <= 7)
+            tmp = tmp->next;
+        tmp = tmp->next;
+    }
+    cmd->args[idx] = NULL;
+    return idx;
 }
 
-static t_token	*get_cmd(t_cmd *cmd, t_token *tkn)
-{
-	cmd->cmd = ft_strdup(tkn->value);
-	if (tkn->next)
-		tkn = tkn->next;
-	else
-		return (NULL);
-	return (tkn);
-}
 
 int	ft_alloc_simplecmd(t_cmd *cmd, t_token *tkn)
 {
-	while (tkn && tkn->token_type != l_pipe)
-	{
-		if (tkn->token_type >= 4 && tkn->token_type <= 7)
-			tkn = move_next(tkn, 2);
-		if (tkn && tkn->token_type == l_word)
-		{
-			if (cmd->cmd == NULL)
-			{
-				tkn = get_cmd(cmd, tkn);
-				if (!tkn)
-					return (0);
-			}
-			else
-			{
-				if (count_args(cmd, tkn) == 0)
-					return (0);
-				tkn = move_next(tkn, get_args(cmd, tkn));
-				if (!tkn)
-					return (0);
-			}
-		}
-		else
-			return (1);
-	}
+	t_token *tmp;
+
+	tmp = tkn;
+	if (count_args(cmd, tmp))
+			return (-1);
+	get_args(cmd, tmp);
 	return (0);
 }

@@ -25,7 +25,8 @@ typedef enum e_quote_tbl
 {
 	normal,
 	in_single,
-	in_double
+	in_double,
+	mixte
 }		t_quote_tbl;
 
 typedef enum e_lex_tbl

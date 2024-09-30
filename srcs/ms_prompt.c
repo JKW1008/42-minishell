@@ -22,11 +22,13 @@ void	ft_prompt(t_data **data)
 		if (!input)
 			break ;
 		(*data)->prompt = input;
-		ft_parser(data);
-		ms_execute((*data)->cmdline->head, data);
-		ms_cmd(data);
 		if (ft_strlen(input))
+		{
+			ft_parser(data);
+			// ms_execute((*data)->cmdline->head, data);
+			ms_cmd(data);
 			add_history(input);
+		}
 		free(input);
 	}
 	return ;

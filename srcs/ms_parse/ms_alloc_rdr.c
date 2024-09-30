@@ -20,7 +20,7 @@ static size_t	alloc_rdr(t_cmd *cmd, t_token *tkn)
 
 	cnt = 0;
 	idx = 0;
-	while (tkn->token_type != l_pipe && tkn->next)
+	while (tkn && tkn->token_type != l_pipe)
 	{
 		if (tkn->token_type >= 4 && tkn->token_type <= 7)
 			cnt++;
@@ -62,17 +62,20 @@ int	ft_cmd_rdr(t_cmd *cmd, t_token *tkn)
 {
 	int	idx;
 	int	cnt;
+	t_token *tmp;
 
 	idx = 0;
-	cnt = alloc_rdr(cmd, tkn);
+	tmp = tkn;
+	cnt = alloc_rdr(cmd, tmp);
 	if (!cnt)
 		return (0);
 	while (idx < cnt)
 	{
-		while (tkn->token_type >= 4 && tkn->token_type <= 7)
-			tkn = tkn->next;
-		get_rdr(cmd, &tkn->prev, idx++);
-		tkn = tkn->next;
+		while (tmp->token_type < 4 || tmp->token_type > 7)
+			tmp = tmp->next;
+		get_rdr(cmd, &tmp, idx++);
+		tmp = tmp->next;
 	}
+	cmd->rdr_cnt = cnt;
 	return (0);
 }
