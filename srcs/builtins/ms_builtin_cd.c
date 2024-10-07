@@ -6,11 +6,49 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:08:19 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/30 02:26:37 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/07 15:54:02 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	envp_update_while(char **envp, char **old_pwd, char *pwd)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], "PWD=", 4) == 0)
+		{
+			*old_pwd = ft_strdup(envp[i] + 4);
+			free(envp[i]);
+			envp[i] = ft_strjoin("PWD=", pwd);
+		}
+		else if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
+		{
+			free(envp[i]);
+			if (*old_pwd)
+				envp[i] = ft_strjoin("OLDPWD=", *old_pwd);
+			else
+				envp[i] = ft_strdup("OLDPWD=");
+		}
+		i++;
+	}
+}
+
+void	evnp_update(char **envp)
+{
+	char	pwd[PATH_MAX];
+	char	*old_pwd;
+
+	if (getcwd(pwd, sizeof(pwd)) == NULL)
+	{
+		perror("getcwd");
+		return ;
+	}
+	envp_update_while(envp, &old_pwd, pwd);
+}
 
 int	check_cd_args(char **cd, char **tmp, char *home)
 {
@@ -83,6 +121,7 @@ void	cd_cmd(t_data **data)
 		printf("minishell: cd: %s: No such file or directory\n", cd[1]);
 	else if (getcwd(cwd, sizeof(cwd)) != NULL)
 		printf("%s\n", cwd);
+	evnp_update((*data)->envp);
 	free(tmp);
 	free_split(cd);
 	free(home);
