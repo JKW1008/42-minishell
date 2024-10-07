@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:41:14 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/30 02:26:43 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/07 17:00:02 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,14 @@ int	process_echo_options(char **divided, int *i)
 	return (check_n);
 }
 
-void	do_echo(t_data **data)
+void	do_echo(t_cmd *node, t_data **data)
 {
 	char	**divided;
 	char	*expand;
 	int		i;
 	int		check_n;
 
-	divided = ft_split((*data)->prompt, ' ');
+	divided = ft_split(node->prompt, ' ');
 	if (!divided)
 		return ;
 	check_n = process_echo_options(divided, &i);

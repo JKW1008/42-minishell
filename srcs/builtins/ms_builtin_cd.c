@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:08:19 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/07 15:54:02 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/07 16:51:19 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,14 +102,14 @@ int	check_cd_arg(char **tmp, char **cd, char *home)
 	return (construct_cd_path(cd, tmp, home));
 }
 
-void	cd_cmd(t_data **data)
+void	cd_cmd(t_cmd *node, t_data **data)
 {
 	char	*tmp;
 	char	**cd;
 	char	cwd[PATH_MAX];
 	char	*home;
 
-	cd = ft_split((*data)->prompt, ' ');
+	cd = ft_split(node->prompt, ' ');
 	home = find_home_path((*data)->envp);
 	if (check_cd_arg(&tmp, cd, home))
 	{

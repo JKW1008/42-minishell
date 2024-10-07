@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:34:52 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/30 01:02:11 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/07 16:58:04 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,12 @@ void	process_env_variable(t_data **data, char *cd_j)
 		free(env);
 }
 
-void	export(t_data **data)
+void	export(t_cmd *node, t_data **data)
 {
 	char	**cd;
 	int		i;
 
-	cd = ft_split((*data)->prompt, ' ');
+	cd = ft_split(node->prompt, ' ');
 	i = 1;
 	if (!cd || !cd[1])
 	{
