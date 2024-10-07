@@ -34,7 +34,7 @@ int	ft_is_builtin(const char *token)
 	i = 0;
 	while (builtins[i])
 	{
-		if (ft_strncmp(token, builtins[i], 5) == 0)
+		if (ft_strncmp(token, builtins[i], ft_strlen(builtins[i]) + 1) == 0)
 			return (1);
 		i++;
 	}
