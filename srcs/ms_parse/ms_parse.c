@@ -37,6 +37,8 @@ static t_cmd	*ft_create_cmd(t_token **tkn, t_data **data)
 	ft_cmd_rdr(cmd, *tkn);
 	ft_alloc_simplecmd(cmd, *tkn);
 	cmd->prompt = ft_strdup((*data)->prompt);
+	if (ft_is_builtin(cmd->cmd) == 1)
+		cmd->is_builtin = 1;
 	return (cmd);
 }
 
