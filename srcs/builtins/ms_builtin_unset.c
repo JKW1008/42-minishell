@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:38:09 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/07 16:58:56 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/10 18:19:05 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,17 @@ void	unset_arg(t_data **data, char *arg)
 
 void	do_unset(t_cmd *node, t_data **data)
 {
-	char	**divided;
 	int		i;
 
-	divided = ft_split(node->prompt, ' ');
-	if (!divided || !divided[1])
+	if (!node->args || !node->args[9])
 	{
-		print_error_and_free(divided, "unset: not enough argumenst");
+		printf("unset: not enough argumenst");
 		return ;
 	}
-	i = 1;
-	while (divided[i])
+	i = 0;
+	while (node->args[i])
 	{
-		unset_arg(data, divided[i]);
+		unset_arg(data, node->args[i]);
 		i++;
 	}
-	free_split(divided);
 }

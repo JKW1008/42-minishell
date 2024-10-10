@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 01:54:40 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/07 17:00:24 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/08 15:36:11 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	printenv(char **envp, int flag);
 
 //	ms_builtin_exit.c
 int		check_digit(char *str);
-void	do_exit(char *prompt);
+void	do_exit(t_cmd *node);
 
 //	ms_builtin_export.c
 int		update_existing_env(char **envp, char *env, char *cd_j, char *eq);

@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:34:52 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/07 16:58:04 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/10 18:01:14 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,20 +87,31 @@ void	process_env_variable(t_data **data, char *cd_j)
 
 void	export(t_cmd *node, t_data **data)
 {
-	char	**cd;
 	int		i;
+	char	*full_args;
+	char	*temp;
 
-	cd = ft_split(node->prompt, ' ');
-	i = 1;
-	if (!cd || !cd[1])
+	i = 0;
+	if (!node->args || !node->args[0])
 	{
-		print_and_free(cd, (*data)->envp);
+		print_and_free((*data)->envp);
 		return ;
 	}
-	while (cd[i])
+	while (node->args[i])
 	{
-		process_env_variable(data, cd[i]);
-		i++;
+		if (i + 2 < node->arg_cnt && ft_strncmp(node->args[i + 1], "=", 1) == 0)
+		{
+			temp = ft_strjoin(node->args[i], node->args[i + 1]);
+			full_args = ft_strjoin(temp, node->args[i + 2]);
+			free(temp);
+			process_env_variable(data, full_args);
+			free(full_args);
+			i += 3;
+		}
+		else
+		{
+			process_env_variable(data, node->args[i]);
+			i++;
+		}
 	}
-	free_split(cd);
 }

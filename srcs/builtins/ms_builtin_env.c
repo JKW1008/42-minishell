@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:11:26 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/30 01:57:20 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/08 16:32:26 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ int	is_env_name(char *str)
 int	validate_env_name(char *cd, char **env, char *eq)
 {
 	if (!eq)
-		*env = cd;
+		*env = ft_strdup(cd);
 	else
 		*env = ft_substr(cd, 0, eq - cd);
-	if (!is_env_name(*env))
+	if (!*env || !is_env_name(*env))
 	{
-		printf("Invalid environment variable name: %s\n", cd);
-		if (eq)
+		if (*env)
 			free(*env);
+		printf("Invalid environment variable name: %s\n", cd);
 		return (0);
 	}
 	return (1);

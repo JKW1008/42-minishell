@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 02:11:47 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/30 03:01:50 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/08 16:06:19 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char		*find_path(char **envp, char *str);
 //	ms_free_utils.c
 int			ft_split_free(char ***sp);
 void		free_split(char **str);
-void		print_and_free(char **cd, char **envp);
+void		print_and_free(char **envp);
 void		print_error_and_free(char **divided, const char *message);
 
 //	ms_token_list_utils.c

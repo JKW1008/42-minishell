@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:08:19 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/07 16:51:19 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/08 15:24:49 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	envp_update_while(char **envp, char **old_pwd, char *pwd)
 	}
 }
 
-void	evnp_update(char **envp)
+void	envp_update(char **envp)
 {
 	char	pwd[PATH_MAX];
 	char	*old_pwd;
@@ -50,14 +50,19 @@ void	evnp_update(char **envp)
 	envp_update_while(envp, &old_pwd, pwd);
 }
 
-int	check_cd_args(char **cd, char **tmp, char *home)
+int	check_cd_args(char **args, char **tmp, char *home)
 {
-	if (cd[1] == NULL || !ft_strncmp(cd[1], "~", 2))
+	if (args[0] == NULL || !ft_strncmp(args[0], "~", 2))
 	{
 		*tmp = ft_strdup(home);
 		return (0);
 	}
-	else if (cd[2] != NULL)
+	else if (!ft_strncmp(args[0], "..", 2))
+	{
+		*tmp = ft_strdup("..");
+		return (0);
+	}
+	else if (args[1] != NULL)
 	{
 		printf("minishell: cd: too many arguments\n");
 		return (1);
@@ -65,15 +70,15 @@ int	check_cd_args(char **cd, char **tmp, char *home)
 	return (2);
 }
 
-int	construct_cd_path(char **cd, char **tmp, char *home)
+int	construct_cd_path(char **args, char **tmp, char *home)
 {
 	char	*temp;
 	char	cwd[PATH_MAX];
 
-	if (cd[1][0] == '~')
-		*tmp = ft_strjoin(home, cd[1] + 1);
-	else if (cd[1][0] == '/')
-		*tmp = ft_strdup(cd[1]);
+	if (args[0][0] == '~')
+		*tmp = ft_strjoin(home, args[1] + 1);
+	else if (args[0][0] == '/' || !ft_strncmp(args[0], "..", 2))
+		*tmp = ft_strdup(args[1]);
 	else
 	{
 		if (getcwd(cwd, sizeof(cwd)) == NULL)
@@ -84,7 +89,7 @@ int	construct_cd_path(char **cd, char **tmp, char *home)
 		temp = ft_strjoin(cwd, "/");
 		if (!temp)
 			return (1);
-		*tmp = ft_strjoin(temp, cd[1]);
+		*tmp = ft_strjoin(temp, args[0]);
 		free(temp);
 	}
 	if (!*tmp)
@@ -105,24 +110,20 @@ int	check_cd_arg(char **tmp, char **cd, char *home)
 void	cd_cmd(t_cmd *node, t_data **data)
 {
 	char	*tmp;
-	char	**cd;
 	char	cwd[PATH_MAX];
 	char	*home;
 
-	cd = ft_split(node->prompt, ' ');
 	home = find_home_path((*data)->envp);
-	if (check_cd_arg(&tmp, cd, home))
+	if (check_cd_arg(&tmp, node->args, home))
 	{
-		free_split(cd);
 		free(home);
 		return ;
 	}
 	if (chdir(tmp) == -1)
-		printf("minishell: cd: %s: No such file or directory\n", cd[1]);
+		printf("minishell: cd: %s: No such file or directory\n", node->args[1]);
 	else if (getcwd(cwd, sizeof(cwd)) != NULL)
 		printf("%s\n", cwd);
-	evnp_update((*data)->envp);
+	envp_update((*data)->envp);
 	free(tmp);
-	free_split(cd);
 	free(home);
 }

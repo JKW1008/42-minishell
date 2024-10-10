@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:41:14 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/07 17:00:02 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/08 15:31:40 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,41 +74,39 @@ char	*expand_env(char *arg, t_data **data)
 	return (result);
 }
 
-int	process_echo_options(char **divided, int *i)
+int	process_echo_options(char **args, int *i)
 {
 	int	check_n;
 
 	check_n = 1;
-	*i = 1;
-	if (divided[1] && ft_strncmp(divided[1], "-n", 2) == 0)
+	*i = 0;
+	if (args[0] && ft_strncmp(args[0], "-n", 2) == 0)
 	{
 		check_n = 0;
-		*i = 2;
+		*i = 1;
 	}
 	return (check_n);
 }
 
 void	do_echo(t_cmd *node, t_data **data)
 {
-	char	**divided;
 	char	*expand;
 	int		i;
 	int		check_n;
 
-	divided = ft_split(node->prompt, ' ');
-	if (!divided)
-		return ;
-	check_n = process_echo_options(divided, &i);
-	while (divided[i])
+	check_n = process_echo_options(node->args, &i);
+	while (node->args[i])
 	{
-		expand = expand_env(divided[i], data);
-		ft_putstr_fd(expand, 1);
-		if (divided[i + 1])
-			ft_putchar_fd(' ', 1);
-		free(expand);
+		expand = expand_env(node->args[i], data);
+		if (expand)
+		{
+			ft_putstr_fd(expand, 1);
+			if (node->args[i + 1])
+				ft_putchar_fd(' ', 1);
+			free(expand);
+		}
 		i++;
 	}
 	if (check_n)
 		ft_putchar_fd('\n', 1);
-	free_split(divided);
 }

@@ -6,14 +6,20 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 22:38:00 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/07 17:00:54 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/08 15:36:26 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 void	ms_execute(t_cmd *node, t_data **data)
-{
+{	
+	// int	i = 0;
+	// while (node->args[i])
+	// {
+	// 	printf("%s\n", node->args[i]);
+	// 	i++;
+	// }
 	if (!ft_strncmp(node->cmd, "cd", 2))
 		cd_cmd(node, data);
 	else if (!ft_strncmp(node->cmd, "pwd", 4))
@@ -21,7 +27,7 @@ void	ms_execute(t_cmd *node, t_data **data)
 	else if (!ft_strncmp(node->cmd, "env", 4))
 		env_command(data);
 	else if (!ft_strncmp(node->cmd, "exit", 4))
-		do_exit(node->prompt);
+		do_exit(node);
 	else if (!ft_strncmp(node->cmd, "export", 6))
 		export(node, data);
 	else if (!ft_strncmp(node->cmd, "unset ", 5))

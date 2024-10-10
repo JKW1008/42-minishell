@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:33:16 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/30 02:26:57 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/08 15:38:28 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,20 @@ int	check_digit(char *str)
 	return (1);
 }
 
-void	do_exit(char *prompt)
+void	do_exit(t_cmd *node)
 {
-	char	**tmp;
-
-	tmp = ft_split(prompt, ' ');
 	printf("exit\n");
-	if (tmp[1] == NULL)
+	if (node->args[0] == NULL)
 		exit(0);
-	else if (!check_digit(tmp[1]))
+	else if (!check_digit(node->args[0]))
 	{
-		printf("tmp = %d\n", ft_atoi(tmp[1]));
-		printf("numeric argument required");
+		printf("exit: %s: numeric argument required\n", node->args[0]);
 		exit(2);
 	}
-	else if (tmp[2] != NULL)
+	else if (node->args[1] != NULL)
 	{
 		printf("too many arguments");
 		return ;
 	}
-	exit((unsigned char)ft_atoi(tmp[1]));
+	exit((unsigned char)ft_atoi(node->args[0]));
 }
