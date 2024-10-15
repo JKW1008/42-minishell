@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 23:12:56 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/29 23:49:06 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/15 17:29:46 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@ int	ft_is_builtin(const char *token)
 			return (1);
 		i++;
 	}
+	return (0);
+}
+
+int	ft_is_heredoc(char *token)
+{
+	if (ft_strncmp(token, "<<", 3) == 0)
+		return (1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 11:14:54 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/09/30 03:12:08 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/15 17:31:04 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int			ft_alloc_simplecmd(t_cmd *cmd, t_token *tkn);
 int			ft_is_command(const char *token, char **envp);
 int			ft_is_builtin(const char *token);
 int			ft_is_redirection(const char *token);
+int			ft_is_heredoc(char *token);
 
 //	ms_lexer.c
 void		ft_set_qt_value(t_token *tkn);

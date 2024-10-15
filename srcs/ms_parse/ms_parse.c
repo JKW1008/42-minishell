@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 14:22:47 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/06 15:54:03 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/15 17:44:48 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,28 @@ static t_cmd	*ft_create_cmd(t_token **tkn, t_data **data)
 		exit(EXIT_FAILURE);
 	if ((*tkn)->token_type == l_pipe)
 		(*tkn) = (*tkn)->next;
-	ft_cmd_rdr(cmd, *tkn);
-	ft_alloc_simplecmd(cmd, *tkn);
+	if (ft_is_heredoc((*tkn)->value))  // token이 "<<"
+	{
+		cmd->cmd = ft_strdup("<<");  // cmd에 "<<" 저장
+		cmd->is_heredoc = 1;  // heredoc 플래그 설정
+
+		(*tkn) = (*tkn)->next;  // 다음 토큰으로 이동하여 delimiter 확인
+		if (*tkn && (*tkn)->token_type == l_word)  // delimiter 저장
+		{
+			cmd->args = ft_calloc(sizeof(char *), 2);  // 인자 배열 초기화
+			cmd->args[0] = ft_strdup((*tkn)->value);  // delimiter를 args[0]에 저장
+			cmd->arg_cnt = 1;
+		}
+	}
+    else
+    {
+        ft_cmd_rdr(cmd, *tkn);
+        ft_alloc_simplecmd(cmd, *tkn);
+    }
 	cmd->prompt = ft_strdup((*data)->prompt);
 	if (ft_is_builtin(cmd->cmd) == 1)
 		cmd->is_builtin = 1;
+
 	return (cmd);
 }
 

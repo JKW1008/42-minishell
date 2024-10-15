@@ -6,13 +6,13 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 02:45:35 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/30 07:58:55 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/15 19:13:21 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
-
+# define MAX_HEREDOCS 100
 # include "enum.h"
 
 typedef struct s_redir
@@ -68,5 +68,17 @@ typedef struct s_data
 	t_tkn_stk	*tkn;
 	t_cmdline	*cmdline;
 }	t_data;
+
+typedef struct s_heredoc
+{
+	char	*content;
+	char	*delimiter;
+}	t_heredoc;
+
+typedef struct s_heredoc_list
+{
+	t_heredoc	heredocs[MAX_HEREDOCS];
+    int			count;
+}	t_heredoc_list;
 
 #endif

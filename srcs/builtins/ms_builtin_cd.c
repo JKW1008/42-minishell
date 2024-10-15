@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:08:19 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/08 15:24:49 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/15 21:30:28 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	cd_cmd(t_cmd *node, t_data **data)
 	char	*tmp;
 	char	cwd[PATH_MAX];
 	char	*home;
-
+	
 	home = find_home_path((*data)->envp);
 	if (check_cd_arg(&tmp, node->args, home))
 	{

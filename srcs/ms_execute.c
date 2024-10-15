@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 22:38:00 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/08 15:36:26 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/15 19:54:51 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 
 void	ms_execute(t_cmd *node, t_data **data)
 {	
-	// int	i = 0;
-	// while (node->args[i])
-	// {
-	// 	printf("%s\n", node->args[i]);
-	// 	i++;
-	// }
 	if (!ft_strncmp(node->cmd, "cd", 2))
 		cd_cmd(node, data);
 	else if (!ft_strncmp(node->cmd, "pwd", 4))
