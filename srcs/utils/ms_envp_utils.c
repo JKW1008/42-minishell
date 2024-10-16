@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 01:33:08 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/30 01:46:56 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/16 21:22:11 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,29 @@ char	*join_value(char *result, char *value)
 		tmp = ft_strdup(result);
 	free(result);
 	return (tmp);
+}
+
+void	envp_update_while(char **envp, char **old_pwd, char *pwd)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], "PWD=", 4) == 0)
+		{
+			*old_pwd = ft_strdup(envp[i] + 4);
+			free(envp[i]);
+			envp[i] = ft_strjoin("PWD=", pwd);
+		}
+		else if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
+		{
+			free(envp[i]);
+			if (*old_pwd)
+				envp[i] = ft_strjoin("OLDPWD=", *old_pwd);
+			else
+				envp[i] = ft_strdup("OLDPWD=");
+		}
+		i++;
+	}
 }

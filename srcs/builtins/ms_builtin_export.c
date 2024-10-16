@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:34:52 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/10 18:01:14 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/16 21:19:51 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,6 @@ void	export(t_cmd *node, t_data **data)
 			i += 3;
 		}
 		else
-		{
-			process_env_variable(data, node->args[i]);
-			i++;
-		}
+			process_env_variable(data, node->args[i++]);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:41:14 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/08 15:31:40 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/16 17:42:28 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	process_echo_options(char **args, int *i)
 	return (check_n);
 }
 
-void	do_echo(t_cmd *node, t_data **data)
+int	do_echo(t_cmd *node, t_data **data)
 {
 	char	*expand;
 	int		i;
@@ -109,4 +109,5 @@ void	do_echo(t_cmd *node, t_data **data)
 	}
 	if (check_n)
 		ft_putchar_fd('\n', 1);
+	return (0);
 }

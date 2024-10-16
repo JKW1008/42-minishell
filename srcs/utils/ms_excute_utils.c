@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:59:41 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/08 15:36:15 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/16 21:48:44 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	free_envp(char **envp)
 	free(envp);
 }
 
-void	env_command(t_data **data)
+int	env_command(t_data **data)
 {
 	printenv((*data)->envp, 0);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 11:14:54 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/10/15 17:31:04 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/17 00:04:31 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ void		ft_set_valex(t_token *tkn, t_data *data);
 size_t		ft_lexer(t_data **data);
 
 // ms_merge_tokens.c
-size_t	ft_merge_tokens(t_data **data);
-
+size_t		ft_merge_tokens(t_data **data);
 
 //	ms_parse.c
 int			ft_init_cmdline(t_data **data);

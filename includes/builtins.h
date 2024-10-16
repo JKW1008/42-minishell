@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 01:54:40 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/08 15:36:11 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/16 21:23:14 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*join_char(char *result, char c);
 char	*expand_env_var(char *arg, int *i, t_data **data, char *result);
 char	*expand_env(char *arg, t_data **data);
 int		process_echo_options(char **divided, int *i);
-void	do_echo(t_cmd *node, t_data **data);
+int		do_echo(t_cmd *node, t_data **data);
 
 //	ms_builtin_env.c
 int		is_env_name(char *str);
@@ -43,7 +43,7 @@ void	process_env_variable(t_data **data, char *cd_j);
 void	export(t_cmd *node, t_data **data);
 
 //	ms_builtin_pwd.c
-void	print_dir(void);
+int		print_dir(void);
 
 //	ms_builtin_unset.c
 int		env_cnt(char **envp, char *name);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ms_merge_tokens.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehukim <jaehukim42@student.42gyeong      +#+  +:+       +#+        */
+/*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 13:38:37 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/09/23 13:38:39 by jaehukim         ###   ########.fr       */
+/*   Updated: 2024/10/16 21:44:26 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void		ft_tkn_free(t_token *tkn)
+static void	ft_tkn_free(t_token *tkn)
 {
 	free(tkn->value);
 	free(tkn);
@@ -21,7 +21,7 @@ static void		ft_tkn_free(t_token *tkn)
 static size_t	ft_reidx_tkns(t_tkn_stk *stack)
 {
 	int		idx;
-	t_token *token;
+	t_token	*token;
 
 	idx = 0;
 	token = stack->head;
@@ -36,7 +36,7 @@ static size_t	ft_reidx_tkns(t_tkn_stk *stack)
 
 static t_token	*merge_tokens(t_token *tkn, t_token *prev)
 {
-	t_token *new;
+	t_token	*new;
 
 	new = (t_token *)malloc(sizeof(t_token));
 	new->value = ft_strjoin(prev->value, tkn->value);
@@ -65,7 +65,7 @@ static t_token	*merge_tokens(t_token *tkn, t_token *prev)
 size_t	ft_merge_tokens(t_data **data)
 {
 	t_token	*tkn;
-	t_token *prev;
+	t_token	*prev;
 
 	prev = NULL;
 	tkn = (*data)->tkn->head;
@@ -84,4 +84,3 @@ size_t	ft_merge_tokens(t_data **data)
 	ft_reidx_tkns((*data)->tkn);
 	return (0);
 }
-	

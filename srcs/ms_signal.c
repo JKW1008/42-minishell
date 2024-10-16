@@ -6,13 +6,13 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 09:39:57 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/09/29 17:22:58 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/16 23:54:02 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-extern volatile sig_atomic_t g_signal_received;
+extern volatile sig_atomic_t	g_signal_received;
 
 void	sig_ctrl(int sig)
 {

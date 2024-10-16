@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 11:09:45 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/09/30 02:05:39 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/16 21:48:30 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ static size_t	get_rdr(t_cmd *cmd, t_token **tkn, int idx)
 
 int	ft_cmd_rdr(t_cmd *cmd, t_token *tkn)
 {
-	int	idx;
-	int	cnt;
-	t_token *tmp;
+	int		idx;
+	int		cnt;
+	t_token	*tmp;
 
 	idx = 0;
 	tmp = tkn;

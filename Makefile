@@ -12,37 +12,42 @@ HEADR = ./includes/minishell.h \
 SRCS_DIR = ./srcs
 OBJS_DIR = ./objs
 
-SRCS =	ms_main.c \
-		ms_init.c \
-		ms_signal.c \
-		ms_prompt.c \
+SRCS =	ms_cmd.c \
 		ms_execute.c \
-		ms_cmd.c \
-		ms_parse/ms_lexer.c \
-		ms_parse/ms_lex_util.c \
-		ms_parse/ms_tokenize.c \
-		ms_parse/ms_parse.c \
-		ms_parse/ms_alloc_simplecmd.c \
+		ms_here_doc.c \
+		ms_init.c \
+		ms_main.c \
+		ms_prompt.c \
+		ms_signal.c \
 		ms_parse/ms_alloc_rdr.c \
-		ms_parse/ms_tokens_type_utils.c \
+		ms_parse/ms_alloc_simplecmd.c \
+		ms_parse/ms_lex_util.c \
+		ms_parse/ms_lexer.c \
 		ms_parse/ms_merge_tokens.c \
+		ms_parse/ms_parse.c \
 		ms_parse/ms_sort_ord.c \
+		ms_parse/ms_tkn_cmd_free.c \
+		ms_parse/ms_tokenize.c \
+		ms_parse/ms_tokens_type_utils.c \
 		utils/ms_char_handle.c \
-		utils/ms_err_handle.c \
-		utils/ms_find_path.c \
-		utils/ms_excute_utils.c \
-		utils/ms_free_utils.c \
-		utils/ms_tokens_utils.c \
-		utils/ms_token_list_utils.c \
+		utils/ms_cmd_utils.c \
 		utils/ms_echo_utils.c \
 		utils/ms_envp_utils.c \
+		utils/ms_err_handle.c \
+		utils/ms_excute_utils.c \
+		utils/ms_find_path.c \
+		utils/ms_free_utils.c \
+		utils/ms_handle_rdr.c \
+		utils/ms_token_list_utils.c \
+		utils/ms_tokens_utils.c \
 		builtins/ms_builtin_cd.c \
-		builtins/ms_builtin_pwd.c \
+		builtins/ms_builtin_echo.c \
 		builtins/ms_builtin_env.c \
 		builtins/ms_builtin_exit.c \
 		builtins/ms_builtin_export.c \
+		builtins/ms_builtin_pwd.c \
 		builtins/ms_builtin_unset.c \
-		builtins/ms_builtin_echo.c \
+
 
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
 OBJS := $(patsubst $(SRCS_DIR)/%.c,$(OBJS_DIR)/%.o,$(SRCS))

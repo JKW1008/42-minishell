@@ -6,13 +6,13 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 13:08:52 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/09/30 07:59:12 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/16 23:53:42 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-volatile sig_atomic_t g_signal_received = 0;
+volatile sig_atomic_t	g_signal_received = 0;
 
 int	main(int ac, char **av, char **envp)
 {

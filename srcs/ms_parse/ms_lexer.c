@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 16:46:00 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/09/29 23:53:56 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/16 21:45:55 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,16 @@ size_t	ft_search_envp(t_token *tkn, int i, t_data *data)
 	char	**item;
 
 	idx = i;
-	envp_ord = 0;
+	envp_ord = -1;
 	if (ft_strncmp(tkn->value + idx, "$?", 2) == 0)
 	{
 		item = (char **) malloc(sizeof(char *) * 3);
 		item[0] = ft_strdup("$?");
-		item[1] = ft_itoa(data->errno_); // check memory leak
+		item[1] = ft_itoa(data->errno_);
 		ft_replace_envp_val(tkn->value, idx, item);
 		return (2);
 	}
-	while (data->envp[envp_ord])
+	while (data->envp[envp_ord++])
 	{
 		item = ft_split(data->envp[envp_ord], '=');
 		if (ft_strncmp(tkn->value + idx + 1, item[0], ft_strlen(item[0])) == 0)
@@ -64,10 +64,7 @@ size_t	ft_search_envp(t_token *tkn, int i, t_data *data)
 			ft_replace_envp_val(tkn->value, idx, item);
 			return (ft_strlen(item[0]));
 		}	
-		free(item[0]);
-		free(item[1]);
-		free(item);
-		envp_ord++;
+		free_split(item);
 	}
 	return (0);
 }

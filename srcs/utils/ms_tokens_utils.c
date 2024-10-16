@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 00:14:33 by kjung             #+#    #+#             */
-/*   Updated: 2024/09/30 00:18:17 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/17 01:03:27 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,4 @@ int	ft_token_quote(char *prompt, t_tkn_stk **tkns, char quote)
 		return (-1);
 	ft_add_token(prompt, 0, ++i, tkns);
 	return (i);
-}
-
-t_tkn_stk	*ft_free_tokens(t_tkn_stk *tokens)
-{
-	t_token	*current;
-	t_token	*next;
-
-	current = tokens->head;
-	while (current)
-	{
-		next = current->next;
-		free(current->value);
-		free(current);
-		current = next;
-	}
-	free(tokens);
-	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 02:45:35 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/15 19:13:21 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/17 00:04:01 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,17 @@ typedef struct s_heredoc
 typedef struct s_heredoc_list
 {
 	t_heredoc	heredocs[MAX_HEREDOCS];
-    int			count;
+	int			count;
 }	t_heredoc_list;
+
+typedef struct s_pipe_info
+{
+	int				pipe_fd[2];
+	int				prev_pipe;
+	t_heredoc_list	*heredoc_list;
+	t_data			**data;
+	int				stdin_backup;
+	int				stdout_backup;
+}	t_pipe_info;
 
 #endif
