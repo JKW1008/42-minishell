@@ -34,6 +34,34 @@ static size_t	count_args(t_cmd *cmd, t_token *tkn)
 	return (0);
 }
 
+//static size_t	get_args(t_cmd *cmd, t_token *tkn)
+//{
+//	int		idx;
+//	t_token	*tmp;
+//	idx = 0;
+//	tmp = tkn;
+//	while (tmp && tmp->token_type != l_word && tmp->token_type != l_pipe)
+//		tmp = tmp->next;
+//	if (tmp && tmp->token_type == l_word)
+//	{
+//		cmd->cmd = ft_strdup(tmp->value);
+//		tmp = tmp->next;
+//	}
+//	while (tmp && tmp->token_type != l_pipe)
+//	{
+//		if (tmp->token_type == l_word)
+//		{
+//			cmd->args[idx] = ft_strdup(tmp->value);
+//			idx++;
+//		}
+//		else if (tmp->token_type >= 4 && tmp->token_type <= 7)
+//			tmp = tmp->next;
+//		tmp = tmp->next;
+//	}
+//	cmd->args[idx] = NULL;
+//	return (idx);
+//}
+
 static size_t	get_args(t_cmd *cmd, t_token *tkn)
 {
 	int		idx;
@@ -41,26 +69,17 @@ static size_t	get_args(t_cmd *cmd, t_token *tkn)
 
 	idx = 0;
 	tmp = tkn;
-	while (tmp && tmp->token_type != l_word && tmp->token_type != l_pipe)
-		tmp = tmp->next;
-	if (tmp && tmp->token_type == l_word)
-	{
-		cmd->cmd = ft_strdup(tmp->value);
-		tmp = tmp->next;
-	}
 	while (tmp && tmp->token_type != l_pipe)
 	{
-		if (tmp->token_type == l_word)
-		{
-			cmd->args[idx] = ft_strdup(tmp->value);
-			idx++;
-		}
-		else if (tmp->token_type >= 4 && tmp->token_type <= 7)
+		if (tmp->token_type >= 4 && tmp->token_type <= 7)
 			tmp = tmp->next;
+		else if (tmp->token_type == l_word && !cmd->cmd)
+			cmd->cmd = ft_strdup(tmp->value);
+		else if (tmp->token_type == l_word && cmd->cmd)
+			cmd->args[idx++] = ft_strdup(tmp->value);
 		tmp = tmp->next;
 	}
-	cmd->args[idx] = NULL;
-	return (idx);
+	return (0);
 }
 
 int	ft_alloc_simplecmd(t_cmd *cmd, t_token *tkn)
