@@ -12,17 +12,17 @@
 
 #include "../../includes/minishell.h"
 
-int	ft_init_cmdline(t_data **data)
+t_cmdline	*ft_init_cmdline(void)
 {
 	t_cmdline	*cmdline;
 
 	cmdline = (t_cmdline *) malloc(sizeof(t_cmdline));
 	if (!cmdline)
-		return (1);
+		return (NULL);
 	cmdline->count = 0;
 	cmdline->head = NULL;
-	(*data)->cmdline = cmdline;
-	return (0);
+	// (*data)->cmdline = cmdline;
+	return (cmdline);
 }
 
 static size_t	ft_check_tknlen(t_token *tkn)
@@ -42,23 +42,62 @@ static size_t	ft_check_tknlen(t_token *tkn)
 	return (token_count);
 }
 
+//static size_t	parse(t_data **data)
+//{
+//	t_token	*token;
+//	(*data)->cmdline = ft_calloc(sizeof(t_cmdline), 1);
+//	token = (*data)->tkn->head;
+//	while (token->tkn_idx < (*data)->tkn->len)
+//	{
+//		if (token->tkn_idx == 0 || token->token_type == l_pipe)
+//		{
+//			if (ft_check_tknlen(token) == 0)
+//				return (2);
+//			ft_append_cmd(ft_create_cmd(&token, data), 
+//				(*data)->cmdline);
+//		}
+//		if (token->next)
+//			token = token->next;
+//		else
+//			return (0);
+//	}
+//	return (0);
+//}
+
+
+static int		token_move(t_token **tkn, int count)
+{
+	int	idx;
+
+	idx = 0;
+	while (idx < count)
+	{
+		(*tkn) = (*tkn)->next;
+		idx++;
+	}
+	return (0);
+}
 static size_t	parse(t_data **data)
 {
-	t_token	*token;
+	t_token	*tkn;
+	t_cmd	*cmd;
+	int		tkn_counter;
 
-	(*data)->cmdline = ft_calloc(sizeof(t_cmdline), 1);
-	token = (*data)->tkn->head;
-	while (token->tkn_idx < (*data)->tkn->len)
+	(*data)->cmdline = ft_init_cmdline();
+	tkn = (*data)->tkn->head;
+	while (tkn && tkn->tkn_idx < (*data)->tkn->len)
 	{
-		if (token->tkn_idx == 0 || token->token_type == l_pipe)
+		if (tkn->token_type != l_pipe && tkn->tkn_idx != (*data)->tkn->len)
 		{
-			if (ft_check_tknlen(token) == 0)
+			tkn_counter = ft_check_tknlen(tkn);
+			if (tkn_counter == 0)
 				return (2);
-			ft_append_cmd(ft_create_cmd(&token, data), \
-				(*data)->cmdline);
+			cmd = ft_create_cmd(&tkn, data);
+			ft_append_cmd(cmd, (*data)->cmdline);
+			token_move(&tkn, tkn_counter);
 		}
-		if (token->next)
-			token = token->next;
+		else if (tkn->next)
+			tkn = tkn->next;
 		else
 			return (0);
 	}

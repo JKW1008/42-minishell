@@ -39,7 +39,7 @@ size_t		ft_lexer(t_data **data);
 size_t		ft_merge_tokens(t_data **data);
 
 //	ms_parse.c
-int			ft_init_cmdline(t_data **data);
+t_cmdline		*ft_init_cmdline(void);
 size_t		ft_parser(t_data **data);
 
 //	ms_tokenize.c

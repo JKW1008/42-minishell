@@ -36,7 +36,7 @@ SRCS =	ft_isalpha.c\
 		ft_putnbr_fd.c\
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 NAME = libft.a
 HEADR = libft.h
 OBJS = $(SRCS:.c=.o)

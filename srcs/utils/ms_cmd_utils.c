@@ -19,30 +19,48 @@ void	ft_create_cmd_for_lword(t_cmd **cmd, t_token **tkn)
 	(*cmd)->arg_cnt = 1;
 }
 
+//t_cmd	*ft_create_cmd(t_token **tkn, t_data **data)
+//{
+//	t_cmd	*cmd;
+
+//	cmd = (t_cmd *) ft_calloc(sizeof(t_cmd), 1);
+//	if (!cmd)
+//		exit(EXIT_FAILURE);
+//	if ((*tkn)->token_type == l_pipe)
+//		(*tkn) = (*tkn)->next;
+//	if (ft_is_heredoc((*tkn)->value))
+//	{
+//		cmd->cmd = ft_strdup("<<");
+//		cmd->is_heredoc = 1;
+//		(*tkn) = (*tkn)->next;
+//		if (*tkn && (*tkn)->token_type == l_word)
+//			ft_create_cmd_for_lword(&cmd, tkn);
+//	}
+//	else
+//	{
+//		ft_cmd_rdr(cmd, *tkn);
+//		ft_alloc_simplecmd(cmd, *tkn);
+//	}
+//	if (*data && (*data)->prompt)
+//        cmd->prompt = ft_strdup((*data)->prompt);
+//	if (cmd->cmd && ft_is_builtin(cmd->cmd) == 1)
+//		cmd->is_builtin = 1;
+//	return (cmd);
+//}
+
 t_cmd	*ft_create_cmd(t_token **tkn, t_data **data)
 {
 	t_cmd	*cmd;
+//	t_token	*tmp;
 
 	cmd = (t_cmd *) ft_calloc(sizeof(t_cmd), 1);
 	if (!cmd)
 		exit(EXIT_FAILURE);
-	if ((*tkn)->token_type == l_pipe)
-		(*tkn) = (*tkn)->next;
-	if (ft_is_heredoc((*tkn)->value))
-	{
-		cmd->cmd = ft_strdup("<<");
-		cmd->is_heredoc = 1;
-		(*tkn) = (*tkn)->next;
-		if (*tkn && (*tkn)->token_type == l_word)
-			ft_create_cmd_for_lword(&cmd, tkn);
-	}
-	else
-	{
-		ft_cmd_rdr(cmd, *tkn);
-		ft_alloc_simplecmd(cmd, *tkn);
-	}
-	cmd->prompt = ft_strdup((*data)->prompt);
-	if (ft_is_builtin(cmd->cmd) == 1)
+	ft_cmd_rdr(cmd, *tkn);
+	ft_alloc_simplecmd(cmd, *tkn);
+	if (*data && (*data)->prompt)
+        cmd->prompt = ft_strdup((*data)->prompt);
+	if (cmd->cmd && ft_is_builtin(cmd->cmd) == 1)
 		cmd->is_builtin = 1;
 	return (cmd);
 }

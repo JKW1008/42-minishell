@@ -37,6 +37,8 @@ char	**copy_envp(char **envp)
 		i++;
 	}
 	new_envp[i] = NULL;
+	// $?
+	// $$
 	return (new_envp);
 }
 
