@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 01:54:40 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/16 21:23:14 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/18 00:21:58 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 //	ms_builtin_cd.c
 int		check_cd_args(char **cd, char **tmp, char *home);
 int		construct_cd_path(char **cd, char **tmp, char *home);
-int		check_cd_arg(char **tmp, char **cd, char *home);
+int		check_cd_arg(char **tmp, char **cd, char *home, char **envp);
 void	cd_cmd(t_cmd *node, t_data **data);
 
 //	ms_builtin_echo.c

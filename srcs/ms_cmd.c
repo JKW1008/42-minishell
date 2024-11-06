@@ -6,11 +6,35 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 07:03:28 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/17 00:49:10 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/05 14:20:00 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void cat_command(t_cmd *cmd)
+{
+	if (ft_strncmp(cmd->cmd, "cat", 4) == 0 && cmd->arg_cnt == 0)
+	{
+		char buffer[4096];
+		ssize_t bytes_read;
+		int empty_lines = 0;
+
+		while ((bytes_read = read(STDIN_FILENO, buffer, sizeof(buffer))) > 0)
+		{
+			if (bytes_read == 1 && buffer[0] == '\n')
+			{
+				empty_lines++;
+				if (empty_lines >= 2)
+					break;
+			}
+			else
+				empty_lines = 0;
+			write(STDOUT_FILENO, buffer, bytes_read);
+		}
+		exit(0);
+	}
+}
 
 void execute_command(t_cmd *cmd, t_data **data)
 {
@@ -18,6 +42,9 @@ void execute_command(t_cmd *cmd, t_data **data)
 	char	**new_args;
 	int		i;
 
+	if (!cmd->cmd || cmd->cmd[0] == '\0')
+		exit(0);
+	cat_command(cmd);
 	full_path = find_path((*data)->envp, cmd->cmd);
 	if (!full_path)
 	{
@@ -56,7 +83,7 @@ void	handle_child_process(t_cmd *cmd, t_pipe_info *info)
 	handle_redirections(cmd, info->heredoc_list);
 	if (cmd->is_builtin)
 		exit(ms_execute(cmd, info->data, 1));
-	else
+	else if (!cmd->is_builtin && !cmd->is_heredoc)
 		execute_command(cmd, info->data);
 }
 
@@ -87,19 +114,65 @@ int	is_special_builtin(t_cmd *cmd)
 		return (1);
 	return (0);
 }
+void	handle_redirection_only(t_cmd *cmd, t_pipe_info *info)
+{
+	pid_t pid;
+	char buffer[4096];
+	ssize_t bytes_read;
+	int empty_lines;
+	
+	pid = fork();
+	empty_lines = 0;
+	if (pid == -1)
+	{
+		perror("fork");
+		exit(1);
+	}
+	if (pid == 0)
+	{
+		if (info->prev_pipe != -1)
+		{
+			dup2(info->prev_pipe, STDIN_FILENO);
+			close(info->prev_pipe);
+		}
+		if (cmd->next && info->pipe_fd[1] != -1)
+		{
+			dup2(info->pipe_fd[1], STDOUT_FILENO);
+			close(info->pipe_fd[1]);
+		}
+		handle_redirections(cmd, info->heredoc_list);
+		while ((bytes_read = read(STDIN_FILENO, buffer, sizeof(buffer))) > 0)
+		{
+			if (bytes_read == 1 && buffer[0] == '\n')
+			{
+				empty_lines++;
+				if (empty_lines >= 2)
+					break;
+			}
+			else
+				empty_lines = 0;
+			write(STDOUT_FILENO, buffer, bytes_read);
+		}
+		exit(0);
+	}
+	else
+	{
+		if (info->prev_pipe != -1)
+			close(info->prev_pipe);
+		if (cmd->next)
+		{
+			close(info->pipe_fd[1]);
+			info->prev_pipe = info->pipe_fd[0];
+		}
+		else
+			info->prev_pipe = -1;
+	}
+}
 
 void	process_command(t_cmd *cmd, t_pipe_info *info)
 {
 	pid_t	pid;
 
-	if (cmd->next)
-	{
-		if (pipe(info->pipe_fd) == -1)
-		{
-			perror("pipe");
-			exit(1);
-		}
-	}
 	pid = fork();
 	if (pid == -1)
 	{
@@ -107,11 +180,36 @@ void	process_command(t_cmd *cmd, t_pipe_info *info)
 		exit(1);
 	}
 	if (pid == 0)
-		handle_child_process(cmd, info);
+	{
+		if (info->prev_pipe != -1)
+		{
+			dup2(info->prev_pipe, STDIN_FILENO);
+			close(info->prev_pipe);
+		}
+		if (cmd->next && info->pipe_fd[1] != -1)
+		{
+			dup2(info->pipe_fd[1], STDOUT_FILENO);
+			close(info->pipe_fd[1]);
+		}
+		handle_redirections(cmd, info->heredoc_list);
+		if (cmd->is_builtin)
+			exit(ms_execute(cmd, info->data, 1));
+		else
+			execute_command(cmd, info->data);
+	}
 	else
-		handle_parent_process(cmd, info);
+	{
+		if (info->prev_pipe != -1)
+			close(info->prev_pipe);
+		if (cmd->next)
+		{
+			close(info->pipe_fd[1]);
+			info->prev_pipe = info->pipe_fd[0];
+		}
+		else
+			info->prev_pipe = -1;
+	}
 }
-
 void	execute_pipeline(t_data **data, t_heredoc_list *heredoc_list)
 {
 	t_cmd		*cmd;
@@ -125,8 +223,18 @@ void	execute_pipeline(t_data **data, t_heredoc_list *heredoc_list)
 	cmd = (*data)->cmdline->head;
 	while (cmd)
 	{
+		if (cmd->next)
+		{
+			if (pipe(info.pipe_fd) == -1)
+			{
+				perror("pipe");
+				exit(1);
+			}
+		}
 		if (cmd->is_builtin && is_special_builtin(cmd))
 			ms_execute(cmd, data, 0);
+		else if (cmd->rdr_cnt > 0 && (!cmd->cmd || cmd->cmd[0] == '\0'))
+			handle_redirection_only(cmd, &info);
 		else
 			process_command(cmd, &info);
 		cmd = cmd->next;

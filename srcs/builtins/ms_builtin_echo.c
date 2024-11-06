@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:41:14 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/16 17:42:28 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/05 14:12:39 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,47 @@ char	*expand_env(char *arg, t_data **data)
 int	process_echo_options(char **args, int *i)
 {
 	int	check_n;
+	int	j;
 
 	check_n = 1;
 	*i = 0;
-	if (args[0] && ft_strncmp(args[0], "-n", 2) == 0)
+	while (args[*i] && args[*i][0] == '-' && args[*i][1] == 'n')
 	{
-		check_n = 0;
-		*i = 1;
+		j = 1;
+		while (args[*i][j] == 'n')
+			j++;
+		if (args[*i][j] == '\0')
+		{
+			check_n = 0;
+			(*i)++;
+		}
+		else
+			break ;
 	}
 	return (check_n);
+}
+
+void	print_question_env(t_data **data)
+{
+	int		i;
+	char	**res;
+	
+	i = 0;
+	while ((*data)->envp[i])
+	{
+		if (ft_strncmp((*data)->envp[i], "?=", 2) == 0)
+		{
+			res = ft_split((*data)->envp[i], '=');
+			if (res && res[1])
+			{
+				printf("%s\n", res[1]);
+				free_split(res);
+			}
+			return ;
+		}
+		i++;
+	}
+	return ;
 }
 
 int	do_echo(t_cmd *node, t_data **data)
@@ -98,6 +130,11 @@ int	do_echo(t_cmd *node, t_data **data)
 	while (node->args[i])
 	{
 		expand = expand_env(node->args[i], data);
+		if (ft_strncmp(node->args[i], "$?", 2) == 0)
+		{
+			print_question_env(data);
+			return (0);
+		}
 		if (expand)
 		{
 			ft_putstr_fd(expand, 1);

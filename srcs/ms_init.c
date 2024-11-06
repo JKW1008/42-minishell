@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 17:09:22 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/09/30 07:59:13 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/18 16:19:22 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,15 @@ char	**copy_envp(char **envp)
 		}
 		i++;
 	}
-	new_envp[i] = NULL;
+	new_envp[i] = ft_strdup("?=0");
+	if (!new_envp[i])
+	{
+		while (i-- > 0)
+			free(new_envp[i]);
+		free(new_envp);
+		return (NULL);
+	}
+	new_envp[i + 1] = NULL;
 	return (new_envp);
 }
 

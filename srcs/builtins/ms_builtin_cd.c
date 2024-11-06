@@ -6,11 +6,25 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:08:19 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/16 21:23:33 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/18 00:22:39 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+char	*get_oldpwd(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
+			return envp[i] + 7;
+		i++;
+	}
+	return NULL;
+}
 
 void	envp_update(char **envp)
 {
@@ -72,10 +86,25 @@ int	construct_cd_path(char **args, char **tmp, char *home)
 	return (0);
 }
 
-int	check_cd_arg(char **tmp, char **cd, char *home)
+int check_cd_arg(char **tmp, char **cd, char *home, char **envp)
 {
-	int	result;
+	int		result;
+	char	*oldpwd;
 
+	if (cd[0] && ft_strncmp(cd[0], "-", 1) == 0)
+	{
+		oldpwd = get_oldpwd(envp);
+		if (oldpwd && *oldpwd)
+		{
+			*tmp = ft_strdup(oldpwd);
+			return (0);
+		}
+		else
+		{
+			printf("minishell: cd: OLDPWD not set\n");
+			return (1);
+		}
+	}
 	result = check_cd_args(cd, tmp, home);
 	if (result != 2)
 		return (result);
@@ -88,7 +117,7 @@ void	cd_cmd(t_cmd *node, t_data **data)
 	char	*home;
 
 	home = find_home_path((*data)->envp);
-	if (check_cd_arg(&tmp, node->args, home))
+	if (check_cd_arg(&tmp, node->args, home, (*data)->envp))
 	{
 		free(home);
 		return ;

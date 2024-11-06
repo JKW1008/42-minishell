@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 23:12:56 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/15 17:29:46 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/17 18:46:22 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	ft_is_builtin(const char *token)
 		{"echo", "cd", "pwd", "export", "unset", "env", "exit", NULL};
 
 	i = 0;
+	if (token == NULL)
+		return (0);
 	while (builtins[i])
 	{
 		if (ft_strncmp(token, builtins[i], ft_strlen(builtins[i]) + 1) == 0)
