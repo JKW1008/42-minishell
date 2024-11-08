@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 14:23:02 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/17 18:48:28 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/08 19:09:20 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		ms_execute(t_cmd *node, t_data **data, int in_child);
 
 //	ms_here_doc.c
 char	*get_input(char *prompt);
-char	*set_heredoc(t_cmd *node);
+char	*set_heredoc(t_cmd *node, int *heredoc_idx);
 void	process_commands(t_data **data, t_heredoc_list *heredoc_list);
 
 //	ms_init.c

@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 17:09:22 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/11/06 17:23:25 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/08 15:28:44 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**copy_envp(char **envp)
 	i = 0;
 	while (envp[i])
 		i++;
-	new_envp = malloc((i + 1) * sizeof(char *));
+	new_envp = malloc((i + 2) * sizeof(char *));
 	if (!new_envp)
 		return (NULL);
 	i = 0;

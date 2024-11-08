@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 07:03:28 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/05 14:20:00 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/06 21:28:14 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,39 +210,49 @@ void	process_command(t_cmd *cmd, t_pipe_info *info)
 			info->prev_pipe = -1;
 	}
 }
-void	execute_pipeline(t_data **data, t_heredoc_list *heredoc_list)
+void    execute_pipeline(t_data **data, t_heredoc_list *heredoc_list)
 {
-	t_cmd		*cmd;
-	t_pipe_info	info;
+    t_cmd       *cmd;
+    t_pipe_info info;
+    int         i;
 
-	info.prev_pipe = -1;
-	info.stdin_backup = dup(STDIN_FILENO);
-	info.stdout_backup = dup(STDOUT_FILENO);
-	info.heredoc_list = heredoc_list;
-	info.data = data;
-	cmd = (*data)->cmdline->head;
-	while (cmd)
-	{
-		if (cmd->next)
-		{
-			if (pipe(info.pipe_fd) == -1)
-			{
-				perror("pipe");
-				exit(1);
-			}
-		}
-		if (cmd->is_builtin && is_special_builtin(cmd))
-			ms_execute(cmd, data, 0);
-		else if (cmd->rdr_cnt > 0 && (!cmd->cmd || cmd->cmd[0] == '\0'))
-			handle_redirection_only(cmd, &info);
-		else
-			process_command(cmd, &info);
-		cmd = cmd->next;
-	}
-	while (wait(NULL) > 0)
-		;
-	dup2(info.stdin_backup, STDIN_FILENO);
-	dup2(info.stdout_backup, STDOUT_FILENO);
-	close(info.stdin_backup);
-	close(info.stdout_backup);
+	i = 1;
+    info.prev_pipe = -1;
+    info.stdin_backup = dup(STDIN_FILENO);
+    info.stdout_backup = dup(STDOUT_FILENO);
+    info.heredoc_list = heredoc_list;
+    info.data = data;
+    while (i <= (*data)->cmdline->count)
+    {
+        cmd = (*data)->cmdline->head;
+        while (cmd)
+        {
+            if (cmd->ord == i)
+            {
+                if (cmd->next)
+                {
+                    if (pipe(info.pipe_fd) == -1)
+                    {
+                        perror("pipe");
+                        exit(1);
+                    }
+                }
+                
+                if (cmd->is_builtin && is_special_builtin(cmd))
+                    ms_execute(cmd, data, 0);
+                else if (cmd->rdr_cnt > 0 && (!cmd->cmd || cmd->cmd[0] == '\0'))
+                    handle_redirection_only(cmd, &info);
+                else
+                    process_command(cmd, &info);
+            }
+            cmd = cmd->next;
+        }
+        i++;
+    }
+    while (wait(NULL) > 0)
+        ;
+    dup2(info.stdin_backup, STDIN_FILENO);
+    dup2(info.stdout_backup, STDOUT_FILENO);
+    close(info.stdin_backup);
+    close(info.stdout_backup);
 }

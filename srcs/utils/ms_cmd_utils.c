@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 21:28:23 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/17 18:56:25 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/08 15:26:19 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,35 +18,6 @@ void	ft_create_cmd_for_lword(t_cmd **cmd, t_token **tkn)
 	(*cmd)->args[0] = ft_strdup((*tkn)->value);
 	(*cmd)->arg_cnt = 1;
 }
-
-//t_cmd	*ft_create_cmd(t_token **tkn, t_data **data)
-//{
-//	t_cmd	*cmd;
-
-//	cmd = (t_cmd *) ft_calloc(sizeof(t_cmd), 1);
-//	if (!cmd)
-//		exit(EXIT_FAILURE);
-//	if ((*tkn)->token_type == l_pipe)
-//		(*tkn) = (*tkn)->next;
-//	if (ft_is_heredoc((*tkn)->value))
-//	{
-//		cmd->cmd = ft_strdup("<<");
-//		cmd->is_heredoc = 1;
-//		(*tkn) = (*tkn)->next;
-//		if (*tkn && (*tkn)->token_type == l_word)
-//			ft_create_cmd_for_lword(&cmd, tkn);
-//	}
-//	else
-//	{
-//		ft_cmd_rdr(cmd, *tkn);
-//		ft_alloc_simplecmd(cmd, *tkn);
-//	}
-//	if (*data && (*data)->prompt)
-//        cmd->prompt = ft_strdup((*data)->prompt);
-//	if (cmd->cmd && ft_is_builtin(cmd->cmd) == 1)
-//		cmd->is_builtin = 1;
-//	return (cmd);
-//}
 
 t_cmd	*ft_create_cmd(t_token **tkn, t_data **data)
 {

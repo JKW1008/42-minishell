@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 21:53:02 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/16 22:09:52 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/08 19:10:16 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,75 +42,119 @@ size_t needed_size)
 	return (1);
 }
 
-static int	process_heredoc_line(t_cmd *node, char **result, \
+#include <stdio.h>
+
+static int process_heredoc_line(char *delimiter, char **result, \
 size_t *res_len, size_t *res_cap)
 {
-	char	*line;
-	size_t	line_len;
+    char    *line;
+    size_t  line_len;
 
-	line = get_input("> ");
-	if (!line || (ft_strncmp(line, node->args[0], ft_strlen(node->args[0])) \
-	== 0 && ft_strlen(line) == ft_strlen(node->args[0])))
-	{
-		free(line);
-		return (0);
-	}
-	line_len = ft_strlen(line);
-	if (*res_len + line_len + 2 > *res_cap)
-	{
-		if (!reallocate_result(result, res_cap, *res_len + line_len + 2))
-		{
-			free(line);
-			return (0);
-		}
-	}
-	ft_strlcpy(*result + *res_len, line, line_len + 1);
-	*res_len += line_len;
-	(*result)[(*res_len)++] = '\n';
-	(*result)[*res_len] = '\0';
-	free(line);
-	return (1);
+    line = get_input("> ");
+    if (!line)  // Ctrl+D나 EOF
+        return (0);
+    
+    // delimiter와 정확히 일치할 때만 종료 (길이와 내용 모두 같아야 함)
+	printf("line : %s, delim = %s\n", line, delimiter);
+    if (ft_strlen(line) == ft_strlen(delimiter) && 
+        ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0)
+    {
+        free(line);
+        return (0);
+    }
+    
+    line_len = ft_strlen(line);
+    if (*result == NULL)
+    {
+        *res_cap = line_len + 2;
+        *result = (char *)malloc(*res_cap);
+        if (!*result)
+        {
+            free(line);
+            return (0);
+        }
+    }
+    else if (*res_len + line_len + 2 > *res_cap)
+    {
+        if (!reallocate_result(result, res_cap, *res_len + line_len + 2))
+        {
+            free(line);
+            return (0);
+        }
+    }
+    ft_strlcpy(*result + *res_len, line, line_len + 1);
+    *res_len += line_len;
+    (*result)[(*res_len)++] = '\n';
+    (*result)[*res_len] = '\0';
+    free(line);
+    return (1);
 }
 
-char	*set_heredoc(t_cmd *node)
+char    *set_heredoc(t_cmd *node, int *here_idx)
 {
-	char	*result;
-	size_t	res_len;
-	size_t	res_cap;
+    char    *result;
+    char    *delimiter;
+    size_t  res_len;
+    size_t  res_cap;
+	int	i;
 
-	result = NULL;
-	res_len = 0;
-	res_cap = 0;
-	while (1)
+	i = 0;
+	while (i < node->rdr_cnt)
 	{
-		if (!process_heredoc_line(node, &result, &res_len, &res_cap))
+		if (node->rdr[i]->type == RD_HEREDOC)
+		{
+			delimiter = node->rdr[i]->file;
 			break ;
+		}
+		i++;
 	}
-	return (result);
+    result = NULL;
+    res_len = 0;
+    res_cap = 0;
+	*here_idx = i;
+    while (1)
+    {
+        if (!process_heredoc_line(delimiter, &result, &res_len, &res_cap))
+            break ;
+    }
+    return (result);
 }
 
-void	process_commands(t_data **data, t_heredoc_list *heredoc_list)
+void process_commands(t_data **data, t_heredoc_list *heredoc_list)
 {
-	t_cmd	*tmp;
-	char	*here_doc;
+    t_cmd   *tmp;
+    char    *here_doc;
+    int     i;
+	int		here_idx;
 
-	tmp = (*data)->cmdline->head;
-	heredoc_list->count = 0;
-	while (tmp && tmp->prompt)
-	{
-		if (tmp->is_heredoc)
-		{
-			here_doc = set_heredoc(tmp);
-			if (here_doc && heredoc_list->count < MAX_HEREDOCS)
-			{
-				heredoc_list->heredocs[heredoc_list->count].content = here_doc;
-				heredoc_list->heredocs[heredoc_list->count].delimiter = \
-				ft_strdup(tmp->args[0]);
-				heredoc_list->count++;
-			}
-			else
-				free(here_doc);
-		}
-		tmp = tmp->next;
-	}
+    i = 1;
+    while (i <= (*data)->cmdline->count)
+    {
+        tmp = (*data)->cmdline->head;
+        while (tmp && tmp->prompt)
+        {
+            if (tmp->ord == i && tmp->is_heredoc)
+            {
+                here_doc = set_heredoc(tmp, &here_idx);
+                if (here_doc && heredoc_list->count < MAX_HEREDOCS)
+                {
+                    if (tmp->rdr_cnt)
+                    {
+                        heredoc_list->heredocs[heredoc_list->count].content = here_doc;
+                        heredoc_list->heredocs[heredoc_list->count].delimiter = \
+                        ft_strdup(tmp->rdr[here_idx]->file);
+                        heredoc_list->count++;
+                    }
+                    else
+                    {
+                        free(here_doc);  // args[0]가 NULL이면 here_doc 해제
+                    }
+                }
+                else
+                    free(here_doc);
+            }
+            tmp = tmp->next;
+        }
+        i++;
+    }
 }
