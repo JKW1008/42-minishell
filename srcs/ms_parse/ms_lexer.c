@@ -22,20 +22,20 @@ void	ft_set_qt_value(t_token *tkn)
 	tkn->value[len - 1] = 0;
 }
 
-size_t	ft_replace_envp_val(char *str, int i, char **item)
+size_t	ft_replace_envp_val(char **str, int i, char **item)
 {
 	int		dstlen;
 	char	*dst;
 
-	dstlen = ft_strlen(str) + ft_strlen(item[1]) - (ft_strlen(item[0]) + 1);
+	dstlen = ft_strlen(*str) + ft_strlen(item[1]) - (ft_strlen(item[0]) + 1);
 	dst = (char *) ft_calloc(sizeof(char), (dstlen + 1));
-	ft_strlcpy(dst, str, i + 1);
+	ft_strlcpy(dst, *str, i + 1);
 	ft_strlcpy(dst + i, item[1], ft_strlen(item[1]) + 1);
 	ft_strlcpy(dst + i + ft_strlen(item[1]), \
-				str + i + ft_strlen(item[0]) + 1, \
+				*str + i + ft_strlen(item[0]) + 1, \
 				dstlen - (i + ft_strlen(item[1])) + 1);
-	free(str);
-	str = ft_strdup(dst);
+	free(*str);
+	*str = ft_strdup(dst);
 	free(dst);
 	return (0);
 }
@@ -53,18 +53,24 @@ size_t	ft_search_envp(t_token *tkn, int i, t_data *data)
 		item = (char **) malloc(sizeof(char *) * 3);
 		item[0] = ft_strdup("$?");
 		item[1] = ft_itoa(data->errno_);
-		ft_replace_envp_val(tkn->value, idx, item);
+		ft_replace_envp_val(&tkn->value, idx, item);
 		return (2);
 	}
-	while (data->envp[envp_ord++])
+	while (data->envp[++envp_ord])
 	{
 		item = ft_split(data->envp[envp_ord], '=');
-		if (ft_strncmp(tkn->value + idx + 1, item[0], ft_strlen(item[0])) == 0)
+//		printf("%s %s\n", item[0], item[1]);
+		if (ft_strncmp(tkn->value + idx + 1, item[0], ft_strlen(tkn->value + idx + 1)) == 0)
 		{
-			ft_replace_envp_val(tkn->value, idx, item);
+			ft_replace_envp_val(&tkn->value, idx, item);
 			return (ft_strlen(item[0]));
 		}	
 		free_split(item);
+	}
+	if (!data->envp[envp_ord])
+	{
+		free(tkn->value);
+		tkn->value = NULL;
 	}
 	return (0);
 }
@@ -78,15 +84,15 @@ void	ft_set_valex(t_token *tkn, t_data *data)
 	idx = 0;
 	val = tkn->value;
 	len_val = (int) ft_strlen(val);
-	if (tkn->qt_status == 1)
-	{
-		tkn->value = NULL;
+	if (tkn->qt_status == in_single)
 		return ;
-	}
-	while (val[idx] < len_val)
+	while (idx < len_val)
 	{
 		if (val[idx] == '$')
-			idx += ft_search_envp(tkn, idx, data);
+		{
+			ft_search_envp(tkn, idx, data);
+			return ;
+		}
 		else
 			idx++;
 	}

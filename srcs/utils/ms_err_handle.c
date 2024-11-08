@@ -26,3 +26,12 @@ size_t	ft_print_ret(char *msg, int value)
 	printf("%s", msg);
 	return (value);
 }
+
+size_t	ft_global_err(int i, int type)
+{
+	static size_t err;
+
+	if (type == 1)
+		err = i;
+	return (err);
+}

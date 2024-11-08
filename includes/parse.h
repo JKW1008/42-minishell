@@ -30,7 +30,7 @@ int			ft_is_heredoc(char *token);
 
 //	ms_lexer.c
 void		ft_set_qt_value(t_token *tkn);
-size_t		ft_replace_envp_val(char *str, int i, char **item);
+size_t		ft_replace_envp_val(char **str, int i, char **item);
 size_t		ft_search_envp(t_token *tkn, int i, t_data *data);
 void		ft_set_valex(t_token *tkn, t_data *data);
 size_t		ft_lexer(t_data **data);
@@ -55,5 +55,7 @@ void		ft_identify_token_type(t_token *token, char **envp);
 
 // ms_sort_ord.c
 size_t		ft_sort_ord(t_data **data);
+
+size_t	ft_global_err(int i, int type);
 
 #endif

@@ -129,7 +129,8 @@ int	do_echo(t_cmd *node, t_data **data)
 	check_n = process_echo_options(node->args, &i);
 	while (node->args[i])
 	{
-		expand = expand_env(node->args[i], data);
+//		expand = expand_env(node->args[i], data);
+		expand = node->args[i];
 		if (ft_strncmp(node->args[i], "$?", 2) == 0)
 		{
 			print_question_env(data);

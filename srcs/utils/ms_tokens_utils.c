@@ -15,16 +15,15 @@
 int	ft_valid_quotes(char *prompt)
 {
 	int	len;
-
 	len = ft_strlen(prompt);
 	if (prompt[0] == '\'' || prompt[0] == '"')
 	{
 		if (len < 2)
-			return (1);
+			ft_global_err(1, 1);
 		if (prompt[0] == '\'' && prompt[len - 1] != '\'')
-			return (1);
+			ft_global_err(1, 1);
 		if (prompt[0] == '"' && prompt[len - 1] != '"')
-			return (1);
+			ft_global_err(1, 1);
 	}
 	return (0);
 }

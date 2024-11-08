@@ -46,10 +46,10 @@ void	ft_identify_token_type(t_token *token, char **envp)
 	else if (ft_is_command(token->value, envp))
 		token->token_type = l_word;
 	else if (len >= 2 && token->value[0] == '"' && token->value[len - 1] == '"')
-		token->token_type = l_quot_dbl;
+		token->token_type = l_word; //l_quot_dbl
 	else if (len >= 2 && token->value[0] == '\'' && \
 			token->value[len - 1] == '\'')
-		token->token_type = l_quot_sgl;
+		token->token_type = l_word; // l_quot_sgl
 	else if (ft_strncmp(token->value, "|", 1) == 0)
 		token->token_type = l_pipe;
 	else if (ft_strncmp(token->value, "<<", 2) == 0)

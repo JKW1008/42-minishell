@@ -34,7 +34,7 @@ void	ft_prompt(t_data **data)
 	ft_memset(&heredoc_list, 0, sizeof(t_heredoc_list));
 	while (1)
 	{
-
+		ft_global_err(0, 1);
 		input = readline("$ ");
 		if (!input)
 			break ;
