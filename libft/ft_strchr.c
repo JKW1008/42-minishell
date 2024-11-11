@@ -24,3 +24,20 @@ char	*ft_strchr(const char *s, int c)
 	}
 	return (NULL);
 }
+
+char	*ft_strchr2(const char *s, int c, int options)
+{
+	if (!c)
+		return ((char *)s + ft_strlen(s));
+	while (*s != '\0')
+	{
+		if (*s == c)
+		{
+			if (options == 0)
+				return (ft_strdup(s));
+		}
+		else
+			s++;
+	}
+	return (NULL);
+}

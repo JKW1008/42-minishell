@@ -29,6 +29,8 @@ SRCS =	ms_cmd.c \
 		ms_parse/ms_tkn_cmd_free.c \
 		ms_parse/ms_tokenize.c \
 		ms_parse/ms_tokens_type_utils.c \
+		ms_parse/ms_token_list_utils.c \
+		ms_parse/ms_lexer_for_envp.c \
 		utils/ms_char_handle.c \
 		utils/ms_cmd_utils.c \
 		utils/ms_echo_utils.c \
@@ -38,7 +40,6 @@ SRCS =	ms_cmd.c \
 		utils/ms_find_path.c \
 		utils/ms_free_utils.c \
 		utils/ms_handle_rdr.c \
-		utils/ms_token_list_utils.c \
 		utils/ms_tokens_utils.c \
 		builtins/ms_builtin_cd.c \
 		builtins/ms_builtin_echo.c \

@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-int	ft_process_special_chars(char *prompt, int *i, t_tkn_stk **tkns)
+static int	ft_process_special_chars(char *prompt, int *i, t_tkn_stk **tkns)
 {
 	int	cnt;
 
@@ -38,7 +38,7 @@ int	ft_process_special_chars(char *prompt, int *i, t_tkn_stk **tkns)
 	return (0);
 }
 
-int	ft_process_word(char *prompt, int *i, int len, t_tkn_stk **tkns)
+static int	ft_process_word(char *prompt, int *i, int len, t_tkn_stk **tkns)
 {
 	int	cnt;
 

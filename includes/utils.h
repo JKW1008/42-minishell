@@ -39,6 +39,7 @@ void		envp_update_while(char **envp, char **old_pwd, char *pwd);
 //	ms_err_uitls.c
 void		ft_error(char *msg);
 size_t		ft_print_ret(char *msg, int value);
+size_t		ft_global_err(int i, int type);
 
 //	ms_excute_utils.c
 char		*find_home_path(char **envp);
@@ -64,12 +65,6 @@ void	handle_rd_out(t_rdr *rdr);
 void	handle_rd_append(t_rdr *rdr);
 void	handle_heredoc(t_rdr *rdr, t_heredoc_list *heredoc_list);
 void	handle_redirections(t_cmd *cmd, t_heredoc_list *heredoc_list);
-
-
-//	ms_token_list_utils.c
-int			ft_process_special_chars(char *prompt, int *i, t_tkn_stk **tkns);
-int			ft_process_word(char *prompt, int *i, int len, t_tkn_stk **tkns);
-void		ft_tokenize_of_while(char *prompt, int len, t_tkn_stk **tkns);
 
 //	ms_tokens_utils.c
 int			ft_valid_quotes(char *prompt);

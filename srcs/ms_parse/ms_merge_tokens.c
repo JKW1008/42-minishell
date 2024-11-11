@@ -62,6 +62,13 @@ static t_token	*merge_tokens(t_token *tkn, t_token *prev)
 	return (new);
 }
 
+static t_token *get_first_token(t_token *token) 
+{
+    while (token && token->prev)
+        token = token->prev;
+    return (token);
+}
+
 size_t	ft_merge_tokens(t_data **data)
 {
 	t_token	*tkn;
@@ -71,7 +78,7 @@ size_t	ft_merge_tokens(t_data **data)
 	tkn = (*data)->tkn->head;
 	while (tkn)
 	{
-		if (tkn->pre_sep == '\'' || tkn->pre_sep == '"')
+		if (tkn->pre_sep != ' ' && tkn->tkn_idx > 0)
 			tkn = merge_tokens(tkn, prev);
 		if (tkn->next)
 		{
@@ -79,8 +86,11 @@ size_t	ft_merge_tokens(t_data **data)
 			tkn = tkn->next;
 		}
 		else
-			return (0);
+		{
+			(*data)->tkn->head = get_first_token(tkn);
+			ft_reidx_tkns((*data)->tkn);
+			break ;
+		}
 	}
-	ft_reidx_tkns((*data)->tkn);
 	return (0);
 }
