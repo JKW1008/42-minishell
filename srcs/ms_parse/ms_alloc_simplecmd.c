@@ -73,6 +73,13 @@ static size_t	get_args(t_cmd *cmd, t_token *tkn)
 	{
 		if (tmp->token_type >= 4 && tmp->token_type <= 7)
 			tmp = tmp->next;
+		else if (tmp->token_type == l_word && !tmp->value)
+		{
+			if (tmp->next)
+				tmp = tmp->next;
+			else
+				return (0);
+		}
 		else if (tmp->token_type == l_word && !cmd->cmd)
 			cmd->cmd = ft_strdup(tmp->value);
 		else if (tmp->token_type == l_word && cmd->cmd)

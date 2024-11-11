@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:06:53 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/11/11 17:06:16 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/11 17:07:18 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ft_prompt(t_data **data)
 	ft_memset(&heredoc_list, 0, sizeof(t_heredoc_list));
 	while (1)
 	{
+		ft_global_err(0, 1);
 		input = readline("$ ");
 		if (!input)
 			break ;

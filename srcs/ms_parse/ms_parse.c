@@ -112,6 +112,8 @@ size_t	ft_parser(t_data **data)
 	(*data)->errno_ = parse(data);
 	(*data)->errno_ = ft_sort_ord(data);
 	if ((*data)->errno_)
+		ft_global_err(1, 1);
+	if (ft_global_err(0, 0) == 1)
 		printf("minishell: syntax error\n");
 	return (ft_strlen((*data)->prompt));
 }
