@@ -52,11 +52,10 @@ int	ft_token_quote(char *prompt, int *start, t_tkn_stk **tkns, char quote)
 
 	i = 1;
 	len = ft_strlen(prompt);
-	while (i < len && prompt[i] != quote)
+	while (i < len && prompt[i + *start] != quote)
 		i++;
 	if (i > len)
 		return (-1);
-	i += 2;
-	ft_add_token(prompt, *start, i, tkns);
-	return (i);
+	ft_add_token(prompt, *start, i + 1, tkns);
+	return (i + 1);
 }

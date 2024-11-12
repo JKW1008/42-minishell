@@ -36,7 +36,6 @@ int		is_special_builtin(t_cmd *cmd);
 void	process_command(t_cmd *cmd, t_pipe_info *info);
 void	execute_pipeline(t_data **data, t_heredoc_list *heredoc_list);
 
-
 //	ms_execute.c
 int		ms_execute(t_cmd *node, t_data **data, int in_child);
 
@@ -54,5 +53,7 @@ void	ft_prompt(t_data **data);
 
 //	ms_signal.c
 void	ft_ctrl_signal(void);
+
+void	ft_destroy_parser_context(t_data **data);
 
 #endif

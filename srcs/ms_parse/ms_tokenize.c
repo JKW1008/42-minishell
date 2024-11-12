@@ -30,15 +30,17 @@ t_token	*ft_creat_token(char *prompt, int start, int cnt)
 	tok->value = ft_substr(prompt, start, cnt);
 	tok->qt_status = ft_quote(tok->value);
 	i = start - 1;
-    while (i >= 0 && ms_ft_isspace(prompt[i]))
-	{
+	while (i >= 0 && ms_ft_isspace(prompt[i]))
 		i--;
-	}
-	tok->pre_sep = (i < start - 1) ? ' ' : '\0'; 
+	if (i < start - 1)
+		tok->pre_sep = ' ';
+	else
+		tok->pre_sep = '\0';
 	tok->next = NULL;
 	tok->prev = NULL;
 	if (ft_valid_quotes(tok->value))
 	{
+		ft_global_err(1, 1);
 		free(tok->value);
 		free(tok);
 		return (NULL);

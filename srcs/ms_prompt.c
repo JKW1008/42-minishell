@@ -50,6 +50,7 @@ void	ft_prompt(t_data **data)
 			i++;
 		}
 		ft_memset(&heredoc_list, 0, sizeof(t_heredoc_list));
+		ft_destroy_parser_context(data);
 	}
 	return ;
 }

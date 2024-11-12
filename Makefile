@@ -19,6 +19,7 @@ SRCS =	ms_cmd.c \
 		ms_main.c \
 		ms_prompt.c \
 		ms_signal.c \
+		ms_destroy_parser.c \
 		ms_parse/ms_alloc_rdr.c \
 		ms_parse/ms_alloc_simplecmd.c \
 		ms_parse/ms_lex_util.c \

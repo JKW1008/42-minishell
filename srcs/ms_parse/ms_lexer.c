@@ -35,6 +35,7 @@ void	ft_set_valex(t_token *tkn, t_data *data)
 		ft_search_envp(&tmp_splitted[idx++], data);
 	free(tkn->value);
 	tkn->value = ft_concate(tmp_splitted, 0, 0);
+	ft_split_free(&tmp_splitted);
 	if (tkn->value && ft_strlen(tkn->value) == 0)
 	{
 		free(tkn->value);

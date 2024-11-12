@@ -141,7 +141,7 @@ int	do_echo(t_cmd *node, t_data **data)
 			ft_putstr_fd(expand, 1);
 			if (node->args[i + 1])
 				ft_putchar_fd(' ', 1);
-			free(expand);
+//			free(expand);
 		}
 		i++;
 	}
