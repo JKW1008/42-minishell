@@ -69,7 +69,7 @@ void	handle_redirections(t_cmd *cmd, t_heredoc_list *heredoc_list);
 //	ms_tokens_utils.c
 int			ft_valid_quotes(char *prompt);
 int			ft_token_metachar(char *prompt, t_tkn_stk **tkns);
-int			ft_token_quote(char *prompt, t_tkn_stk **tkns, char quote);
+int			ft_token_quote(char *prompt, int *start, t_tkn_stk **tkns, char quote);
 t_tkn_stk	*ft_free_tokens(t_tkn_stk *tokens);
 
 #endif

@@ -26,9 +26,8 @@ void	ft_set_valex(t_token *tkn, t_data *data)
 {
 	int		idx;
 	char	**tmp_splitted;
-	
-	idx = 0;
 
+	idx = 0;
 	if (tkn->qt_status == in_single)
 		return ;
 	tmp_splitted = ft_split2(tkn->value, '$');

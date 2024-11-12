@@ -45,7 +45,7 @@ int	ft_token_metachar(char *prompt, t_tkn_stk **tkns)
 	return (1);
 }
 
-int	ft_token_quote(char *prompt, t_tkn_stk **tkns, char quote)
+int	ft_token_quote(char *prompt, int *start, t_tkn_stk **tkns, char quote)
 {
 	int	i;
 	int	len;
@@ -56,6 +56,7 @@ int	ft_token_quote(char *prompt, t_tkn_stk **tkns, char quote)
 		i++;
 	if (i > len)
 		return (-1);
-	ft_add_token(prompt, 0, ++i, tkns);
+	i += 2;
+	ft_add_token(prompt, *start, i, tkns);
 	return (i);
 }

@@ -30,7 +30,8 @@ static int	ft_process_special_chars(char *prompt, int *i, t_tkn_stk **tkns)
 	}
 	else if (prompt[*i] == '"' || prompt[*i] == '\'')
 	{
-		cnt = ft_token_quote(prompt + *i, tkns, prompt[*i]);
+		//cnt = ft_token_quote(prompt + *i, tkns, prompt[*i]);
+		cnt = ft_token_quote(prompt, i, tkns, prompt[*i]);
 		if (cnt == -1)
 			return (-1);
 		*i += cnt;

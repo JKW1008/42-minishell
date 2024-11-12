@@ -62,11 +62,11 @@ static t_token	*merge_tokens(t_token *tkn, t_token *prev)
 	return (new);
 }
 
-static t_token *get_first_token(t_token *token) 
+static t_token	*get_first_token(t_token *token)
 {
-    while (token && token->prev)
-        token = token->prev;
-    return (token);
+	while (token && token->prev)
+		token = token->prev;
+	return (token);
 }
 
 size_t	ft_merge_tokens(t_data **data)

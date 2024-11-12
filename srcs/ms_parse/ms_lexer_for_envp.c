@@ -35,7 +35,7 @@ size_t	ft_search_envp(char **str, t_data *data)
 	int		envp_ord;
 	int		start_idx;
 	char	**item;
-	char 	**tmp;
+	char	**tmp;
 
 	envp_ord = -1;
 	start_idx = 1;
@@ -56,5 +56,5 @@ size_t	ft_search_envp(char **str, t_data *data)
 		*str = ft_concate(tmp, 0, start_idx);
 		free_split(tmp);
 	}
-	return (0);	
+	return (0);
 }

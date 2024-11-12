@@ -22,16 +22,19 @@ void	ft_init_stk_tokens(t_tkn_stk **tkns)
 t_token	*ft_creat_token(char *prompt, int start, int cnt)
 {
 	t_token	*tok;
+	int		i;
 
 	tok = (t_token *)ft_calloc(sizeof(t_token), 1);
 	if (!tok)
 		return (NULL);
 	tok->value = ft_substr(prompt, start, cnt);
 	tok->qt_status = ft_quote(tok->value);
-	if (start > 0)
-		tok->pre_sep = prompt[start - 1];
-	else
-		tok->pre_sep = '\0';
+	i = start - 1;
+    while (i >= 0 && ms_ft_isspace(prompt[i]))
+	{
+		i--;
+	}
+	tok->pre_sep = (i < start - 1) ? ' ' : '\0'; 
 	tok->next = NULL;
 	tok->prev = NULL;
 	if (ft_valid_quotes(tok->value))

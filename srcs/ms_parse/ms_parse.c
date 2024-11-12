@@ -21,7 +21,6 @@ t_cmdline	*ft_init_cmdline(void)
 		return (NULL);
 	cmdline->count = 0;
 	cmdline->head = NULL;
-	// (*data)->cmdline = cmdline;
 	return (cmdline);
 }
 
@@ -42,30 +41,7 @@ static size_t	ft_check_tknlen(t_token *tkn)
 	return (token_count);
 }
 
-//static size_t	parse(t_data **data)
-//{
-//	t_token	*token;
-//	(*data)->cmdline = ft_calloc(sizeof(t_cmdline), 1);
-//	token = (*data)->tkn->head;
-//	while (token->tkn_idx < (*data)->tkn->len)
-//	{
-//		if (token->tkn_idx == 0 || token->token_type == l_pipe)
-//		{
-//			if (ft_check_tknlen(token) == 0)
-//				return (2);
-//			ft_append_cmd(ft_create_cmd(&token, data), 
-//				(*data)->cmdline);
-//		}
-//		if (token->next)
-//			token = token->next;
-//		else
-//			return (0);
-//	}
-//	return (0);
-//}
-
-
-static int		token_move(t_token **tkn, int count)
+static int	token_move(t_token **tkn, int count)
 {
 	int	idx;
 
@@ -77,6 +53,7 @@ static int		token_move(t_token **tkn, int count)
 	}
 	return (0);
 }
+
 static size_t	parse(t_data **data)
 {
 	t_token	*tkn;
@@ -106,6 +83,9 @@ static size_t	parse(t_data **data)
 
 size_t	ft_parser(t_data **data)
 {
+	int	prompt_len;
+
+	
 	(*data)->errno_ = 0;
 	(*data)->errno_ = ft_lexer(data);
 	(*data)->errno_ = ft_merge_tokens(data);
@@ -115,5 +95,6 @@ size_t	ft_parser(t_data **data)
 		ft_global_err(1, 1);
 	if (ft_global_err(0, 0) == 1)
 		printf("minishell: syntax error\n");
-	return (ft_strlen((*data)->prompt));
+	prompt_len = ft_strlen((*data)->prompt);
+	return (prompt_len);
 }
