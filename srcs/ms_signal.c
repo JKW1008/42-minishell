@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 09:39:57 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/10/16 23:54:02 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/11 17:18:30 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,23 @@
 
 extern volatile sig_atomic_t	g_signal_received;
 
-void	sig_ctrl(int sig)
+void sig_ctrl(int sig)
 {
 	if (sig == SIGINT)
 	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		printf("^C\n");
+		g_signal_received = 1;  // SIGINT 받음
+		printf("\n");  // 새 줄
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	else if (sig == SIGQUIT)
 	{
+		g_signal_received = 2;  // SIGQUIT 받음
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	return ;
 }
 
 void	ft_ctrl_signal(void)
