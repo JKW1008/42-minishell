@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:06:53 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/11/11 17:07:18 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/12 17:23:46 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	in_prompt(t_data **data, char *input, t_heredoc_list *list)
 void	ft_prompt(t_data **data)
 {
 	char			*input;
+	char			*pwd;
+	char			*new_pwd;
 	t_heredoc_list	heredoc_list;
 	int				i;
 
@@ -37,7 +39,12 @@ void	ft_prompt(t_data **data)
 	while (1)
 	{
 		ft_global_err(0, 1);
-		input = readline("$ ");
+		pwd = getcwd(NULL, BUFSIZ);
+		new_pwd = ft_strjoin("$", pwd);
+		free(pwd);
+		pwd = ft_strjoin(new_pwd, " ");
+		free(new_pwd);
+		input = readline(pwd);
 		if (!input)
 			break ;
 		(*data)->prompt = input;
