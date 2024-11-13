@@ -54,6 +54,12 @@ static size_t	get_rdr(t_cmd *cmd, t_token **tkn, int idx)
 		cmd->is_heredoc = 1;
 	}
 	(*tkn) = (*tkn)->next;
+	if (!(*tkn) || (*tkn)->token_type != l_word)
+	{
+		cmd->rdr[idx]->file = NULL;
+		ft_global_err(1, 1);
+		return (1);
+	}
 	cmd->rdr[idx]->file = ft_strdup((*tkn)->value);
 	return (0);
 }
@@ -73,7 +79,8 @@ int	ft_cmd_rdr(t_cmd *cmd, t_token *tkn)
 	{
 		while (tmp->token_type < 4 || tmp->token_type > 7)
 			tmp = tmp->next;
-		get_rdr(cmd, &tmp, idx++);
+		if (get_rdr(cmd, &tmp, idx++))
+			return (1);
 		tmp = tmp->next;
 	}
 	cmd->rdr_cnt = cnt;

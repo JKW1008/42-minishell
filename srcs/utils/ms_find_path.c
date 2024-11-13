@@ -100,8 +100,11 @@ char	*find_path(char **envp, char *str)
 	res = check_absolute_or_home_path(str);
 	if (res)
 		return (res);
+	printf("%s\n", envp[i]);
 	while (ft_strnstr(envp[i], "PATH=", 5) == NULL)
 		i++;
+	if (!envp[i])
+        return (NULL);
 	divided = ft_split(envp[i], '=');
 	res = fp_while(divided, str);
 	if (res != NULL)

@@ -29,7 +29,7 @@ static size_t	count_args(t_cmd *cmd, t_token *tkn)
 	}
 	cmd->arg_cnt = total - 1;
 	if (cmd->arg_cnt < 0)
-		return (1);
+		cmd->arg_cnt = 0;
 	cmd->args = (char **) ft_calloc(sizeof(char **), cmd->arg_cnt + 1);
 	return (0);
 }

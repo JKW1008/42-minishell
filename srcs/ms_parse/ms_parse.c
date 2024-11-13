@@ -70,6 +70,8 @@ static size_t	parse(t_data **data)
 			if (tkn_counter == 0)
 				return (2);
 			cmd = ft_create_cmd(&tkn, data);
+			if (!cmd)
+				return (1);
 			ft_append_cmd(cmd, (*data)->cmdline);
 			token_move(&tkn, tkn_counter);
 		}

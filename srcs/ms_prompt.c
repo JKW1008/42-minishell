@@ -19,6 +19,8 @@ void	in_prompt(t_data **data, char *input, t_heredoc_list *list)
 	if ((*data)->prompt == NULL)
 		ft_error("Memory allocation failed");
 	ft_parser(data);
+	if (ft_global_err(0, 0) != 0)
+		return ;
 	process_commands(data, list);
 	execute_pipeline(data, list);
 	free((*data)->prompt);

@@ -27,8 +27,10 @@ t_cmd	*ft_create_cmd(t_token **tkn, t_data **data)
 	cmd = (t_cmd *) ft_calloc(sizeof(t_cmd), 1);
 	if (!cmd)
 		exit(EXIT_FAILURE);
-	ft_cmd_rdr(cmd, *tkn);
-	ft_alloc_simplecmd(cmd, *tkn);
+	if (ft_cmd_rdr(cmd, *tkn))
+		return (NULL);
+	if (ft_alloc_simplecmd(cmd, *tkn))
+		return (NULL);
 	if (*data && (*data)->prompt)
         cmd->prompt = ft_strdup((*data)->prompt);
 	if (cmd->cmd && ft_is_builtin(cmd->cmd) == 1)
