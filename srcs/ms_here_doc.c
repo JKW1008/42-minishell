@@ -42,8 +42,6 @@ size_t needed_size)
 	return (1);
 }
 
-#include <stdio.h>
-
 static int process_heredoc_line(char *delimiter, char **result, \
 size_t *res_len, size_t *res_cap)
 {

@@ -24,8 +24,6 @@ int	main(int ac, char **av, char **envp)
 	ft_ctrl_signal();
 	ft_prompt(&data);
 	free_envp(data->envp);
-	free_split(data->envp);
-	free(data->current_path);
 	free(data);
 	return (EXIT_SUCCESS);
 }

@@ -61,7 +61,6 @@ typedef struct s_tkn_stk
 typedef struct s_data
 {
 	int			errno_;
-	char		*current_path;
 	char		**envp;
 	char		**av;
 	char		*prompt;

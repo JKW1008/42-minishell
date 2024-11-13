@@ -17,6 +17,8 @@ void	destroy_token(t_data **data)
 	t_token *token;
 	t_token	*next;
 
+	if (!(*data)->tkn)
+		return ;
 	token = (*data)->tkn->head;
 	while (token)
 	{
@@ -26,6 +28,8 @@ void	destroy_token(t_data **data)
 		token = next;
 	}
 	free((*data)->tkn);
+	(*data)->tkn = NULL;
+	return ;
 }
 
 
