@@ -49,6 +49,8 @@ size_t	ft_lexer(t_data **data)
 	int			idx;
 
 	(*data)->tkn = ft_tokenize((*data)->prompt);
+	if (ft_global_err(0, 0))
+		return (1);
 	if (!(*data)->tkn)
 		return (ft_print_ret("minishell: Tokenization failed\n", 2));
 	idx = 0;

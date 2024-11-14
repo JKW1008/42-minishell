@@ -181,6 +181,9 @@ void	process_command(t_cmd *cmd, t_pipe_info *info)
 	}
 	if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		signal(SIGTSTP, SIG_DFL);
 		if (info->prev_pipe != -1)
 		{
 			dup2(info->prev_pipe, STDIN_FILENO);
@@ -199,6 +202,10 @@ void	process_command(t_cmd *cmd, t_pipe_info *info)
 	}
 	else
 	{
+		signal(SIGINT, SIG_IGN);
+    	signal(SIGQUIT, SIG_IGN);
+		signal(SIGTSTP, SIG_IGN);
+
 		if (info->prev_pipe != -1)
 			close(info->prev_pipe);
 		if (cmd->next)
@@ -255,4 +262,5 @@ void    execute_pipeline(t_data **data, t_heredoc_list *heredoc_list)
     dup2(info.stdout_backup, STDOUT_FILENO);
     close(info.stdin_backup);
     close(info.stdout_backup);
+	ft_ctrl_signal();
 }
