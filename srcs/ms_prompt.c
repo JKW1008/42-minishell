@@ -58,7 +58,6 @@ void	ft_prompt(t_data **data)
 		(*data)->prompt = input;
 		in_prompt(data, input, &heredoc_list);
 		ft_destroy_parser_context(data, &heredoc_list);	
-		free(input);
 		free(pwd);
 	}
 	free(pwd);

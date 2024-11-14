@@ -39,12 +39,14 @@ void	ft_ctrl_signal(void)
 	//int					rc;
 	// struct termios		term;
 	//set_termios(&term);
+	
+	signal(SIGQUIT, SIG_IGN); 
 	sa.sa_handler = sig_ctrl;
 	if (sigemptyset(&sa.sa_mask) == -1)
 		ft_error("SigEmptySet Error");
 	sa.sa_flags = SA_RESTART;
 	if (sigaction(SIGINT, &sa, 0) == -1)
 		ft_error("SigAction Error");
-	if (sigaction(SIGQUIT, &sa, NULL) == -1)
-		ft_error("SigAction Error");
+	//if (sigaction(SIGQUIT, &sa, NULL) == -1)
+	//	ft_error("SigAction Error");
 }
