@@ -54,6 +54,6 @@ void	ft_prompt(t_data **data);
 //	ms_signal.c
 void	ft_ctrl_signal(void);
 
-void	ft_destroy_parser_context(t_data **data);
+void	ft_destroy_parser_context(t_data **data, t_heredoc_list *h_list);
 
 #endif

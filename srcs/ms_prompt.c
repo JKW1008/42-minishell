@@ -12,8 +12,23 @@
 
 #include "../includes/minishell.h"
 
+static char *ft_set_prompt_pwd(void)
+{
+	char *pwd;
+	char *new_pwd;
+
+	pwd = getcwd(NULL, BUFSIZ);
+	new_pwd = ft_strjoin("$", pwd);
+	free(pwd);
+	pwd = ft_strjoin(new_pwd, " ");
+	free(new_pwd);
+	return (pwd);
+}
+
 void	in_prompt(t_data **data, char *input, t_heredoc_list *list)
 {
+	if (ft_strlen(input) < 1)
+		return ;
 	add_history(input);
 	(*data)->prompt = ft_strdup(input);
 	if ((*data)->prompt == NULL)
@@ -31,35 +46,21 @@ void	ft_prompt(t_data **data)
 {
 	char			*input;
 	char			*pwd;
-	char			*new_pwd;
 	t_heredoc_list	heredoc_list;
-	int				i;
 
 	ft_memset(&heredoc_list, 0, sizeof(t_heredoc_list));
 	while (1)
 	{
 		ft_global_err(0, 1);
-		pwd = getcwd(NULL, BUFSIZ);
-		new_pwd = ft_strjoin("$", pwd);
-		free(pwd);
-		pwd = ft_strjoin(new_pwd, " ");
-		free(new_pwd);
+		pwd = ft_set_prompt_pwd();
 		input = readline(pwd);
 		if (!input)
 			break ;
 		(*data)->prompt = input;
-		if (ft_strlen(input) > 0)
-			in_prompt(data, input, &heredoc_list);
+		in_prompt(data, input, &heredoc_list);
+		ft_destroy_parser_context(data, &heredoc_list);	
 		free(input);
-		i = 0;
-		while (i < heredoc_list.count)
-		{
-			free(heredoc_list.heredocs[i].content);
-			free(heredoc_list.heredocs[i].delimiter);
-			i++;
-		}
-		ft_memset(&heredoc_list, 0, sizeof(t_heredoc_list));
-		ft_destroy_parser_context(data);
+		free(pwd);
 	}
 	return ;
 }
