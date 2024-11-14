@@ -29,9 +29,19 @@ size_t	ft_print_ret(char *msg, int value)
 
 size_t	ft_global_err(int i, int type)
 {
-	static size_t err;
+	static size_t	now_err;
+	static size_t	old_err;
 
-	if (type == 1)
-		err = i;
-	return (err);
+	if (type == 0)
+		;
+	else if (type == 1)
+		now_err = i;
+	else if (type == 2)
+		return (old_err);
+	else if (type == 3)
+	{
+		old_err = now_err;
+		now_err = 0;
+	}
+	return (now_err);
 }

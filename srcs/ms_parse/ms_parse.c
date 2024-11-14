@@ -84,9 +84,7 @@ static size_t	parse(t_data **data)
 }
 
 size_t	ft_parser(t_data **data)
-{
-	int	prompt_len;
-	
+{	
 	(*data)->errno_ = 0;
 	(*data)->errno_ = ft_lexer(data);
 	(*data)->errno_ = ft_merge_tokens(data);
@@ -94,8 +92,9 @@ size_t	ft_parser(t_data **data)
 	(*data)->errno_ = ft_sort_ord(data);
 	if ((*data)->errno_)
 		ft_global_err((*data)->errno_, 1);
-	if (ft_global_err(0, 0) != 0)
+	if ((*data)->errno_ || ft_global_err(0, 0))
 		printf("minishell: syntax error\n");
-	prompt_len = ft_strlen((*data)->prompt);
-	return (prompt_len);
+	else
+		ft_global_err(0, 1);
+	return (0);
 }

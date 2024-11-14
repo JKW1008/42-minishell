@@ -30,28 +30,47 @@ static size_t	ft_replace_envp_val(char **str, int i, char **item)
 	return (0);
 }
 
-size_t	ft_search_envp(char **str, t_data *data)
+static int	convert_envp_value(char **value, t_data *data)
 {
 	int		envp_ord;
-	int		start_idx;
 	char	**item;
-	char	**tmp;
 
 	envp_ord = -1;
+	while (data->envp[++envp_ord])
+	{
+		item = ft_split(data->envp[envp_ord], '=');
+		if (ft_strncmp(*value + 1, item[0], ft_strlen(*value + 1)) == 0)
+		{
+			ft_replace_envp_val(value, 0, item);
+		}
+		free_split(item);
+	}
+	return (0);
+}
+
+static size_t	ft_search_errno(char **str)
+{
+	char	*err;
+
+	err = ft_itoa(ft_global_err(0, 2));
+	free(*str);
+	*str = err;
+	return (0);
+}
+
+size_t	ft_search_envp(char **str, t_data *data)
+{
+	int		start_idx;
+	char	**tmp;
+
 	start_idx = 1;
 	if (*str[0] == '$' && ft_strlen(*str) > 1)
 	{
 		tmp = ft_split2(*str, ' ');
-		while (data->envp[++envp_ord])
-		{
-			item = ft_split(data->envp[envp_ord], '=');
-			if (ft_strncmp(tmp[0] + 1, item[0], ft_strlen(tmp[0] + 1)) == 0)
-			{
-				ft_replace_envp_val(&tmp[0], 0, item);
-				start_idx = 0;
-			}
-			free_split(item);
-		}
+		if (ft_strncmp(tmp[0], "$?", ft_strlen(tmp[0])) == 0)
+			start_idx = ft_search_errno(&tmp[0]);
+		else
+			start_idx = convert_envp_value(&tmp[0], data);
 		free(*str);
 		*str = ft_concate(tmp, 0, start_idx);
 		free_split(tmp);

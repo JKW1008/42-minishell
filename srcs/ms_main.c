@@ -25,5 +25,6 @@ int	main(int ac, char **av, char **envp)
 	ft_prompt(&data);
 	free_envp(data->envp);
 	free(data);
+	printf("exit\n");
 	return (EXIT_SUCCESS);
 }

@@ -15,6 +15,7 @@
 int	ft_valid_quotes(char *prompt)
 {
 	int	len;
+
 	len = ft_strlen(prompt);
 	if (prompt[0] == '\'' || prompt[0] == '"')
 	{

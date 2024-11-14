@@ -38,8 +38,7 @@ void	in_prompt(t_data **data, char *input, t_heredoc_list *list)
 		return ;
 	process_commands(data, list);
 	execute_pipeline(data, list);
-	free((*data)->prompt);
-	(*data)->prompt = NULL;
+
 }
 
 void	ft_prompt(t_data **data)
@@ -51,7 +50,7 @@ void	ft_prompt(t_data **data)
 	ft_memset(&heredoc_list, 0, sizeof(t_heredoc_list));
 	while (1)
 	{
-		ft_global_err(0, 1);
+		ft_global_err(0, 3);
 		pwd = ft_set_prompt_pwd();
 		input = readline(pwd);
 		if (!input)
@@ -62,5 +61,6 @@ void	ft_prompt(t_data **data)
 		free(input);
 		free(pwd);
 	}
+	free(pwd);
 	return ;
 }

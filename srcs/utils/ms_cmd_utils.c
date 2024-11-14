@@ -22,7 +22,6 @@ void	ft_create_cmd_for_lword(t_cmd **cmd, t_token **tkn)
 t_cmd	*ft_create_cmd(t_token **tkn, t_data **data)
 {
 	t_cmd	*cmd;
-//	t_token	*tmp;
 
 	cmd = (t_cmd *) ft_calloc(sizeof(t_cmd), 1);
 	if (!cmd)
@@ -32,7 +31,7 @@ t_cmd	*ft_create_cmd(t_token **tkn, t_data **data)
 	if (ft_alloc_simplecmd(cmd, *tkn))
 		return (NULL);
 	if (*data && (*data)->prompt)
-        cmd->prompt = ft_strdup((*data)->prompt);
+		cmd->prompt = ft_strdup((*data)->prompt);
 	if (cmd->cmd && ft_is_builtin(cmd->cmd) == 1)
 		cmd->is_builtin = 1;
 	return (cmd);

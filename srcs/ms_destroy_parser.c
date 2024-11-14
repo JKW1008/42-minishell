@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-void	destroy_token(t_data **data)
+static void	destroy_token(t_data **data)
 {
 	t_token *token;
 	t_token	*next;
@@ -32,7 +32,7 @@ void	destroy_token(t_data **data)
 	return ;
 }
 
-void	destroy_cmdline(t_data **data)
+static void	destroy_cmdline(t_data **data)
 {
 	t_cmd	*cmd;
 	t_cmd	*next;
@@ -44,7 +44,7 @@ void	destroy_cmdline(t_data **data)
 		i = 0;
 		free(cmd->cmd);
 		free(cmd->prompt);
-		while (i < cmd->rdr_cnt)
+		while (cmd->rdr[i])
 		{
 			free(cmd->rdr[i]->file);
 			free(cmd->rdr[i++]);
@@ -60,7 +60,7 @@ void	destroy_cmdline(t_data **data)
 	}
 }
 
-void	destory_heredoc(t_heredoc_list *h_list)
+static void	destory_heredoc(t_heredoc_list *h_list)
 {
 	int	i;
 	
@@ -85,4 +85,6 @@ void	ft_destroy_parser_context(t_data **data, t_heredoc_list *h_list)
 	if ((*data)->tkn)
 		destroy_token(data);
 	destory_heredoc(h_list);
+	free((*data)->prompt);
+	(*data)->prompt = NULL;
 }
