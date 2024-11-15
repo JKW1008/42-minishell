@@ -12,6 +12,22 @@
 
 #include "../includes/minishell.h"
 
+extern volatile sig_atomic_t	g_signal_received;
+
+void	wait_all_children(void)
+{
+	int		status;
+
+	while (wait(&status) > 0)
+	 ;
+	if (WIFEXITED(status))
+		ft_global_err(WEXITSTATUS(status), 1);
+	else if (WIFSIGNALED(status))
+		ft_global_err(128 + WTERMSIG(status), 1);
+    else if (WIFSTOPPED(status))
+		g_signal_received = 3;
+}
+
 void cat_command(t_cmd *cmd)
 {
 	if (ft_strncmp(cmd->cmd, "cat", 4) == 0 && cmd->arg_cnt == 0)
@@ -114,6 +130,7 @@ int	is_special_builtin(t_cmd *cmd)
 		return (1);
 	return (0);
 }
+
 void	handle_redirection_only(t_cmd *cmd, t_pipe_info *info)
 {
 	pid_t pid;
@@ -169,6 +186,22 @@ void	handle_redirection_only(t_cmd *cmd, t_pipe_info *info)
 	}
 }
 
+void	default_signal(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGTSTP, SIG_DFL);
+	return ;
+}
+
+void	stop_signal(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
+	return ;
+}
+
 void	process_command(t_cmd *cmd, t_pipe_info *info)
 {
 	pid_t	pid;
@@ -179,11 +212,10 @@ void	process_command(t_cmd *cmd, t_pipe_info *info)
 		perror("fork");
 		exit(1);
 	}
+//	default_signal();
 	if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-		signal(SIGTSTP, SIG_DFL);
+		
 		if (info->prev_pipe != -1)
 		{
 			dup2(info->prev_pipe, STDIN_FILENO);
@@ -202,10 +234,7 @@ void	process_command(t_cmd *cmd, t_pipe_info *info)
 	}
 	else
 	{
-		signal(SIGINT, SIG_IGN);
-    	signal(SIGQUIT, SIG_IGN);
-		signal(SIGTSTP, SIG_IGN);
-
+		stop_signal();
 		if (info->prev_pipe != -1)
 			close(info->prev_pipe);
 		if (cmd->next)
@@ -217,6 +246,7 @@ void	process_command(t_cmd *cmd, t_pipe_info *info)
 			info->prev_pipe = -1;
 	}
 }
+
 void    execute_pipeline(t_data **data, t_heredoc_list *heredoc_list)
 {
     t_cmd       *cmd;
@@ -256,8 +286,9 @@ void    execute_pipeline(t_data **data, t_heredoc_list *heredoc_list)
         }
         i++;
     }
-    while (wait(NULL) > 0)
-        ;
+    //while (wait(NULL) > 0)
+    //    ;
+	wait_all_children();
     dup2(info.stdin_backup, STDIN_FILENO);
     dup2(info.stdout_backup, STDOUT_FILENO);
     close(info.stdin_backup);

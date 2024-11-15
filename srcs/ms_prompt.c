@@ -50,6 +50,7 @@ void	ft_prompt(t_data **data)
 	ft_memset(&heredoc_list, 0, sizeof(t_heredoc_list));
 	while (1)
 	{
+		// ft_ctrl_signal();
 		ft_global_err(0, 3);
 		pwd = ft_set_prompt_pwd();
 		input = readline(pwd);
