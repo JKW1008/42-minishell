@@ -52,6 +52,22 @@ void cat_command(t_cmd *cmd)
 	}
 }
 
+void check_dir(t_cmd *cmd)
+{
+	struct stat	*buf;
+
+	buf = ft_calloc(sizeof(struct stat), 1);
+	stat(cmd->cmd, buf);
+	if (S_ISDIR(buf->st_mode))
+	{
+		ft_putstr_fd("Minishell: Is Directory\n", STDERR_FILENO);
+		free(buf);
+		exit(1);
+	}
+	free(buf);
+	return ;
+}
+
 void execute_command(t_cmd *cmd, t_data **data)
 {
 	char	*full_path;
@@ -61,6 +77,7 @@ void execute_command(t_cmd *cmd, t_data **data)
 	if (!cmd->cmd || cmd->cmd[0] == '\0')
 		exit(0);
 	cat_command(cmd);
+	check_dir(cmd);
 	full_path = find_path((*data)->envp, cmd->cmd);
 	if (!full_path)
 	{
@@ -249,49 +266,47 @@ void	process_command(t_cmd *cmd, t_pipe_info *info)
 
 void    execute_pipeline(t_data **data, t_heredoc_list *heredoc_list)
 {
-    t_cmd       *cmd;
-    t_pipe_info info;
-    int         i;
+	t_cmd		*cmd;
+	t_pipe_info	info;
+	int			i;
 
 	i = 1;
-    info.prev_pipe = -1;
-    info.stdin_backup = dup(STDIN_FILENO);
-    info.stdout_backup = dup(STDOUT_FILENO);
-    info.heredoc_list = heredoc_list;
-    info.data = data;
-    while (i <= (*data)->cmdline->count)
-    {
-        cmd = (*data)->cmdline->head;
-        while (cmd)
-        {
-            if (cmd->ord == i)
-            {
-                if (cmd->next)
-                {
-                    if (pipe(info.pipe_fd) == -1)
-                    {
-                        perror("pipe");
-                        exit(1);
-                    }
-                }
-                
-                if (cmd->is_builtin && is_special_builtin(cmd))
-                    ms_execute(cmd, data, 0);
-                else if (cmd->rdr_cnt > 0 && (!cmd->cmd || cmd->cmd[0] == '\0'))
-                    handle_redirection_only(cmd, &info);
-                else
-                    process_command(cmd, &info);
-            }
-            cmd = cmd->next;
-        }
-        i++;
-    }
-    //while (wait(NULL) > 0)
-    //    ;
+	info.prev_pipe = -1;
+	info.stdin_backup = dup(STDIN_FILENO);
+	info.stdout_backup = dup(STDOUT_FILENO);
+	info.heredoc_list = heredoc_list;
+	info.data = data;
+	while (i <= (*data)->cmdline->count)
+	{
+		cmd = (*data)->cmdline->head;
+		while (cmd)
+		{
+			if (cmd->ord == i)
+			{
+				if (cmd->next)
+				{
+					if (pipe(info.pipe_fd) == -1)
+					{
+						perror("pipe");
+						exit(1);
+					}
+				}
+				
+				if (cmd->is_builtin && is_special_builtin(cmd))
+					ms_execute(cmd, data, 0);
+				else if (cmd->rdr_cnt > 0 && (!cmd->cmd || cmd->cmd[0] == '\0'))
+					handle_redirection_only(cmd, &info);
+				else
+					process_command(cmd, &info);
+			}
+			cmd = cmd->next;
+		}
+		i++;
+	}
 	wait_all_children();
-    dup2(info.stdin_backup, STDIN_FILENO);
-    dup2(info.stdout_backup, STDOUT_FILENO);
-    close(info.stdin_backup);
-    close(info.stdout_backup);
+	dup2(info.stdin_backup, STDIN_FILENO);
+	dup2(info.stdout_backup, STDOUT_FILENO);
+	close(info.stdin_backup);
+	close(info.stdout_backup);
 	ft_ctrl_signal();
 }

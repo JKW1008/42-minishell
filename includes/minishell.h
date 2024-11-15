@@ -28,6 +28,7 @@
 # include "utils.h"
 # include "../libft/libft.h"
 # include <sys/wait.h>
+# include <sys/stat.h>
 
 //	ms_cmd.c
 void	handle_child_process(t_cmd *cmd, t_pipe_info *info);

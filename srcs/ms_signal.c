@@ -26,17 +26,14 @@ void sig_ctrl(int sig)
 	}
 	else if (sig == SIGQUIT)
 	{
-		g_signal_received = 2;  // SIGQUIT 받음
+		g_signal_received = 2; 
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	else if (sig == SIGTSTP)
     {
-        g_signal_received = 3;// SIGTSTP 받음
-		//signal(SIGTSTP, SIG_DFL);
-		//raise(SIGTSTP);            // 현재 프로세스에 SIGTSTP 시그널 전송
-        //signal(SIGTSTP, sig_ctrl);
+        g_signal_received = 3;
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();

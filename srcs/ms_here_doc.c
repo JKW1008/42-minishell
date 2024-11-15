@@ -12,6 +12,15 @@
 
 #include "../includes/minishell.h"
 
+void	heredoc_sighandler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		ft_global_err(130, 1);
+		write(STDOUT_FILENO, "\n", 1);
+	}
+}
+
 char	*get_input(char *prompt)
 {
 	char	*line;
@@ -48,9 +57,14 @@ size_t *res_len, size_t *res_cap)
     char    *line;
     size_t  line_len;
 
+	if (ft_global_err(0, 0))
+		return (0);
     line = get_input("> ");
-    if (!line)  // Ctrl+D나 EOF
-        return (0);
+	if (!line || ft_global_err(0, 0))  // Ctrl+D나 EOF
+    {
+		free(line);
+		return (0);
+	}
     
     // delimiter와 정확히 일치할 때만 종료 (길이와 내용 모두 같아야 함)
 	printf("line : %s, delim = %s\n", line, delimiter);
@@ -94,7 +108,7 @@ char    *set_heredoc(t_cmd *node, int *here_idx)
     char    *delimiter;
     size_t  res_len;
     size_t  res_cap;
-	int	i;
+	int		i;
 
 	i = 0;
 	while (i < node->rdr_cnt)
@@ -110,11 +124,27 @@ char    *set_heredoc(t_cmd *node, int *here_idx)
     res_len = 0;
     res_cap = 0;
 	*here_idx = i;
-    while (1)
+
+	void (*old_handler)(int) = signal(SIGINT, heredoc_sighandler);
+    while (!ft_global_err(0, 0))
     {
         if (!process_heredoc_line(delimiter, &result, &res_len, &res_cap))
-            break ;
+        {
+			if (ft_global_err(0, 0) > 0)
+			{
+				free(result);
+				result = NULL;
+			}
+			break ;
+		}
     }
+	signal(SIGINT, old_handler);
+	ft_ctrl_signal();
+	if (ft_global_err(0, 0) && result)
+	{
+		free(result);
+		result = NULL;
+	}
     return (result);
 }
 
@@ -126,6 +156,8 @@ void process_commands(t_data **data, t_heredoc_list *heredoc_list)
 	int		here_idx;
 
     i = 1;
+	if (ft_global_err(0, 0) != 0)
+		return ;
     while (i <= (*data)->cmdline->count)
     {
         tmp = (*data)->cmdline->head;
