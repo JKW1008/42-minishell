@@ -26,14 +26,14 @@ void sig_ctrl(int sig)
 	}
 	else if (sig == SIGQUIT)
 	{
-		g_signal_received = 2; 
+		g_signal_received = SIGQUIT; 
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	else if (sig == SIGTSTP)
     {
-        g_signal_received = 3;
+        g_signal_received = SIGTSTP;
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -68,10 +68,8 @@ void ft_ctrl_signal(void)
     sa.sa_handler = sig_ctrl;
     sigemptyset(&sa.sa_mask);
     sa.sa_flags = SA_RESTART;
-    
+    signal(SIGQUIT, SIG_IGN);
     if (sigaction(SIGINT, &sa, NULL) == -1)
-        ft_error("SigAction Error");
-    if (sigaction(SIGQUIT, &sa, NULL) == -1)
         ft_error("SigAction Error");
     if (sigaction(SIGTSTP, &sa, NULL) == -1)
         ft_error("SigAction Error");
