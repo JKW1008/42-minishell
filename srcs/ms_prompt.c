@@ -61,6 +61,7 @@ void	ft_prompt(t_data **data)
 		ft_destroy_parser_context(data, &heredoc_list);	
 		free(pwd);
 	}
+	ft_destroy_parser_context(data, &heredoc_list);	
 	free(pwd);
 	return ;
 }
