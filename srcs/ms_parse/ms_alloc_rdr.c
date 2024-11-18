@@ -61,6 +61,7 @@ static size_t	get_rdr(t_cmd *cmd, t_token **tkn, int idx)
 		return (1);
 	}
 	cmd->rdr[idx]->file = ft_strdup((*tkn)->value);
+	cmd->rdr[idx]->fd = 0;
 	return (0);
 }
 

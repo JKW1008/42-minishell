@@ -229,7 +229,7 @@ void	process_command(t_cmd *cmd, t_pipe_info *info)
 		perror("fork");
 		exit(1);
 	}
-//	default_signal();
+	default_signal();
 	if (pid == 0)
 	{
 		

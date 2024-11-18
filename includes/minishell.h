@@ -41,9 +41,9 @@ void	execute_pipeline(t_data **data, t_heredoc_list *heredoc_list);
 int		ms_execute(t_cmd *node, t_data **data, int in_child);
 
 //	ms_here_doc.c
-char	*get_input(char *prompt);
-char	*set_heredoc(t_cmd *node, int *heredoc_idx);
-void	process_commands(t_data **data, t_heredoc_list *heredoc_list);
+//char	*get_input(char *prompt);
+//char	*set_heredoc(t_cmd *node, int *heredoc_idx);
+void	process_commands(t_data **data);
 
 //	ms_init.c
 char	**copy_envp(char **envp);

@@ -15,6 +15,7 @@ OBJS_DIR = ./objs
 SRCS =	ms_cmd.c \
 		ms_execute.c \
 		ms_here_doc.c \
+		ms_here_doc_new.c \
 		ms_init.c \
 		ms_main.c \
 		ms_prompt.c \

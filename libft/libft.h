@@ -14,6 +14,9 @@
 # define LIBFT_H
 # include <stdlib.h>
 # include <unistd.h>
+# ifndef BUFFER_SIZE
+# define BUFFER_SIZE 42
+# endif
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -53,5 +56,9 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+size_t	ft_gnl_strlen(const char *s, char c);
+char	*ft_gnl_strjoin(char *s1, char const *s2);
+char	*ft_gnl_strdup(char *s, int extra_size);
+char	*get_next_line(int fd);
 
 #endif

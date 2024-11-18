@@ -54,33 +54,33 @@ void	handle_rd_append(t_rdr *rdr)
 	close(fd);
 }
 
-void	handle_heredoc(t_rdr *rdr, t_heredoc_list *heredoc_list)
-{
-	int			j;
-	int			pipefd[2];
-	t_heredoc	*current_heredoc;
-
-	j = 0;
-	while (j < heredoc_list->count)
-	{
-		current_heredoc = &(heredoc_list->heredocs[j]);
-		if (strcmp(rdr->file, current_heredoc->delimiter) == 0)
-		{
-			if (pipe(pipefd) == -1)
-			{
-				perror("pipe");
-				exit(1);
-			}
-			write(pipefd[1], current_heredoc->content, \
-			strlen(current_heredoc->content));
-			close(pipefd[1]);
-			dup2(pipefd[0], STDIN_FILENO);
-			close(pipefd[0]);
-			break ;
-		}
-		j++;
-	}
-}
+//void	handle_heredoc(t_rdr *rdr, t_heredoc_list *heredoc_list)
+//{
+//	int			j;
+//	int			pipefd[2];
+	//	t_heredoc	*current_heredoc;
+	//j = 0;
+	//while (j < heredoc_list->count)
+	//{
+	//	current_heredoc = &(heredoc_list->heredocs[j]);
+	//	if (strcmp(rdr->file, current_heredoc->delimiter) == 0)
+	//	{
+	//		if (pipe(pipefd) == -1)
+	//		{
+	//			perror("pipe");
+	//			exit(1);
+	//		}
+	//		write(pipefd[1], current_heredoc->content, \
+	//		strlen(current_heredoc->content));
+	//		close(pipefd[1]);
+	//		dup2(pipefd[0], STDIN_FILENO);
+	//		close(pipefd[0]);
+	//		break ;
+	//	}
+	//	j++;
+	//}
+	
+//}
 
 void	handle_redirections(t_cmd *cmd, t_heredoc_list *heredoc_list)
 {
@@ -96,7 +96,9 @@ void	handle_redirections(t_cmd *cmd, t_heredoc_list *heredoc_list)
 		else if (cmd->rdr[i]->type == RD_APPEND)
 			handle_rd_append(cmd->rdr[i]);
 		else if (cmd->rdr[i]->type == RD_HEREDOC)
-			handle_heredoc(cmd->rdr[i], heredoc_list);
+			dup2(cmd->rdr[i]->fd, STDIN_FILENO);
+		heredoc_list = NULL;
+			//handle_heredoc(cmd->rdr[i], heredoc_list);
 		i++;
 	}
 }

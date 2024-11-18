@@ -36,7 +36,7 @@ void	in_prompt(t_data **data, char *input, t_heredoc_list *list)
 	ft_parser(data);
 	if (ft_global_err(0, 0) != 0)
 		return ;
-	process_commands(data, list);
+	process_commands(data);
 	execute_pipeline(data, list);
 
 }
