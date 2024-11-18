@@ -42,10 +42,11 @@ static int	convert_envp_value(char **value, t_data *data)
 		if (ft_strncmp(*value + 1, item[0], ft_strlen(*value + 1)) == 0)
 		{
 			ft_replace_envp_val(value, 0, item);
+			return (0);
 		}
 		free_split(item);
 	}
-	return (0);
+	return (1);
 }
 
 static size_t	ft_search_errno(char **str)
