@@ -14,7 +14,6 @@ OBJS_DIR = ./objs
 
 SRCS =	ms_cmd.c \
 		ms_execute.c \
-		ms_here_doc.c \
 		ms_here_doc_new.c \
 		ms_init.c \
 		ms_main.c \
@@ -44,7 +43,7 @@ SRCS =	ms_cmd.c \
 		utils/ms_handle_rdr.c \
 		utils/ms_tokens_utils.c \
 		builtins/ms_builtin_cd.c \
-		builtins/ms_builtin_echo.c \
+		builtins/ms_builtin_echo_new.c \
 		builtins/ms_builtin_env.c \
 		builtins/ms_builtin_exit.c \
 		builtins/ms_builtin_export.c \

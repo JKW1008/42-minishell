@@ -34,7 +34,7 @@ int	ms_ft_isspace(int c)
 
 int	ft_is_metachar(char c)
 {
-	return (c == '|' || c == '<' || c == '>' || c == '&' || c == '=');
+	return (c == '|' || c == '<' || c == '>' || c == '&');
 }
 
 t_quote_tbl	ft_quote(char *str)

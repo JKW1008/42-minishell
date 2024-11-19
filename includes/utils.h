@@ -64,7 +64,7 @@ void	handle_rd_in(t_rdr *rdr);
 void	handle_rd_out(t_rdr *rdr);
 void	handle_rd_append(t_rdr *rdr);
 void	handle_heredoc(t_rdr *rdr, t_heredoc_list *heredoc_list);
-void	handle_redirections(t_cmd *cmd, t_heredoc_list *heredoc_list);
+void	handle_redirections(t_cmd *cmd);
 
 //	ms_tokens_utils.c
 int			ft_valid_quotes(char *prompt);

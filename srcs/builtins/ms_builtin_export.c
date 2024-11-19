@@ -67,6 +67,7 @@ void	process_env_variable(t_data **data, char *cd_j)
 	int		cnt;
 
 	eq = ft_strchr(cd_j, '=');
+	printf("%s\n", eq);
 	if (!validate_env_name(cd_j, &env, eq))
 		return ;
 	if (!update_existing_env((*data)->envp, env, cd_j, eq))
@@ -88,8 +89,8 @@ void	process_env_variable(t_data **data, char *cd_j)
 void	export(t_cmd *node, t_data **data)
 {
 	int		i;
-	char	*full_args;
-	char	*temp;
+	//char	*full_args;
+	//char	*temp;
 
 	i = 0;
 	if (!node->args || !node->args[0])
@@ -97,18 +98,22 @@ void	export(t_cmd *node, t_data **data)
 		print_and_free((*data)->envp);
 		return ;
 	}
-	while (node->args[i])
+	while (i < node->arg_cnt)
 	{
-		if (i + 2 < node->arg_cnt && ft_strncmp(node->args[i + 1], "=", 1) == 0)
+		if (node->args[i])
 		{
-			temp = ft_strjoin(node->args[i], node->args[i + 1]);
-			full_args = ft_strjoin(temp, node->args[i + 2]);
-			free(temp);
-			process_env_variable(data, full_args);
-			free(full_args);
-			i += 3;
-		}
-		else
 			process_env_variable(data, node->args[i++]);
+		}
+		//if (i + 2 < node->arg_cnt && ft_strncmp(node->args[i + 1], "=", 1) == 0)
+		//{
+		//	temp = ft_strjoin(node->args[i], node->args[i + 1]);
+		//	full_args = ft_strjoin(temp, node->args[i + 2]);
+		//	free(temp);
+		//	process_env_variable(data, full_args);
+		//	free(full_args);
+		//	i += 3;
+		//}
+		//else
+		//	process_env_variable(data, node->args[i++]);
 	}
 }

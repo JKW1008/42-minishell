@@ -15,7 +15,7 @@
 int	ms_execute(t_cmd *node, t_data **data, int in_child)
 {
 	if (!ft_strncmp(node->cmd, "echo", 4))
-		return (do_echo(node, data));
+		return (do_echo(node));
 	else if (!ft_strncmp(node->cmd, "cd", 2))
 	{
 		if (!in_child)

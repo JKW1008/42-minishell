@@ -120,32 +120,32 @@ void	print_question_env(t_data **data)
 	return ;
 }
 
-int	do_echo(t_cmd *node, t_data **data)
-{
-	char	*expand;
-	int		i;
-	int		check_n;
+//int	do_echo(t_cmd *node, t_data **data)
+//{
+//	char	*expand;
+//	int		i;
+//	int		check_n;
 
-	check_n = process_echo_options(node->args, &i);
-	while (node->args[i])
-	{
-//		expand = expand_env(node->args[i], data);
-		expand = node->args[i];
-		if (ft_strncmp(node->args[i], "$?", 2) == 0)
-		{
-			print_question_env(data);
-			return (0);
-		}
-		if (expand)
-		{
-			ft_putstr_fd(expand, 1);
-			if (node->args[i + 1])
-				ft_putchar_fd(' ', 1);
-//			free(expand);
-		}
-		i++;
-	}
-	if (check_n)
-		ft_putchar_fd('\n', 1);
-	return (0);
-}
+//	check_n = process_echo_options(node->args, &i);
+//	while (node->args[i])
+//	{
+////		expand = expand_env(node->args[i], data);
+//		expand = node->args[i];
+//		if (ft_strncmp(node->args[i], "$?", 2) == 0)
+//		{
+//			print_question_env(data);
+//			return (0);
+//		}
+//		if (expand)
+//		{
+//			ft_putstr_fd(expand, 1);
+//			if (node->args[i + 1])
+//				ft_putchar_fd(' ', 1);
+////			free(expand);
+//		}
+//		i++;
+//	}
+//	if (check_n)
+//		ft_putchar_fd('\n', 1);
+//	return (0);
+//}

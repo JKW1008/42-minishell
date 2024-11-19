@@ -25,7 +25,7 @@ static char *ft_set_prompt_pwd(void)
 	return (pwd);
 }
 
-void	in_prompt(t_data **data, char *input, t_heredoc_list *list)
+void	in_prompt(t_data **data, char *input)
 {
 	if (ft_strlen(input) < 1)
 		return ;
@@ -37,7 +37,7 @@ void	in_prompt(t_data **data, char *input, t_heredoc_list *list)
 	if (ft_global_err(0, 0) != 0)
 		return ;
 	process_commands(data);
-	execute_pipeline(data, list);
+	execute_pipeline(data);
 
 }
 
@@ -45,9 +45,9 @@ void	ft_prompt(t_data **data)
 {
 	char			*input;
 	char			*pwd;
-	t_heredoc_list	heredoc_list;
+//	t_heredoc_list	heredoc_list;
 
-	ft_memset(&heredoc_list, 0, sizeof(t_heredoc_list));
+//	ft_memset(&heredoc_list, 0, sizeof(t_heredoc_list));
 	while (1)
 	{
 		// ft_ctrl_signal();
@@ -57,11 +57,11 @@ void	ft_prompt(t_data **data)
 		if (!input)
 			break ;
 		(*data)->prompt = input;
-		in_prompt(data, input, &heredoc_list);
-		ft_destroy_parser_context(data, &heredoc_list);	
+		in_prompt(data, input);
+		ft_destroy_parser_context(data);	
 		free(pwd);
 	}
-	ft_destroy_parser_context(data, &heredoc_list);	
+//	ft_destroy_parser_context(data, &heredoc_list);	
 	free(pwd);
 	return ;
 }

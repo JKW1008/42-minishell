@@ -113,7 +113,7 @@ void	handle_child_process(t_cmd *cmd, t_pipe_info *info)
 		dup2(info->prev_pipe, STDIN_FILENO);
 		close(info->prev_pipe);
 	}
-	handle_redirections(cmd, info->heredoc_list);
+	handle_redirections(cmd);
 	if (cmd->is_builtin)
 		exit(ms_execute(cmd, info->data, 1));
 	else if (!cmd->is_builtin && !cmd->is_heredoc)
@@ -174,7 +174,7 @@ void	handle_redirection_only(t_cmd *cmd, t_pipe_info *info)
 			dup2(info->pipe_fd[1], STDOUT_FILENO);
 			close(info->pipe_fd[1]);
 		}
-		handle_redirections(cmd, info->heredoc_list);
+		handle_redirections(cmd);
 		while ((bytes_read = read(STDIN_FILENO, buffer, sizeof(buffer))) > 0)
 		{
 			if (bytes_read == 1 && buffer[0] == '\n')
@@ -243,7 +243,7 @@ void	process_command(t_cmd *cmd, t_pipe_info *info)
 			dup2(info->pipe_fd[1], STDOUT_FILENO);
 			close(info->pipe_fd[1]);
 		}
-		handle_redirections(cmd, info->heredoc_list);
+		handle_redirections(cmd);
 		if (cmd->is_builtin)
 			exit(ms_execute(cmd, info->data, 1));
 		else
@@ -264,7 +264,7 @@ void	process_command(t_cmd *cmd, t_pipe_info *info)
 	}
 }
 
-void    execute_pipeline(t_data **data, t_heredoc_list *heredoc_list)
+void    execute_pipeline(t_data **data)
 {
 	t_cmd		*cmd;
 	t_pipe_info	info;
@@ -274,7 +274,7 @@ void    execute_pipeline(t_data **data, t_heredoc_list *heredoc_list)
 	info.prev_pipe = -1;
 	info.stdin_backup = dup(STDIN_FILENO);
 	info.stdout_backup = dup(STDOUT_FILENO);
-	info.heredoc_list = heredoc_list;
+//	info.heredoc_list = heredoc_list;
 	info.data = data;
 	while (i <= (*data)->cmdline->count)
 	{

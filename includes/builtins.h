@@ -24,7 +24,7 @@ char	*join_char(char *result, char c);
 char	*expand_env_var(char *arg, int *i, t_data **data, char *result);
 char	*expand_env(char *arg, t_data **data);
 int		process_echo_options(char **divided, int *i);
-int		do_echo(t_cmd *node, t_data **data);
+int		do_echo(t_cmd *node);
 
 //	ms_builtin_env.c
 int		is_env_name(char *str);

@@ -17,8 +17,7 @@ void	heredoc_sighandler(int sig)
 	if (sig == SIGINT)
 	{
 		ft_global_err(130, 1);
-		write(STDOUT_FILENO, "^fuck\n", 6);
-		write(STDOUT_FILENO, 0, 1);
+		write(STDOUT_FILENO, 0, 0);
 	}
 }
 
