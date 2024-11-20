@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 07:03:28 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/20 15:25:19 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/20 17:43:33 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,7 @@ void	process_command(t_cmd *cmd, t_pipe_info *info)
 	}
 	if (pid == 0)
 	{
+		handle_redirections(cmd);
 		default_signal();
 		if (info->prev_pipe != -1)
 		{
@@ -257,7 +258,6 @@ void	process_command(t_cmd *cmd, t_pipe_info *info)
 			dup2(info->pipe_fd[1], STDOUT_FILENO);
 		close(info->pipe_fd[0]);
 		close(info->pipe_fd[1]);
-		handle_redirections(cmd);
 		if (cmd->is_builtin)
 			exit(ms_execute(cmd, info->data, 1));
 		else

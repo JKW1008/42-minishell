@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 23:06:46 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/05 18:49:34 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/20 17:46:21 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	handle_redirections(t_cmd *cmd)
 	int	i;
 
 	i = 0;
+	printf("fuck\n");
 	while (i < cmd->rdr_cnt)
 	{
 		if (cmd->rdr[i]->type == RD_IN)

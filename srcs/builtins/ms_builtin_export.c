@@ -6,38 +6,35 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:34:52 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/19 17:14:43 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/20 17:09:48 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	update_existing_env(char **envp, char *env, char *cd_j, char *eq)
+int update_existing_env(char **envp, char *env, char *cd_j, char *eq)
 {
-	int	i;
-	int	env_len;
+    int i;
+    int env_len;
 
-	i = 0;
-	if (eq)
-		env_len = eq - env;
-	else
-		ft_strlen(env);
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], env, env_len) == 0 && envp[i][env_len] == '=')
-		{
-			if (eq)
-			{
-				free(envp[i]);
-				envp[i] = ft_strdup(cd_j);
-			}
-			return (1);
-		}
-		i++;
-	}
-	return (0);
+    i = 0;
+	env_len = ft_strlen(env);
+    while (envp[i])
+    {
+        if (ft_strncmp(envp[i], env, env_len) == 0 && envp[i][env_len] == '=')
+        {
+            if (eq)
+            {
+                free(envp[i]);
+                envp[i] = ft_strdup(cd_j);
+            }
+            return (1);
+        }
+        i++;
+    }
+    return (0);
 }
-
+ 
 char	**create_new_envp(char **old_envp, char *cd_j, char *eq, int cnt)
 {
 	char	**new_envp;
