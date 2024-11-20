@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:06:53 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/11/12 17:23:46 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/20 14:40:25 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,13 @@ void	in_prompt(t_data **data, char *input)
 		return ;
 	process_commands(data);
 	execute_pipeline(data);
-
 }
 
 void	ft_prompt(t_data **data)
 {
 	char			*input;
 	char			*pwd;
-//	t_heredoc_list	heredoc_list;
 
-//	ft_memset(&heredoc_list, 0, sizeof(t_heredoc_list));
 	while (1)
 	{
 		// ft_ctrl_signal();
@@ -61,7 +58,6 @@ void	ft_prompt(t_data **data)
 		ft_destroy_parser_context(data);	
 		free(pwd);
 	}
-//	ft_destroy_parser_context(data, &heredoc_list);	
 	free(pwd);
 	return ;
 }

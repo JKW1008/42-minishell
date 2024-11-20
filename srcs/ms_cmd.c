@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 07:03:28 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/06 21:28:14 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/20 15:25:19 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,37 @@ void	wait_all_children(void)
 		g_signal_received = 3;
 }
 
-void cat_command(t_cmd *cmd)
-{
-	if (ft_strncmp(cmd->cmd, "cat", 4) == 0 && cmd->arg_cnt == 0)
-	{
-		char buffer[4096];
-		ssize_t bytes_read;
-		int empty_lines = 0;
+// void	cat_command(t_cmd *cmd)
+// {
+// 	if (ft_strncmp(cmd->cmd, "cat", 4) == 0 && cmd->arg_cnt == 0)
+// 	{
+// 		char buffer[4096];
+// 		ssize_t bytes_read;
+// 		int empty_lines = 0;
 
-		while ((bytes_read = read(STDIN_FILENO, buffer, sizeof(buffer))) > 0)
-		{
-			if (bytes_read == 1 && buffer[0] == '\n')
-			{
-				empty_lines++;
-				if (empty_lines >= 2)
-					break;
-			}
-			else
-				empty_lines = 0;
-			write(STDOUT_FILENO, buffer, bytes_read);
-		}
-		exit(0);
-	}
-}
+// 		if (isatty(STDIN_FILENO))
+// 		{
+// 			while ((bytes_read = read(STDIN_FILENO, buffer, sizeof(buffer))) > 0)
+// 			{
+// 				if (bytes_read == 1 && buffer[0] == '\n')
+// 				{
+// 					empty_lines++;
+// 					if (empty_lines >= 2)
+// 						break;
+// 				}
+// 				else
+// 					empty_lines = 0;
+// 				write(STDOUT_FILENO, buffer, bytes_read);
+// 			}
+// 		}
+// 		else
+// 		{
+// 			while ((bytes_read = read(STDIN_FILENO, buffer, sizeof(buffer))) > 0)
+// 				write(STDOUT_FILENO, buffer, bytes_read);
+// 		}
+// 		exit(0);
+// 	}
+// }
 
 void check_dir(t_cmd *cmd)
 {
@@ -76,7 +84,7 @@ void execute_command(t_cmd *cmd, t_data **data)
 
 	if (!cmd->cmd || cmd->cmd[0] == '\0')
 		exit(0);
-	cat_command(cmd);
+	// cat_command(cmd);
 	check_dir(cmd);
 	full_path = find_path((*data)->envp, cmd->cmd);
 	if (!full_path)
@@ -223,26 +231,32 @@ void	process_command(t_cmd *cmd, t_pipe_info *info)
 {
 	pid_t	pid;
 
+	if (cmd->next)
+	{
+		if (pipe(info->pipe_fd) == -1)
+		{
+			perror("pipe");
+			exit(1);
+		}
+	}
 	pid = fork();
 	if (pid == -1)
 	{
 		perror("fork");
 		exit(1);
 	}
-	default_signal();
 	if (pid == 0)
 	{
-		
+		default_signal();
 		if (info->prev_pipe != -1)
 		{
 			dup2(info->prev_pipe, STDIN_FILENO);
 			close(info->prev_pipe);
 		}
-		if (cmd->next && info->pipe_fd[1] != -1)
-		{
+		if (cmd->next)
 			dup2(info->pipe_fd[1], STDOUT_FILENO);
-			close(info->pipe_fd[1]);
-		}
+		close(info->pipe_fd[0]);
+		close(info->pipe_fd[1]);
 		handle_redirections(cmd);
 		if (cmd->is_builtin)
 			exit(ms_execute(cmd, info->data, 1));
@@ -254,59 +268,53 @@ void	process_command(t_cmd *cmd, t_pipe_info *info)
 		stop_signal();
 		if (info->prev_pipe != -1)
 			close(info->prev_pipe);
-		if (cmd->next)
-		{
-			close(info->pipe_fd[1]);
-			info->prev_pipe = info->pipe_fd[0];
-		}
-		else
+		close(info->pipe_fd[1]);
+		info->prev_pipe = info->pipe_fd[0];
+		if (!cmd->next)
 			info->prev_pipe = -1;
 	}
 }
 
-void    execute_pipeline(t_data **data)
+void execute_pipeline(t_data **data)
 {
 	t_cmd		*cmd;
 	t_pipe_info	info;
-	int			i;
+	pid_t		*pids;
+	int			cmd_count;
 
-	i = 1;
+	cmd = (*data)->cmdline->head;
+	cmd_count = 0;
+	while (cmd)
+	{
+		cmd_count++;
+		cmd = cmd->next;
+	}
+	pids = malloc(sizeof(pid_t) * cmd_count);
+	if (!pids)
+	{
+		perror("malloc");
+		exit(1);
+	}
 	info.prev_pipe = -1;
 	info.stdin_backup = dup(STDIN_FILENO);
 	info.stdout_backup = dup(STDOUT_FILENO);
-//	info.heredoc_list = heredoc_list;
 	info.data = data;
-	while (i <= (*data)->cmdline->count)
+	cmd = (*data)->cmdline->head;
+	while (cmd)
 	{
-		cmd = (*data)->cmdline->head;
-		while (cmd)
-		{
-			if (cmd->ord == i)
-			{
-				if (cmd->next)
-				{
-					if (pipe(info.pipe_fd) == -1)
-					{
-						perror("pipe");
-						exit(1);
-					}
-				}
-				
-				if (cmd->is_builtin && is_special_builtin(cmd))
-					ms_execute(cmd, data, 0);
-				else if (cmd->rdr_cnt > 0 && (!cmd->cmd || cmd->cmd[0] == '\0'))
-					handle_redirection_only(cmd, &info);
-				else
-					process_command(cmd, &info);
-			}
-			cmd = cmd->next;
-		}
-		i++;
+		if (cmd->is_builtin && is_special_builtin(cmd))
+			ms_execute(cmd, data, 0);
+		else if (cmd->rdr_cnt > 0 && (!cmd->cmd || cmd->cmd[0] == '\0'))
+			handle_redirection_only(cmd, &info);
+		else
+			process_command(cmd, &info);
+		cmd = cmd->next;
 	}
 	wait_all_children();
 	dup2(info.stdin_backup, STDIN_FILENO);
 	dup2(info.stdout_backup, STDOUT_FILENO);
 	close(info.stdin_backup);
 	close(info.stdout_backup);
+	free(pids);
 	ft_ctrl_signal();
 }
