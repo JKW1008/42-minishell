@@ -6,16 +6,16 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:06:53 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/11/20 14:40:25 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/21 18:12:34 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static char *ft_set_prompt_pwd(void)
+static char	*ft_set_prompt_pwd(void)
 {
-	char *pwd;
-	char *new_pwd;
+	char	*pwd;
+	char	*new_pwd;
 
 	pwd = getcwd(NULL, BUFSIZ);
 	new_pwd = ft_strjoin("$", pwd);
@@ -47,7 +47,6 @@ void	ft_prompt(t_data **data)
 
 	while (1)
 	{
-		// ft_ctrl_signal();
 		ft_global_err(0, 3);
 		pwd = ft_set_prompt_pwd();
 		input = readline(pwd);
@@ -55,7 +54,7 @@ void	ft_prompt(t_data **data)
 			break ;
 		(*data)->prompt = input;
 		in_prompt(data, input);
-		ft_destroy_parser_context(data);	
+		ft_destroy_parser_context(data);
 		free(pwd);
 	}
 	free(pwd);

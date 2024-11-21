@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:08:19 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/18 00:22:39 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/21 18:25:24 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,10 @@ char	*get_oldpwd(char **envp)
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
-			return envp[i] + 7;
+			return (envp[i] + 7);
 		i++;
 	}
-	return NULL;
-}
-
-void	envp_update(char **envp)
-{
-	char	pwd[PATH_MAX];
-	char	*old_pwd;
-
-	if (getcwd(pwd, sizeof(pwd)) == NULL)
-	{
-		perror("getcwd");
-		return ;
-	}
-	envp_update_while(envp, &old_pwd, pwd);
+	return (NULL);
 }
 
 int	check_cd_args(char **args, char **tmp, char *home)
@@ -86,7 +73,7 @@ int	construct_cd_path(char **args, char **tmp, char *home)
 	return (0);
 }
 
-int check_cd_arg(char **tmp, char **cd, char *home, char **envp)
+int	check_cd_arg(char **tmp, char **cd, char *home, char **envp)
 {
 	int		result;
 	char	*oldpwd;

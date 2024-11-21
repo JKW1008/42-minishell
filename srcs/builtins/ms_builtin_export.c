@@ -6,35 +6,51 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:34:52 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/20 17:09:48 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/21 18:34:36 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int update_existing_env(char **envp, char *env, char *cd_j, char *eq)
+int	update_existing_env(char **envp, char *env, char *cd_j, char *eq)
 {
-    int i;
-    int env_len;
+	int	i;
+	int	env_len;
 
-    i = 0;
+	i = 0;
 	env_len = ft_strlen(env);
-    while (envp[i])
-    {
-        if (ft_strncmp(envp[i], env, env_len) == 0 && envp[i][env_len] == '=')
-        {
-            if (eq)
-            {
-                free(envp[i]);
-                envp[i] = ft_strdup(cd_j);
-            }
-            return (1);
-        }
-        i++;
-    }
-    return (0);
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], env, env_len) == 0 && envp[i][env_len] == '=')
+		{
+			if (eq)
+			{
+				free(envp[i]);
+				envp[i] = ft_strdup(cd_j);
+			}
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }
- 
+
+int	create_new_envp_while(char **new_envp, char **old_envp, int *i, int cnt)
+{
+	while (*i < cnt)
+	{
+		new_envp[*i] = ft_strdup(old_envp[*i]);
+		if (!new_envp[*i])
+		{
+			while (--(*i) >= 0)
+				free(new_envp[*i]);
+			free(new_envp);
+			return (0);
+		}
+		(*i)++;
+	}
+}
+
 char	**create_new_envp(char **old_envp, char *cd_j, char *eq, int cnt)
 {
 	char	**new_envp;
@@ -47,18 +63,8 @@ char	**create_new_envp(char **old_envp, char *cd_j, char *eq, int cnt)
 		perror("malloc");
 		return (NULL);
 	}
-	while (i < cnt)
-	{
-		new_envp[i] = ft_strdup(old_envp[i]);
-		if (!new_envp[i])
-		{
-			while (--i >= 0)
-				free(new_envp[i]);
-			free(new_envp);
-			return (NULL);
-		}
-		i++;
-	}
+	if (!create_new_envp_while(new_envp, old_envp, &i, cnt))
+		return (NULL);
 	if (!eq)
 		new_envp[cnt] = ft_strjoin(cd_j, "=");
 	else

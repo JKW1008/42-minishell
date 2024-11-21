@@ -6,18 +6,18 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:38:09 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/18 00:16:25 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/21 18:35:15 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int env_cnt(char **envp, char *name)
+int	env_cnt(char **envp, char *name)
 {
 	int		i;
 	int		name_len;
 	char	*eq_pos;
-	
+
 	i = 0;
 	name_len = ft_strlen(name);
 	while (envp[i])

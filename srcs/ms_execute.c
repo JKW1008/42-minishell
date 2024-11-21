@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 22:38:00 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/16 23:53:17 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/21 17:51:27 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,17 @@ int	ms_execute(t_cmd *node, t_data **data, int in_child)
 			export(node, data);
 		return (0);
 	}
-	else if (!ft_strncmp(node->cmd, "unset", 5))
+	else
+	{
+		if (!ms_execute2(node, data, in_child))
+			return (0);
+	}
+	return (1);
+}
+
+int	ms_execute2(t_cmd *node, t_data **data, int in_child)
+{
+	if (!ft_strncmp(node->cmd, "unset", 5))
 	{
 		if (!in_child)
 			do_unset(node, data);
