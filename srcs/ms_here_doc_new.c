@@ -56,7 +56,6 @@ static void	process_heredoc_new(t_cmd *cmd, int i)
 	if (pid == 0)
 	{
 		signal(SIGINT, heredoc_sighandler);
-		signal(SIGQUIT, SIG_IGN);
 		ft_heredoc_gnl(cmd, i, fd);
 		exit(EXIT_SUCCESS);
 	}
@@ -65,8 +64,7 @@ static void	process_heredoc_new(t_cmd *cmd, int i)
 		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
 		close(fd[1]);
-		dup2(STDIN_FILENO, fd[0]);
-		cmd->rdr[i]->fd = STDIN_FILENO;
+		cmd->rdr[i]->fd = fd[0];
 	}
 	ft_ctrl_signal();
 }
