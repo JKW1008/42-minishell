@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:41:14 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/05 14:12:39 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/21 18:26:10 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	print_question_env(t_data **data)
 {
 	int		i;
 	char	**res;
-	
+
 	i = 0;
 	while ((*data)->envp[i])
 	{

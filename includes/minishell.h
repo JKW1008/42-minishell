@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 14:23:02 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/08 19:09:20 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/21 18:27:01 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,29 +30,39 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 
+extern volatile sig_atomic_t	g_signal_received;
+
 //	ms_cmd.c
-void	handle_child_process(t_cmd *cmd, t_pipe_info *info);
-void	handle_parent_process(t_cmd *cmd, t_pipe_info *info);
+void	check_dir(t_cmd *cmd);
+void	execute_command(t_cmd *cmd, t_data **data);
 int		is_special_builtin(t_cmd *cmd);
-void	process_command(t_cmd *cmd, t_pipe_info *info);
+void	handle_redirection_only(t_cmd *cmd, t_pipe_info *info);
 void	execute_pipeline(t_data **data);
 
 //	ms_execute.c
 int		ms_execute(t_cmd *node, t_data **data, int in_child);
+int		ms_execute2(t_cmd *node, t_data **data, int in_child);
 
 //	ms_here_doc.c
-//char	*get_input(char *prompt);
-//char	*set_heredoc(t_cmd *node, int *heredoc_idx);
 void	process_commands(t_data **data);
 
 //	ms_init.c
 char	**copy_envp(char **envp);
 t_data	*ft_initalise(t_data **data, char **envp);
+void	init_info(t_data **data, t_pipe_info *info);
+
+//	ms_process.c
+void	wait_all_children(void);
+void	handle_child_process(t_cmd *cmd, t_pipe_info *info);
+void	handle_parent_process(t_cmd *cmd, t_pipe_info *info);
+void	process_command(t_cmd *cmd, t_pipe_info *info);
 
 //	ms_prompt.c
 void	ft_prompt(t_data **data);
 
 //	ms_signal.c
+void	default_signal(void);
+void	stop_signal(void);
 void	ft_ctrl_signal(void);
 void	sig_ctrl(int sig);
 

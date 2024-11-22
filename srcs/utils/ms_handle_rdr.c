@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 23:06:46 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/05 18:49:34 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/21 18:36:04 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	handle_rd_append(t_rdr *rdr)
 	close(fd);
 }
 
-
 void	handle_redirections(t_cmd *cmd)
 {
 	int	i;
@@ -70,7 +69,6 @@ void	handle_redirections(t_cmd *cmd)
 			handle_rd_append(cmd->rdr[i]);
 		else if (cmd->rdr[i]->type == RD_HEREDOC)
 			dup2(cmd->rdr[i]->fd, STDIN_FILENO);
-			//handle_heredoc(cmd->rdr[i], heredoc_list);
 		i++;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_here_doc_new.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehukim <jaehukim42@student.42gyeong      +#+  +:+       +#+        */
+/*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 21:32:09 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/11/18 21:32:10 by jaehukim         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:53:18 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ void	ft_heredoc_gnl(t_cmd *cmd, int i, int fd[2])
 	close(fd[1]);
 }
 
-
-static void process_heredoc_new(t_cmd *cmd, int i)
+static void	process_heredoc_new(t_cmd *cmd, int i)
 {
 	pid_t	pid;
 	int		fd[2];
@@ -72,7 +71,7 @@ static void process_heredoc_new(t_cmd *cmd, int i)
 	ft_ctrl_signal();
 }
 
-static void find_heredoc(t_cmd *cmd)
+static void	find_heredoc(t_cmd *cmd)
 {
 	int	i;
 
@@ -85,23 +84,23 @@ static void find_heredoc(t_cmd *cmd)
 	}
 }
 
-void process_commands(t_data **data)
+void	process_commands(t_data **data)
 {
-    t_cmd   *tmp;
-    int     i;
+	t_cmd	*tmp;
+	int		i;
 
-    i = 1;
+	i = 1;
 	if (ft_global_err(0, 0) != 0)
 		return ;
-    while (i <= (*data)->cmdline->count)
-    {
-        tmp = (*data)->cmdline->head;
-        while (tmp && tmp->prompt)
-        {
-            if (tmp->ord == i && tmp->is_heredoc)
-                find_heredoc(tmp);
-            tmp = tmp->next;
-        }
-        i++;
-    }
+	while (i <= (*data)->cmdline->count)
+	{
+		tmp = (*data)->cmdline->head;
+		while (tmp && tmp->prompt)
+		{
+			if (tmp->ord == i && tmp->is_heredoc)
+				find_heredoc(tmp);
+			tmp = tmp->next;
+		}
+		i++;
+	}
 }
