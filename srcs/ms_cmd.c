@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 07:03:28 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/21 17:07:45 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/22 18:06:29 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,18 @@ void	execute_pipeline(t_data **data)
 {
 	t_pipe_info	info;
 	pid_t		*pids;
-	int			cmd_count;
+	int			i;
 
-	cmd_count = cmd_cnt(data);
-	pids = malloc(sizeof(pid_t) * cmd_count);
+	i = 0;
+	pids = malloc(sizeof(pid_t) * (*data)->cmdline->count);
 	if (!pids)
 	{
 		perror("malloc");
 		exit(1);
 	}
-	exe_pipe_while(data, &info);
+	init_info(data, &info);
+	while (i <= (*data)->cmdline->count)
+		exe_pipe_while(data, &info, i++);
 	wait_all_children();
 	manage_fd(&info);
 	free(pids);

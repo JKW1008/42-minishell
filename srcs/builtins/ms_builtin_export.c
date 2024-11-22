@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:34:52 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/21 18:34:36 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/22 10:58:24 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	create_new_envp_while(char **new_envp, char **old_envp, int *i, int cnt)
 		}
 		(*i)++;
 	}
+	return (1);
 }
 
 char	**create_new_envp(char **old_envp, char *cd_j, char *eq, int cnt)
