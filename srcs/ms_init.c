@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 17:09:22 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/11/21 16:49:50 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/08 15:28:44 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**copy_envp(char **envp)
 	i = 0;
 	while (envp[i])
 		i++;
-	new_envp = malloc((i + 1) * sizeof(char *));
+	new_envp = malloc((i + 2) * sizeof(char *));
 	if (!new_envp)
 		return (NULL);
 	i = 0;
@@ -36,7 +36,15 @@ char	**copy_envp(char **envp)
 		}
 		i++;
 	}
-	new_envp[i] = NULL;
+	new_envp[i] = ft_strdup("?=0");
+	if (!new_envp[i])
+	{
+		while (i-- > 0)
+			free(new_envp[i]);
+		free(new_envp);
+		return (NULL);
+	}
+	new_envp[i + 1] = NULL;
 	return (new_envp);
 }
 
@@ -50,12 +58,4 @@ t_data	*ft_initalise(t_data **data, char **envp)
 	(*data)->cmdline = NULL;
 	(*data)->tkn = NULL;
 	return (*data);
-}
-
-void	init_info(t_data **data, t_pipe_info *info)
-{
-	info->prev_pipe = -1;
-	info->stdin_backup = dup(STDIN_FILENO);
-	info->stdout_backup = dup(STDOUT_FILENO);
-	info->data = data;
 }

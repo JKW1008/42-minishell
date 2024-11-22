@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_builtin_echo_new.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jaehukim <jaehukim42@student.42gyeong      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:45:40 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/11/21 18:26:43 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/19 13:45:43 by jaehukim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	process_echo_options(char **args, int *i)
 	return (check_n);
 }
 
+
 int	do_echo(t_cmd *node)
 {
 	int		i;
@@ -46,8 +47,8 @@ int	do_echo(t_cmd *node)
 	{
 		str = node->args[i];
 		if (str)
-		{	
-			printf("%s", str);
+		{
+			printf("%s",str);
 			if (node->args[i + 1])
 				printf(" ");
 		}

@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 11:14:54 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/11/21 15:47:49 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/17 00:04:31 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ size_t		ft_lexer(t_data **data);
 size_t		ft_merge_tokens(t_data **data);
 
 //	ms_parse.c
-t_cmdline	*ft_init_cmdline(void);
+t_cmdline		*ft_init_cmdline(void);
 size_t		ft_parser(t_data **data);
 
 //	ms_tokenize.c
@@ -58,6 +58,7 @@ size_t		ft_sort_ord(t_data **data);
 void		ft_tokenize_of_while(char *prompt, int len, t_tkn_stk **tkns);
 
 //ms_lexer_for_evnp
-size_t		ft_search_envp(char **str, t_data *data);
+size_t	ft_search_envp(char **str, t_data *data);
+
 
 #endif

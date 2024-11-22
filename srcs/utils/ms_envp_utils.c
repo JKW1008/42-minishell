@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 01:33:08 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/21 18:25:02 by kjung            ###   ########.fr       */
+/*   Updated: 2024/10/18 00:18:35 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,4 @@ void	envp_update_while(char **envp, char **old_pwd, char *pwd)
 		}
 		i++;
 	}
-}
-
-void	envp_update(char **envp)
-{
-	char	pwd[PATH_MAX];
-	char	*old_pwd;
-
-	if (getcwd(pwd, sizeof(pwd)) == NULL)
-	{
-		perror("getcwd");
-		return ;
-	}
-	envp_update_while(envp, &old_pwd, pwd);
 }

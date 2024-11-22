@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_here_doc_new.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jaehukim <jaehukim42@student.42gyeong      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 21:32:09 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/11/21 17:53:18 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/18 21:32:10 by jaehukim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	ft_heredoc_gnl(t_cmd *cmd, int i, int fd[2])
 	close(fd[1]);
 }
 
-static void	process_heredoc_new(t_cmd *cmd, int i)
+
+static void process_heredoc_new(t_cmd *cmd, int i)
 {
 	pid_t	pid;
 	int		fd[2];
@@ -56,7 +57,6 @@ static void	process_heredoc_new(t_cmd *cmd, int i)
 	if (pid == 0)
 	{
 		signal(SIGINT, heredoc_sighandler);
-		signal(SIGQUIT, SIG_IGN);
 		ft_heredoc_gnl(cmd, i, fd);
 		exit(EXIT_SUCCESS);
 	}
@@ -65,13 +65,12 @@ static void	process_heredoc_new(t_cmd *cmd, int i)
 		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
 		close(fd[1]);
-		dup2(STDIN_FILENO, fd[0]);
-		cmd->rdr[i]->fd = STDIN_FILENO;
+		cmd->rdr[i]->fd = fd[0];
 	}
 	ft_ctrl_signal();
 }
 
-static void	find_heredoc(t_cmd *cmd)
+static void find_heredoc(t_cmd *cmd)
 {
 	int	i;
 
@@ -84,23 +83,23 @@ static void	find_heredoc(t_cmd *cmd)
 	}
 }
 
-void	process_commands(t_data **data)
+void process_commands(t_data **data)
 {
-	t_cmd	*tmp;
-	int		i;
+    t_cmd   *tmp;
+    int     i;
 
-	i = 1;
+    i = 1;
 	if (ft_global_err(0, 0) != 0)
 		return ;
-	while (i <= (*data)->cmdline->count)
-	{
-		tmp = (*data)->cmdline->head;
-		while (tmp && tmp->prompt)
-		{
-			if (tmp->ord == i && tmp->is_heredoc)
-				find_heredoc(tmp);
-			tmp = tmp->next;
-		}
-		i++;
-	}
+    while (i <= (*data)->cmdline->count)
+    {
+        tmp = (*data)->cmdline->head;
+        while (tmp && tmp->prompt)
+        {
+            if (tmp->ord == i && tmp->is_heredoc)
+                find_heredoc(tmp);
+            tmp = tmp->next;
+        }
+        i++;
+    }
 }

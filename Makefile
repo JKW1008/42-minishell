@@ -15,10 +15,8 @@ OBJS_DIR = ./objs
 SRCS =	ms_cmd.c \
 		ms_execute.c \
 		ms_here_doc_new.c \
-		ms_hro.c \
 		ms_init.c \
 		ms_main.c \
-		ms_process.c \
 		ms_prompt.c \
 		ms_signal.c \
 		ms_destroy_parser.c \
@@ -36,12 +34,10 @@ SRCS =	ms_cmd.c \
 		ms_parse/ms_lexer_for_envp.c \
 		utils/ms_char_handle.c \
 		utils/ms_cmd_utils.c \
-		utils/ms_command_utils.c \
 		utils/ms_echo_utils.c \
 		utils/ms_envp_utils.c \
 		utils/ms_err_handle.c \
 		utils/ms_excute_utils.c \
-		utils/ms_exe_pipe_utils.c \
 		utils/ms_find_path.c \
 		utils/ms_free_utils.c \
 		utils/ms_handle_rdr.c \

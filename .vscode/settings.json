@@ -13,7 +13,6 @@
 		"struct.h": "c",
 		"utils.h": "c",
 		"limits.h": "c",
-		"unistd.h": "c",
-		"stat.h": "c"
+		"unistd.h": "c"
 	}
 }

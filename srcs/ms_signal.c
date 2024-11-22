@@ -6,33 +6,19 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 09:39:57 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/11/21 18:14:33 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/11 17:18:30 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	default_signal(void)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGTSTP, SIG_DFL);
-	return ;
-}
+extern volatile sig_atomic_t	g_signal_received;
 
-void	stop_signal(void)
-{
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTSTP, SIG_IGN);
-	return ;
-}
-
-void	sig_ctrl(int sig)
+void sig_ctrl(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_signal_received = 1;
+		g_signal_received = 1;  // SIGINT 받음
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -40,20 +26,21 @@ void	sig_ctrl(int sig)
 	}
 	else if (sig == SIGQUIT)
 	{
-		g_signal_received = SIGQUIT;
+		g_signal_received = SIGQUIT; 
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	else if (sig == SIGTSTP)
-	{
-		g_signal_received = SIGTSTP;
+    {
+        g_signal_received = SIGTSTP;
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 		printf("\nsuspended\n");
-		exit(0);
-	}
+		exit(0) ;
+        //signal(SIGTSTP, SIG_DFL);  
+    }
 }
 
 //void	ft_ctrl_signal(void)
@@ -69,20 +56,21 @@ void	sig_ctrl(int sig)
 //	signal(SIGINT, sig_ctrl);
 //    signal(SIGQUIT, sig_ctrl);
 //    signal(SIGTSTP, sig_ctrl);
+	
 //	//if (sigaction(SIGQUIT, &sa, NULL) == -1)
 //	//	ft_error("SigAction Error");
 //}
 
-void	ft_ctrl_signal(void)
+void ft_ctrl_signal(void)
 {
-	struct sigaction	sa;
-
-	sa.sa_handler = sig_ctrl;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
-	signal(SIGQUIT, SIG_IGN);
-	if (sigaction(SIGINT, &sa, NULL) == -1)
-		ft_error("SigAction Error");
-	if (sigaction(SIGTSTP, &sa, NULL) == -1)
-		ft_error("SigAction Error");
+    struct sigaction sa;
+    
+    sa.sa_handler = sig_ctrl;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = SA_RESTART;
+    signal(SIGQUIT, SIG_IGN);
+    if (sigaction(SIGINT, &sa, NULL) == -1)
+        ft_error("SigAction Error");
+    if (sigaction(SIGTSTP, &sa, NULL) == -1)
+        ft_error("SigAction Error");
 }

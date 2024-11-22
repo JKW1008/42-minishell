@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:34:52 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/21 18:34:36 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/19 17:14:43 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ int	update_existing_env(char **envp, char *env, char *cd_j, char *eq)
 	int	env_len;
 
 	i = 0;
-	env_len = ft_strlen(env);
+	if (eq)
+		env_len = eq - env;
+	else
+		ft_strlen(env);
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], env, env_len) == 0 && envp[i][env_len] == '=')
@@ -35,22 +38,6 @@ int	update_existing_env(char **envp, char *env, char *cd_j, char *eq)
 	return (0);
 }
 
-int	create_new_envp_while(char **new_envp, char **old_envp, int *i, int cnt)
-{
-	while (*i < cnt)
-	{
-		new_envp[*i] = ft_strdup(old_envp[*i]);
-		if (!new_envp[*i])
-		{
-			while (--(*i) >= 0)
-				free(new_envp[*i]);
-			free(new_envp);
-			return (0);
-		}
-		(*i)++;
-	}
-}
-
 char	**create_new_envp(char **old_envp, char *cd_j, char *eq, int cnt)
 {
 	char	**new_envp;
@@ -63,8 +50,18 @@ char	**create_new_envp(char **old_envp, char *cd_j, char *eq, int cnt)
 		perror("malloc");
 		return (NULL);
 	}
-	if (!create_new_envp_while(new_envp, old_envp, &i, cnt))
-		return (NULL);
+	while (i < cnt)
+	{
+		new_envp[i] = ft_strdup(old_envp[i]);
+		if (!new_envp[i])
+		{
+			while (--i >= 0)
+				free(new_envp[i]);
+			free(new_envp);
+			return (NULL);
+		}
+		i++;
+	}
 	if (!eq)
 		new_envp[cnt] = ft_strjoin(cd_j, "=");
 	else
