@@ -6,7 +6,11 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 02:11:47 by kjung             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/10/17 00:47:44 by kjung            ###   ########.fr       */
+=======
+/*   Updated: 2024/11/22 18:07:42 by kjung            ###   ########.fr       */
+>>>>>>> 2fe27a2b363a4949d4b9cb4e5b76b63380780f54
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +51,13 @@ char		*find_dir(char *path);
 void		free_envp(char **envp);
 int			env_command(t_data **data);
 
+<<<<<<< HEAD
+=======
+//	ms_exe_pipe_utils.c
+void		exe_pipe_while(t_data **data, t_pipe_info *info, int i);
+void		manage_fd(t_pipe_info *info);
+
+>>>>>>> 2fe27a2b363a4949d4b9cb4e5b76b63380780f54
 //	ms_find_path.c
 char		*check_absolute_or_home_path(char *str);
 char		*check_access(char *split, char *str);

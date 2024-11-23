@@ -6,7 +6,11 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 07:03:28 by kjung             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/11/06 21:28:14 by kjung            ###   ########.fr       */
+=======
+/*   Updated: 2024/11/22 18:06:29 by kjung            ###   ########.fr       */
+>>>>>>> 2fe27a2b363a4949d4b9cb4e5b76b63380780f54
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +154,7 @@ int	is_special_builtin(t_cmd *cmd)
 
 void	handle_redirection_only(t_cmd *cmd, t_pipe_info *info)
 {
+<<<<<<< HEAD
 	pid_t pid;
 	char buffer[4096];
 	ssize_t bytes_read;
@@ -158,10 +163,20 @@ void	handle_redirection_only(t_cmd *cmd, t_pipe_info *info)
 	pid = fork();
 	empty_lines = 0;
 	if (pid == -1)
+=======
+	t_pipe_info	info;
+	pid_t		*pids;
+	int			i;
+
+	i = 0;
+	pids = malloc(sizeof(pid_t) * (*data)->cmdline->count);
+	if (!pids)
+>>>>>>> 2fe27a2b363a4949d4b9cb4e5b76b63380780f54
 	{
 		perror("fork");
 		exit(1);
 	}
+<<<<<<< HEAD
 	if (pid == 0)
 	{
 		if (info->prev_pipe != -1)
@@ -303,6 +318,11 @@ void    execute_pipeline(t_data **data)
 		}
 		i++;
 	}
+=======
+	init_info(data, &info);
+	while (i <= (*data)->cmdline->count)
+		exe_pipe_while(data, &info, i++);
+>>>>>>> 2fe27a2b363a4949d4b9cb4e5b76b63380780f54
 	wait_all_children();
 	dup2(info.stdin_backup, STDIN_FILENO);
 	dup2(info.stdout_backup, STDOUT_FILENO);

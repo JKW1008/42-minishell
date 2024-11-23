@@ -6,7 +6,11 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:34:52 by kjung             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/11/19 17:14:43 by kjung            ###   ########.fr       */
+=======
+/*   Updated: 2024/11/22 10:58:24 by kjung            ###   ########.fr       */
+>>>>>>> 2fe27a2b363a4949d4b9cb4e5b76b63380780f54
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +42,26 @@ int	update_existing_env(char **envp, char *env, char *cd_j, char *eq)
 	return (0);
 }
 
+<<<<<<< HEAD
+=======
+int	create_new_envp_while(char **new_envp, char **old_envp, int *i, int cnt)
+{
+	while (*i < cnt)
+	{
+		new_envp[*i] = ft_strdup(old_envp[*i]);
+		if (!new_envp[*i])
+		{
+			while (--(*i) >= 0)
+				free(new_envp[*i]);
+			free(new_envp);
+			return (0);
+		}
+		(*i)++;
+	}
+	return (1);
+}
+
+>>>>>>> 2fe27a2b363a4949d4b9cb4e5b76b63380780f54
 char	**create_new_envp(char **old_envp, char *cd_j, char *eq, int cnt)
 {
 	char	**new_envp;
