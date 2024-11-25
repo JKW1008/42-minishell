@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 02:11:47 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/22 18:07:42 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/22 19:23:23 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void		free_envp(char **envp);
 int			env_command(t_data **data);
 
 //	ms_exe_pipe_utils.c
-void		exe_pipe_while(t_data **data, t_pipe_info *info, int i);
+void		exe_pipe_while(t_data **data, t_pipe_info *info);
 void		manage_fd(t_pipe_info *info);
 
 //	ms_find_path.c
