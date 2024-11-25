@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 16:50:41 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/22 19:36:53 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/25 21:24:30 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	exe_pipe_while(t_data **data, t_pipe_info *info)
 	}
 }
 
-void	manage_fd(t_pipe_info *info)
-{
-	dup2(info->stdin_backup, STDIN_FILENO);
-	dup2(info->stdout_backup, STDOUT_FILENO);
-	close(info->stdin_backup);
-	close(info->stdout_backup);
-}
+// void	manage_fd(t_pipe_info *info)
+// {
+// 	dup2(info->stdin_backup, STDIN_FILENO);
+// 	dup2(info->stdout_backup, STDOUT_FILENO);
+// 	close(info->stdin_backup);
+// 	close(info->stdout_backup);
+// }

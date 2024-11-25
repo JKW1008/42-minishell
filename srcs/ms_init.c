@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 17:09:22 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/11/21 16:49:50 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/25 21:32:40 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,3 @@ t_data	*ft_initalise(t_data **data, char **envp)
 	return (*data);
 }
 
-void	init_info(t_data **data, t_pipe_info *info)
-{
-	info->prev_pipe = -1;
-	info->stdin_backup = dup(STDIN_FILENO);
-	info->stdout_backup = dup(STDOUT_FILENO);
-	info->data = data;
-}

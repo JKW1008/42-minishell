@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 14:23:02 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/21 18:27:01 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/25 19:05:25 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		ms_execute(t_cmd *node, t_data **data, int in_child);
 int		ms_execute2(t_cmd *node, t_data **data, int in_child);
 
 //	ms_here_doc.c
-void	process_commands(t_data **data);
+void	process_heredoc(t_data **data);
 
 //	ms_init.c
 char	**copy_envp(char **envp);

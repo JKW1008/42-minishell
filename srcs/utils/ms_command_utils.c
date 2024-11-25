@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 18:20:47 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/22 11:27:58 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/25 22:21:32 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,5 @@ void	command_parent(t_pipe_info *info, t_cmd *cmd)
 	info->prev_pipe = info->pipe_fd[0];
 	if (!cmd->next)
 		info->prev_pipe = -1;
+	wait_all_children();
 }

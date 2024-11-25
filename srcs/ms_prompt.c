@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:06:53 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/11/22 19:46:28 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/25 19:05:12 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	in_prompt(t_data **data, char *input)
 	ft_parser(data);
 	if (ft_global_err(0, 0) != 0)
 		return ;
-	process_commands(data);
+	process_heredoc(data);
 	execute_pipeline(data);
 }
 
