@@ -56,47 +56,6 @@ void	execute_command(t_cmd *cmd, t_data **data)
 	exit(1);
 }
 
-// void    execute_command(t_cmd *cmd, t_data **data)
-// {
-//     char    *full_path;
-//     char    **new_args;
-//     int     i;
-
-//     if (!cmd->cmd || cmd->cmd[0] == '\0')
-//         exit(0);
-        
-//     check_dir(cmd);
-//     full_path = find_path((*data)->envp, cmd->cmd);
-//     if (!full_path)
-//     {
-//         fprintf(stderr, "Command not found: %s\n", cmd->cmd);
-//         exit(127);  // 명령어를 찾을 수 없을 때의 표준 exit code
-//     }
-//     new_args = malloc(sizeof(char *) * (cmd->arg_cnt + 2));
-//     if (!new_args)
-//     {
-//         free(full_path);  // 메모리 누수 방지
-//         perror("malloc");
-//         exit(1);
-//     }
-    
-//     // 인자 배열 설정
-//     new_args[0] = cmd->cmd;
-//     i = -1;
-//     while (++i < cmd->arg_cnt)
-//         new_args[i + 1] = cmd->args[i];
-//     new_args[cmd->arg_cnt + 1] = NULL;
-//     printf("fuck\n");
-//     // execve 실행
-//     execve(full_path, new_args, (*data)->envp);
-    
-//     // execve가 실패한 경우에만 여기에 도달
-//     perror("execve");
-//     free(full_path);
-//     free(new_args);
-//     exit(126);  // execve 실패 시의 표준 exit code
-// }
-
 int	is_special_builtin(t_cmd *cmd)
 {
 	if (!cmd->cmd)
@@ -115,21 +74,11 @@ int	is_special_builtin(t_cmd *cmd)
 void	execute_pipeline(t_data **data)
 {
 	t_pipe_info	info;
-	// pid_t		*pids;
 
-	// pids = malloc(sizeof(pid_t) * (*data)->cmdline->count);
-	// if (!pids)
-	// {
-	// 	perror("malloc");
-	// 	exit(1);
-	// }
 	info.prev_pipe = -1;
 	info.data = data;
 	info.pipe_fd[0] = -1;
 	info.pipe_fd[1] = -1;
-	// init_info(data, &info);
 	exe_pipe_while(data, &info);
-	// printf("err: %ld\n", ft_global_err(0, 0));
-	// free(pids);
 	ft_ctrl_signal();
 }

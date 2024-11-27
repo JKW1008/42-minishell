@@ -30,16 +30,6 @@ void	exe_pipe_while(t_data **data, t_pipe_info *info)
 		else
 			process_command(cmd, info);
 		cmd = cmd->next;
-		// printf("%ld", ft_global_err(0, 0));
 	}
 	wait_all_children();
-	//printf("err %ld %ld\n", ft_global_err(0, 0), ft_global_err(0, 2));
 }
-
-// void	manage_fd(t_pipe_info *info)
-// {
-// 	dup2(info->stdin_backup, STDIN_FILENO);
-// 	dup2(info->stdout_backup, STDOUT_FILENO);
-// 	close(info->stdin_backup);
-// 	close(info->stdout_backup);
-// }

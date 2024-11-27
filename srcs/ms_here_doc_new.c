@@ -55,10 +55,9 @@ static void	process_heredoc_new(t_cmd *cmd, int i)
 		ft_error("Fork Failed\n");
 	if (pid == 0)
 	{
-		// close(fd[0]);
 		signal(SIGINT, heredoc_sighandler);
 		signal(SIGQUIT, SIG_IGN);
-		ft_heredoc_gnl(cmd, i, fd); // execve("")
+		ft_heredoc_gnl(cmd, i, fd);
 		exit(EXIT_SUCCESS);
 	}
 	else
@@ -67,45 +66,10 @@ static void	process_heredoc_new(t_cmd *cmd, int i)
 		signal(SIGQUIT, SIG_IGN);
 		waitpid(pid, &status, 0);
 		close(fd[1]);
-		// dup2(STDIN_FILENO, fd[0]);
-		// close(fd[0]);
 		cmd->rdr[i]->fd = fd[0];
 	}
 	ft_ctrl_signal();
 }
-
-// static void process_heredoc_new(t_cmd *cmd, int i)
-// {
-//     pid_t   pid;
-//     int     fd[2];
-//     int     status;
-
-//     if (pipe(fd) < 0)
-//         ft_error("Broken Pipe\n");
-//     pid = fork();
-//     if (pid < 0)
-//         ft_error("Fork Failed\n");
-//     if (pid == 0)
-//     {
-//         close(fd[0]);  // 자식은 읽기 fd를 닫음
-//         signal(SIGINT, heredoc_sighandler);
-//         signal(SIGQUIT, SIG_IGN);
-//         ft_heredoc_gnl(cmd, i, fd);
-// 		close(fd[1]);
-//         exit(EXIT_SUCCESS);
-//     }
-//     else
-//     {
-// 		close(fd[1]);
-//         signal(SIGINT, SIG_IGN);
-//         signal(SIGQUIT, SIG_IGN);
-//         waitpid(pid, &status, 0);
-// 		dup2(fd[0], STDIN_FILENO);
-//         close(fd[1]);  // 부모는 쓰기 fd를 닫음
-// 		// if (cmd->next)
-// 		// 	cmd->rdr[i]->fd = fd[0];  // 읽기 fd 저장
-//     }
-// }
 
 static void	find_heredoc(t_cmd *cmd)
 {

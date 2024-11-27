@@ -51,13 +51,9 @@ static int	convert_envp_value(char **value, t_data *data)
 
 static size_t	ft_search_errno(char **str)
 {
-	// char	*err;
+	char	**tmp;
 
-	//err = ft_itoa(ft_global_err(0, 2));
-	//free(*str);
-	//*str = err;
-	char **tmp = ft_split(*str, '?');
-	// printf("%s %s\n", tmp[0], tmp[1]);
+	tmp = ft_split(*str, '?');
 	free(tmp[0]);
 	tmp[0] = ft_itoa(ft_global_err(0, 2));
 	free(*str);

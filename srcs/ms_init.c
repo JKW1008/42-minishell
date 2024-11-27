@@ -51,4 +51,3 @@ t_data	*ft_initalise(t_data **data, char **envp)
 	(*data)->tkn = NULL;
 	return (*data);
 }
-

@@ -116,7 +116,6 @@ void	cd_cmd(t_cmd *node, t_data **data)
 		printf("minishell: cd: %s: No such file or directory\n", node->args[0]);
 		ft_global_err(1, 1);
 	}
-
 	else
 		envp_update((*data)->envp);
 	free(tmp);

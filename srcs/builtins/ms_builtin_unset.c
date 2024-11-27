@@ -65,10 +65,7 @@ void	do_unset(t_cmd *node, t_data **data)
 	int		i;
 
 	if (!node->args || !node->args[0])
-	{
-		// printf("unset: not enough argumenst\n");
 		return ;
-	}
 	i = 0;
 	while (node->args[i])
 	{
