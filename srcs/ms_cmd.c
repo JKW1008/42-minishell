@@ -39,7 +39,7 @@ void	execute_command(t_cmd *cmd, t_data **data)
 	check_dir(cmd);
 	full_path = find_path((*data)->envp, cmd->cmd);
 	if (!full_path)
-		exit(ft_print_ret("Command not found: ", 2));
+		exit(ft_print_ret("Command not found\n", 2));
 	new_args = malloc(sizeof(char *) * (cmd->arg_cnt + 2));
 	if (!new_args)
 	{

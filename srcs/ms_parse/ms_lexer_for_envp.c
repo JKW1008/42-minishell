@@ -51,11 +51,18 @@ static int	convert_envp_value(char **value, t_data *data)
 
 static size_t	ft_search_errno(char **str)
 {
-	char	*err;
+	// char	*err;
 
-	err = ft_itoa(ft_global_err(0, 2));
+	//err = ft_itoa(ft_global_err(0, 2));
+	//free(*str);
+	//*str = err;
+	char **tmp = ft_split(*str, '?');
+	// printf("%s %s\n", tmp[0], tmp[1]);
+	free(tmp[0]);
+	tmp[0] = ft_itoa(ft_global_err(0, 2));
 	free(*str);
-	*str = err;
+	*str = ft_concate(tmp, 0, 0);
+	ft_split_free(&tmp);
 	return (0);
 }
 
@@ -68,7 +75,7 @@ size_t	ft_search_envp(char **str, t_data *data)
 	if (*str[0] == '$' && ft_strlen(*str) > 1)
 	{
 		tmp = ft_split2(*str, ' ');
-		if (ft_strncmp(tmp[0], "$?", ft_strlen(tmp[0])) == 0)
+		if (ft_strncmp(tmp[0], "$?", 2) == 0)
 			start_idx = ft_search_errno(&tmp[0]);
 		else
 			start_idx = convert_envp_value(&tmp[0], data);
