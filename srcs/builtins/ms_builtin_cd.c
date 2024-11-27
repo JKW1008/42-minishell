@@ -41,6 +41,7 @@ int	check_cd_args(char **args, char **tmp, char *home)
 	else if (args[1] != NULL)
 	{
 		printf("minishell: cd: too many arguments\n");
+		ft_global_err(1, 1);
 		return (1);
 	}
 	return (2);
@@ -89,6 +90,7 @@ int	check_cd_arg(char **tmp, char **cd, char *home, char **envp)
 		else
 		{
 			printf("minishell: cd: OLDPWD not set\n");
+			ft_global_err(1, 1);
 			return (1);
 		}
 	}
@@ -110,7 +112,11 @@ void	cd_cmd(t_cmd *node, t_data **data)
 		return ;
 	}
 	if (chdir(tmp) == -1)
+	{
 		printf("minishell: cd: %s: No such file or directory\n", node->args[0]);
+		ft_global_err(1, 1);
+	}
+
 	else
 		envp_update((*data)->envp);
 	free(tmp);

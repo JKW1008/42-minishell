@@ -20,14 +20,20 @@ void	exe_pipe_while(t_data **data, t_pipe_info *info)
 	while (cmd)
 	{
 		if (cmd->is_builtin && is_special_builtin(cmd))
+		{
 			ms_execute(cmd, data, 0);
+			if (!cmd->next)
+				return ;
+		}
 		else if (cmd->rdr_cnt > 0 && (!cmd->cmd || cmd->cmd[0] == '\0'))
 			handle_redirection_only(cmd, info);
 		else
 			process_command(cmd, info);
 		cmd = cmd->next;
+		// printf("%ld", ft_global_err(0, 0));
 	}
 	wait_all_children();
+	//printf("err %ld %ld\n", ft_global_err(0, 0), ft_global_err(0, 2));
 }
 
 // void	manage_fd(t_pipe_info *info)

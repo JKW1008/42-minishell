@@ -111,6 +111,8 @@ void	export(t_cmd *node, t_data **data)
 {
 	int		i;
 
+	ft_global_err(0, 1);
+	//printf("err %ld %ld\n", ft_global_err(0, 0), ft_global_err(0, 2));
 	i = 0;
 	if (!node->args || !node->args[0])
 	{
@@ -123,4 +125,5 @@ void	export(t_cmd *node, t_data **data)
 			process_env_variable(data, node->args[i]);
 		i++;
 	}
+	//printf("err %ld %ld\n", ft_global_err(0, 0), ft_global_err(0, 2));
 }

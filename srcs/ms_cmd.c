@@ -22,7 +22,7 @@ void	check_dir(t_cmd *cmd)
 	{
 		ft_putstr_fd("Minishell: Is Directory\n", STDERR_FILENO);
 		free(buf);
-		exit(1);
+		exit(126);
 	}
 	free(buf);
 	return ;
@@ -39,7 +39,7 @@ void	execute_command(t_cmd *cmd, t_data **data)
 	check_dir(cmd);
 	full_path = find_path((*data)->envp, cmd->cmd);
 	if (!full_path)
-		exit(ft_print_ret("Command not found\n", 2));
+		exit(ft_print_ret("Command not found\n", 127));
 	new_args = malloc(sizeof(char *) * (cmd->arg_cnt + 2));
 	if (!new_args)
 	{
@@ -107,6 +107,8 @@ int	is_special_builtin(t_cmd *cmd)
 		return (1);
 	if (ft_strncmp(cmd->cmd, "unset", 6) == 0)
 		return (1);
+	if (ft_strncmp(cmd->cmd, "exit", 4) == 0)
+		return (1);
 	return (0);
 }
 
@@ -123,8 +125,11 @@ void	execute_pipeline(t_data **data)
 	// }
 	info.prev_pipe = -1;
 	info.data = data;
+	info.pipe_fd[0] = -1;
+	info.pipe_fd[1] = -1;
 	// init_info(data, &info);
 	exe_pipe_while(data, &info);
+	// printf("err: %ld\n", ft_global_err(0, 0));
 	// free(pids);
 	ft_ctrl_signal();
 }

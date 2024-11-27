@@ -41,7 +41,7 @@ int	validate_env_name(char *cd, char **env, char *eq)
 		if (*env)
 			free(*env);
 		printf("Invalid environment variable name: %s\n", cd);
-		return (0);
+		return (ft_global_err(1, 1));
 	}
 	return (1);
 }

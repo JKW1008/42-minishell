@@ -33,6 +33,7 @@ typedef struct s_cmd
 	t_rdr			**rdr;
 	int				rdr_cnt;
 	char			*prompt;
+	struct s_data			**data;
 	struct s_cmd	*next;
 }		t_cmd;
 

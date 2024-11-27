@@ -20,18 +20,18 @@ void	wait_all_children(void)
 		;	
 	if (WIFEXITED(status))
 	{
-		//printf("종료\n");
+//		printf("종료\n");
 		ft_global_err(WEXITSTATUS(status), 1);
 	}
 	else if (WIFSIGNALED(status))
 	{
-		//printf("시그널종료\n");
+//		printf("시그널종료\n");
 		ft_global_err(128 + WTERMSIG(status), 1);
 	}
 		
 	else if (WIFSTOPPED(status))
 	{
-		//printf("정상종료\n");
+//		printf("정상종료\n");
 		g_signal_received = 3;
 	}
 		

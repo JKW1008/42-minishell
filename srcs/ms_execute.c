@@ -43,7 +43,7 @@ int	ms_execute2(t_cmd *node, t_data **data, int in_child)
 	if (!ft_strncmp(node->cmd, "unset", 5))
 	{
 		if (!in_child)
-			do_unset(node, data);
+			do_unset(node, data);		
 		return (0);
 	}
 	else if (!ft_strncmp(node->cmd, "env", 4))
