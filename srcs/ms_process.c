@@ -19,11 +19,22 @@ void	wait_all_children(void)
 	while (wait(&status) > 0)
 		;	
 	if (WIFEXITED(status))
+	{
+		//printf("종료\n");
 		ft_global_err(WEXITSTATUS(status), 1);
+	}
 	else if (WIFSIGNALED(status))
+	{
+		//printf("시그널종료\n");
 		ft_global_err(128 + WTERMSIG(status), 1);
+	}
+		
 	else if (WIFSTOPPED(status))
+	{
+		//printf("정상종료\n");
 		g_signal_received = 3;
+	}
+		
 }
 
 // void	handle_child_process(t_cmd *cmd, t_pipe_info *info)

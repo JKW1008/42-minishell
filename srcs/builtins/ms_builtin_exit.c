@@ -30,10 +30,14 @@ void	do_exit(t_cmd *node)
 {
 	printf("exit\n");
 	if (node->args[0] == NULL)
+	{
+		ft_global_err(0, 1);
 		exit(0);
+	}	
 	else if (!check_digit(node->args[0]))
 	{
 		printf("exit: %s: numeric argument required\n", node->args[0]);
+		ft_global_err(2, 1);
 		exit(2);
 	}
 	else if (node->args[1] != NULL)
@@ -41,5 +45,6 @@ void	do_exit(t_cmd *node)
 		printf("too many arguments");
 		return ;
 	}
+	ft_global_err(ft_atoi(node->args[0]), 1);
 	exit((unsigned char)ft_atoi(node->args[0]));
 }
