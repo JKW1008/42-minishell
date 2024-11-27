@@ -6,37 +6,63 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:07:18 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/25 21:34:03 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/26 22:13:56 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	hro_child_while(char *buffer, size_t buffer_size)
-{
-	ssize_t	bytes_read;
-	int		empty_lines;
+// void	hro_child_while(char *buffer, size_t buffer_size)
+// {
+// 	ssize_t	bytes_read;
+// 	int		empty_lines;
 
-	empty_lines = 0;
-	bytes_read = read(STDIN_FILENO, buffer, buffer_size);
-	while (bytes_read > 0)
-	{
-		if (bytes_read == 1 && buffer[0] == '\n')
-		{
-			empty_lines++;
-			if (empty_lines >= 2)
-				break ;
-		}
-		else
-			empty_lines = 0;
-		write(STDOUT_FILENO, buffer, bytes_read);
-		bytes_read = read(STDIN_FILENO, buffer, buffer_size);
-	}
-}
+// 	empty_lines = 0;
+// 	bytes_read = read(STDIN_FILENO, buffer, buffer_size);
+// 	while (bytes_read > 0)
+// 	{
+// 		if (bytes_read == 1 && buffer[0] == '\n')
+// 		{
+// 			empty_lines++;
+// 			if (empty_lines >= 2)
+// 				break ;
+// 		}
+// 		else
+// 			empty_lines = 0;
+// 		write(STDOUT_FILENO, buffer, bytes_read);
+// 		bytes_read = read(STDIN_FILENO, buffer, buffer_size);
+// 	}
+// }
+
+// void	hro_child_while(char *buffer, size_t buffer_size)
+// {
+// 	ssize_t	bytes_read;
+// 	int		empty_lines;
+
+// 	empty_lines = 0;
+// 	bytes_read = read(STDIN_FILENO, buffer, buffer_size);
+// 	// heredoc만 있고 파이프가 있는 경우는 읽기만 하고 쓰지 않음
+// 	if (isatty(STDOUT_FILENO))  // 표준 출력이 터미널인 경우만 출력
+// 	{
+// 		while (bytes_read > 0)
+// 		{
+// 			if (bytes_read == 1 && buffer[0] == '\n')
+// 			{
+// 				empty_lines++;
+// 				if (empty_lines >= 2)
+// 					break ;
+// 			}
+// 			else
+// 				empty_lines = 0;
+// 			write(STDOUT_FILENO, buffer, bytes_read);
+// 			bytes_read = read(STDIN_FILENO, buffer, buffer_size);
+// 		}
+// 	}
+// }
 
 void	hro_child(t_pipe_info *info, t_cmd *cmd)
 {
-	char	buffer[4096];
+	// char	buffer[4096];
 
 	if (info->prev_pipe != -1)
 	{
@@ -49,7 +75,9 @@ void	hro_child(t_pipe_info *info, t_cmd *cmd)
 		close(info->pipe_fd[1]);
 	}
 	handle_redirections(cmd);
-	hro_child_while(buffer, sizeof(buffer));
+	// hro_child_while(buffer, sizeof(buffer));
+	// if (cmd->next)
+	// 	hro_child_while(buffer, sizeof(buffer));
 	exit(0);
 }
 
@@ -119,9 +147,8 @@ void    handle_redirection_only(t_cmd *cmd, t_pipe_info *info)
     if (pid == 0)
     {
         // 자식 프로세스에서는 읽기 end를 닫음
-        if (cmd->next && info->pipe_fd[0] != -1)
-            close(info->pipe_fd[0]);
-            
+		if (cmd->next && info->pipe_fd[0] != -1)
+			close(info->pipe_fd[0]);
         hro_child(info, cmd);
     }
     else
