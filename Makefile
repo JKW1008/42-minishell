@@ -45,6 +45,7 @@ SRCS =	ms_cmd.c \
 		utils/ms_find_path.c \
 		utils/ms_free_utils.c \
 		utils/ms_handle_rdr.c \
+		utils/ms_lltoa.c \
 		utils/ms_tokens_utils.c \
 		builtins/ms_builtin_cd.c \
 		builtins/ms_builtin_echo_new.c \

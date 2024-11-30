@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 22:38:00 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/25 18:28:52 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/30 23:35:12 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	ms_execute(t_cmd *node, t_data **data, int in_child)
 	else if (!ft_strncmp(node->cmd, "export", 6))
 	{
 		if (!in_child)
+			export(node, data);
+		else if (!node->args || !node->args[0])
 			export(node, data);
 		return (0);
 	}

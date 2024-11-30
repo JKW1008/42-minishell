@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:53:04 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/08 15:47:35 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/30 23:43:53 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	free_split(char **str)
 	free(str);
 }
 
-void	print_and_free(char **envp)
+void	print_export_env(char **envp)
 {
 	printenv(envp, 1);
 }

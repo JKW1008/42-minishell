@@ -6,17 +6,27 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 09:39:57 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/11/21 18:14:33 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/30 23:36:28 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+void	t_sig(int sig)
+{
+	sig = sig;
+	return ;
+}
+
 void	default_signal(void)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGTSTP, SIG_DFL);
+	struct termios	a;
+
+	tcgetattr(0, &a);
+	a.c_lflag &= ~(512);
+	tcsetattr(0, TCSANOW, &a);
+	signal(SIGINT, t_sig);
+	signal(SIGQUIT, t_sig);
 	return ;
 }
 
@@ -55,23 +65,6 @@ void	sig_ctrl(int sig)
 		exit(0);
 	}
 }
-
-//void	ft_ctrl_signal(void)
-//{
-//	struct sigaction		sa;
-//	sa.sa_handler = sig_ctrl;
-//	if (sigemptyset(&sa.sa_mask) == -1)
-//		ft_error("SigEmptySet Error");
-//	sa.sa_flags = SA_RESTART;
-//	if (sigaction(SIGINT, &sa, 0) == -1)
-//		ft_error("SigAction Error");
-//	sa.sa_handler = sig_ctrl;
-//	signal(SIGINT, sig_ctrl);
-//    signal(SIGQUIT, sig_ctrl);
-//    signal(SIGTSTP, sig_ctrl);
-//	//if (sigaction(SIGQUIT, &sa, NULL) == -1)
-//	//	ft_error("SigAction Error");
-//}
 
 void	ft_ctrl_signal(void)
 {

@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 21:28:23 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/08 15:26:19 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/30 22:40:00 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_cmd	*ft_create_cmd(t_token **tkn, t_data **data)
 	if (cmd->cmd && ft_is_builtin(cmd->cmd) == 1)
 		cmd->is_builtin = 1;
 	cmd->data = data;
+	cmd->cmdline = (*data)->cmdline;
 	return (cmd);
 }
 

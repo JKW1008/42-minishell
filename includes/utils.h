@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 02:11:47 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/22 19:23:23 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/30 23:46:15 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int			env_command(t_data **data);
 
 //	ms_exe_pipe_utils.c
 void		exe_pipe_while(t_data **data, t_pipe_info *info);
-void		manage_fd(t_pipe_info *info);
 
 //	ms_find_path.c
 char		*check_absolute_or_home_path(char *str);
@@ -65,7 +64,7 @@ char		*find_path(char **envp, char *str);
 //	ms_free_utils.c
 int			ft_split_free(char ***sp);
 void		free_split(char **str);
-void		print_and_free(char **envp);
+void		print_export_env(char **envp);
 void		print_error_and_free(char **divided, const char *message);
 
 //	ms_handle_rdr.c
@@ -73,6 +72,9 @@ void		handle_rd_in(t_rdr *rdr);
 void		handle_rd_out(t_rdr *rdr);
 void		handle_rd_append(t_rdr *rdr);
 void		handle_redirections(t_cmd *cmd);
+
+//	ms_lltoa.c
+char	*ft_lltoa(long long n);
 
 //	ms_tokens_utils.c
 int			ft_valid_quotes(char *prompt);

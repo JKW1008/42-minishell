@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 16:50:41 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/30 14:26:57 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/30 23:44:16 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,5 @@ void	exe_pipe_while(t_data **data, t_pipe_info *info)
 			process_command(cmd, info);
 		cmd = cmd->next;
 	}
-	wait_all_children();
+	wait_all_children((*data)->cmdline->head);
 }

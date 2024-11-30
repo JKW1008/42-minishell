@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 02:45:35 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/17 23:13:37 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/30 23:34:44 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,19 @@ typedef struct s_redir
 
 typedef struct s_cmd
 {
-	int				ord;
-	char			*cmd;
-	int				is_heredoc;
-	int				is_builtin;
-	char			**args;
-	int				arg_cnt;
-	t_rdr			**rdr;
-	int				rdr_cnt;
-	char			*prompt;
-	struct s_data	**data;
-	struct s_cmd	*next;
+	int					ord;
+	char				*cmd;
+	pid_t				pid_;
+	int					is_heredoc;
+	int					is_builtin;
+	char				**args;
+	int					arg_cnt;
+	t_rdr				**rdr;
+	int					rdr_cnt;
+	char				*prompt;
+	struct s_data		**data;
+	struct s_cmd		*next;
+	struct s_cmdline	*cmdline;
 }		t_cmd;
 
 typedef struct s_cmdline

@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 14:23:02 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/25 19:05:25 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/30 22:42:11 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,9 @@ void	process_heredoc(t_data **data);
 //	ms_init.c
 char	**copy_envp(char **envp);
 t_data	*ft_initalise(t_data **data, char **envp);
-void	init_info(t_data **data, t_pipe_info *info);
 
 //	ms_process.c
-void	wait_all_children(void);
+void	wait_all_children(t_cmd *cmd);
 void	handle_child_process(t_cmd *cmd, t_pipe_info *info);
 void	handle_parent_process(t_cmd *cmd, t_pipe_info *info);
 void	process_command(t_cmd *cmd, t_pipe_info *info);

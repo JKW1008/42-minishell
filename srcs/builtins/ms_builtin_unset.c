@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:38:09 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/30 16:23:52 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/30 23:43:16 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	unset_arg(t_data **data, char *arg)
 	}
 	else
 		return ;
-		// printf("unset: '%s': not a valid identifier\n", arg);
 }
 
 void	do_unset(t_cmd *node, t_data **data)

@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 13:38:37 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/10/16 21:44:26 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/30 23:43:28 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ size_t	ft_merge_tokens(t_data **data)
 	tkn = (*data)->tkn->head;
 	while (tkn)
 	{
-		if (tkn->pre_sep != ' ' && tkn->prev && \
+		if (tkn->pre_sep != ' ' && tkn->prev && tkn->prev->token_type == \
+		l_word && tkn->token_type == l_word && \
 			(tkn->prev->qt_status != normal || tkn->qt_status != normal))
 			tkn = merge_tokens(tkn, prev);
 		if (tkn->next)
