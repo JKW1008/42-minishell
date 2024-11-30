@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_lexer_for_envp.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehukim <jaehukim42@student.42gyeong      +#+  +:+       +#+        */
+/*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:29:25 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/11/11 11:29:26 by jaehukim         ###   ########.fr       */
+/*   Updated: 2024/11/29 23:28:56 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ static size_t	ft_replace_envp_val(char **str, int i, char **item)
 	int		dstlen;
 	char	*dst;
 
+	if ((!str || !*str || !item || !item[0] || !item[1]) \
+	|| ft_strlen(item[0]) > ft_strlen(*str))
+		return (1);
 	dstlen = ft_strlen(*str) + ft_strlen(item[1]) - (ft_strlen(item[0]) + 1);
 	dst = (char *) ft_calloc(sizeof(char), (dstlen + 1));
 	ft_strlcpy(dst, *str, i + 1);

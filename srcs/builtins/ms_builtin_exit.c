@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:33:16 by kjung             #+#    #+#             */
-/*   Updated: 2024/10/16 17:41:58 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/30 16:12:37 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,16 @@ void	do_exit(t_cmd *node)
 		ft_global_err(0, 1);
 		exit(0);
 	}	
-	else if (!check_digit(node->args[0]))
+	if (node->args[1] != NULL)
 	{
-		printf("exit: %s: numeric argument required\n", node->args[0]);
-		ft_global_err(2, 1);
-		exit(2);
+		ft_putstr_fd("too many arguments", 2);
+		exit(1);
 	}
-	else if (node->args[1] != NULL)
+	if (!('0' <= node->args[0][0] && node->args[0][0] <= '9') && \
+	!('0' <= node->args[0][1] && node->args[0][1] <= '9'))
 	{
-		printf("too many arguments");
-		return ;
+		ft_putstr_fd("numeric argument required", 2);
+		exit(2);
 	}
 	ft_global_err(ft_atoi(node->args[0]), 1);
 	exit((unsigned char)ft_atoi(node->args[0]));

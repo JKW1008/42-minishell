@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehukim <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 23:02:32 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/03/04 23:02:41 by jaehukim         ###   ########.fr       */
+/*   Updated: 2024/11/30 16:11:20 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
 
 int	ft_isspace(char c)
 {
@@ -18,33 +17,26 @@ int	ft_isspace(char c)
 	return (0);
 }
 
-int	get_num(char *nptr, int sign, int n)
+int	ft_atoi(const char *str)
 {
-	while (*nptr >= '0' && *nptr <= '9')
+	unsigned int	result;
+	int				neg;
+
+	result = 0;
+	neg = 1;
+	while (*str == '\t' || *str == '\n' || *str == '\v' \
+			|| *str == '\f' || *str == '\r' || *str == ' ')
+		str++;
+	if (*str == '-' || *str == '+')
 	{
-		n *= 10;
-		n += *nptr - '0';
-		nptr++;
+		if (*str == '-')
+			neg *= -1;
+		str++;
 	}
-	return (n * sign);
-}
-
-int	ft_atoi(const char *nptr)
-{
-	int		sign;
-	int		num;
-	char	*ptr;
-
-	sign = 1;
-	num = 0;
-	ptr = (char *) nptr;
-	while (ft_isspace(*ptr))
-		ptr++;
-	if (*ptr == '-' || *ptr == '+')
-	{	
-		if (*ptr == '-')
-			sign *= -1;
-		ptr++;
+	while (*str >= '0' && *str <= '9')
+	{
+		result = result * 10 + (*str - '0');
+		str++;
 	}
-	return (get_num(ptr, sign, num));
+	return ((int)(result * neg));
 }

@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 16:50:41 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/26 22:20:36 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/30 14:26:57 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exe_pipe_while(t_data **data, t_pipe_info *info)
 	cmd = (*data)->cmdline->head;
 	while (cmd)
 	{
-		if (cmd->is_builtin && is_special_builtin(cmd))
+		if (!cmd->next && cmd->is_builtin && is_special_builtin(cmd))
 		{
 			ms_execute(cmd, data, 0);
 			if (!cmd->next)

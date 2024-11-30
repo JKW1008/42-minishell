@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 17:12:28 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/09/30 03:02:56 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/30 15:19:40 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_error(char *msg)
 
 size_t	ft_print_ret(char *msg, int value)
 {
-	printf("%s", msg);
+	ft_putstr_fd(msg, 2);
 	return (value);
 }
 

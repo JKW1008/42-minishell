@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 07:03:28 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/26 22:26:27 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/30 16:11:52 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,44 @@
 
 void	check_dir(t_cmd *cmd)
 {
-	struct stat	*buf;
+	struct stat	buf;
 
-	buf = ft_calloc(sizeof(struct stat), 1);
-	stat(cmd->cmd, buf);
-	if (S_ISDIR(buf->st_mode))
+	if (cmd->cmd[0] == '/' || (cmd->cmd[0] == '.' && cmd->cmd[1] == '/'))
 	{
-		ft_putstr_fd("Minishell: Is Directory\n", STDERR_FILENO);
-		free(buf);
-		exit(126);
+		if (stat(cmd->cmd, &buf) == 0 && S_ISDIR(buf.st_mode))
+		{
+			ft_putstr_fd("Minishell: Is Directory\n", STDERR_FILENO);
+			exit(126);
+		}
 	}
-	free(buf);
-	return ;
+}
+
+void	check_executable(t_data **data, t_cmd *cmd, char **full_path)
+{
+	struct stat	buf;
+
+	if (cmd->cmd[0] == '/' || (cmd->cmd[0] == '.' && cmd->cmd[1] == '/'))
+	{
+		*full_path = ft_strdup(cmd->cmd);
+		if (stat(*full_path, &buf) == -1)
+		{
+			free(*full_path);
+			ft_putendl_fd("No such file or directory", 2);
+			exit(127);
+		}
+		if (access(*full_path, X_OK) == -1)
+		{
+			free(*full_path);
+			ft_putendl_fd("Permission denied", 2);
+			exit(126);
+		}
+	}
+	else
+	{
+		*full_path = find_path((*data)->envp, cmd->cmd);
+		if (!*full_path)
+			exit(ft_print_ret("Command not found\n", 127));
+	}
 }
 
 void	execute_command(t_cmd *cmd, t_data **data)
@@ -36,8 +62,8 @@ void	execute_command(t_cmd *cmd, t_data **data)
 
 	if (!cmd->cmd || cmd->cmd[0] == '\0')
 		exit(0);
+	check_executable(data, cmd, &full_path);
 	check_dir(cmd);
-	full_path = find_path((*data)->envp, cmd->cmd);
 	if (!full_path)
 		exit(ft_print_ret("Command not found\n", 127));
 	new_args = malloc(sizeof(char *) * (cmd->arg_cnt + 2));
@@ -53,7 +79,7 @@ void	execute_command(t_cmd *cmd, t_data **data)
 	new_args[cmd->arg_cnt + 1] = NULL;
 	execve(full_path, new_args, (*data)->envp);
 	perror("execve");
-	exit(1);
+	exit(127);
 }
 
 int	is_special_builtin(t_cmd *cmd)

@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:11:26 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/20 17:06:36 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/30 16:12:06 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	validate_env_name(char *cd, char **env, char *eq)
 	{
 		if (*env)
 			free(*env);
-		printf("Invalid environment variable name: %s\n", cd);
+		ft_putstr_fd("not a valid identifier", 2);
 		return (ft_global_err(1, 1));
 	}
 	return (1);

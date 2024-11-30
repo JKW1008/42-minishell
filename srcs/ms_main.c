@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 13:08:52 by jaehukim          #+#    #+#             */
-/*   Updated: 2024/11/21 18:11:42 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/30 16:10:56 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	main(int ac, char **av, char **envp)
 
 	if (ac != 1 && !*av)
 		return (-1);
+	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
+		return (1);
 	ft_initalise(&data, envp);
 	ft_ctrl_signal();
 	ft_prompt(&data);

@@ -6,7 +6,7 @@
 /*   By: kjung <kjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:08:19 by kjung             #+#    #+#             */
-/*   Updated: 2024/11/21 18:25:24 by kjung            ###   ########.fr       */
+/*   Updated: 2024/11/30 15:09:56 by kjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int	check_cd_args(char **args, char **tmp, char *home)
 	}
 	else if (args[1] != NULL)
 	{
-		printf("minishell: cd: too many arguments\n");
+		ft_putstr_fd("too many arguments", 2);
 		ft_global_err(1, 1);
-		return (1);
+		exit(1);
 	}
 	return (2);
 }
@@ -113,7 +113,7 @@ void	cd_cmd(t_cmd *node, t_data **data)
 	}
 	if (chdir(tmp) == -1)
 	{
-		printf("minishell: cd: %s: No such file or directory\n", node->args[0]);
+		perror("No such file or directory");
 		ft_global_err(1, 1);
 	}
 	else
