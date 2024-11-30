@@ -78,7 +78,8 @@ size_t	ft_merge_tokens(t_data **data)
 	tkn = (*data)->tkn->head;
 	while (tkn)
 	{
-		if (tkn->pre_sep != ' ' && tkn->prev && \
+		if (tkn->pre_sep != ' ' && tkn->prev && tkn->prev->token_type == l_word  \
+			&&  tkn->token_type == l_word && \
 			(tkn->prev->qt_status != normal || tkn->qt_status != normal))
 			tkn = merge_tokens(tkn, prev);
 		if (tkn->next)

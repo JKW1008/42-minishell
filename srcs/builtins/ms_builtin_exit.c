@@ -38,12 +38,12 @@ long long	ft_atoll(const char *str)
 	sign = 1;
 	result = 0;
 	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
-	i++;
+		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
-	if (str[i] == '-')
-		sign = -1;
-	i++;
+		if (str[i] == '-')
+			sign = -1;
+		i++;
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
@@ -113,10 +113,12 @@ int	check_digit(char *str)
 	int			result;
 
 	i = 0;
-	printf("%s\n", str);
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
+	//printf("%s\n", str);
+	//while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+	//	i++;
 	if (str[i] == '+')
+		i++;
+	if (str[i] == '-')
 		i++;
 	while (str[i])
 	{
@@ -127,6 +129,8 @@ int	check_digit(char *str)
 	num_str = ft_lltoa(ft_atoll(str));
 	if (!num_str)
 		return (0);
+	if (str[0] == '+')
+		str++;
 	result = ft_strncmp(str, num_str, ft_strlen(str));
 	free(num_str);
 	if (result != 0)
@@ -138,14 +142,14 @@ void	do_exit(t_cmd *node)
 {
 	long long	num;
 
-	printf("exit\n");
+	ft_putstr_fd("exit\n", 2);
 	if (node->args[0] == NULL)
 		exit(ft_global_err(0, 2));
 	if (!node->args[1])
 	{
 		if (!check_digit(node->args[0]))
 		{
-			ft_putstr_fd("numeric argument required", 2);
+			ft_putstr_fd("numeric argument require\n", 2);
 			exit(2);
 		}
 	else
@@ -157,7 +161,7 @@ void	do_exit(t_cmd *node)
 	}
 	else
 	{
-		ft_putstr_fd("too many arguments", 2);
+		ft_putstr_fd("too many arguments\n", 2);
 		ft_global_err(1, 1);
 		return ;
 	}

@@ -25,6 +25,7 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	int				ord;
+	pid_t 			pid;
 	char			*cmd;
 	int				is_heredoc;
 	int				is_builtin;
@@ -34,13 +35,16 @@ typedef struct s_cmd
 	int				rdr_cnt;
 	char			*prompt;
 	struct s_data	**data;
+	struct s_cmdline *cmdline;
 	struct s_cmd	*next;
 }		t_cmd;
 
 typedef struct s_cmdline
 {
 	t_cmd	*head;
+	int		**pipe_fd;
 	int		count;
+
 }		t_cmdline;
 
 typedef struct s_token
@@ -70,26 +74,19 @@ typedef struct s_data
 	t_cmdline	*cmdline;
 }	t_data;
 
-typedef struct s_heredoc
-{
-	char	*content;
-	char	*delimiter;
-}	t_heredoc;
+//typedef struct s_heredoc
+//{
+//	char	*content;
+//	char	*delimiter;
+//}	t_heredoc;
 
-typedef struct s_heredoc_list
-{
-	t_heredoc	heredocs[MAX_HEREDOCS];
-	int			count;
-}	t_heredoc_list;
-
-typedef struct s_pipe_info
-{
-	int				pipe_fd[2];
-	int				prev_pipe;
-	t_heredoc_list	*heredoc_list;
-	t_data			**data;
-	int				stdin_backup;
-	int				stdout_backup;
-}	t_pipe_info;
+//typedef struct s_pipe_info
+//{
+//	int				pipe_fd[2];
+//	int				prev_pipe;
+//	t_data			**data;
+//	int				stdin_backup;
+//	int				stdout_backup;
+//}	t_pipe_info;
 
 #endif

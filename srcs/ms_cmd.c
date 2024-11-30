@@ -88,8 +88,8 @@ int	is_special_builtin(t_cmd *cmd)
 		return (0);
 	if (ft_strncmp(cmd->cmd, "cd", 3) == 0)
 		return (1);
-	if (ft_strncmp(cmd->cmd, "export", 6) == 0)
-		return (1);
+	//if (ft_strncmp(cmd->cmd, "export", 6) == 0)
+	//	return (1);
 	if (ft_strncmp(cmd->cmd, "unset", 6) == 0)
 		return (1);
 	if (ft_strncmp(cmd->cmd, "exit", 4) == 0)
@@ -99,12 +99,22 @@ int	is_special_builtin(t_cmd *cmd)
 
 void	execute_pipeline(t_data **data)
 {
-	t_pipe_info	info;
+	int idx;
 
-	info.prev_pipe = -1;
-	info.data = data;
-	info.pipe_fd[0] = -1;
-	info.pipe_fd[1] = -1;
-	exe_pipe_while(data, &info);
+	idx = 0;
+	(*data)->cmdline->pipe_fd = (int **) malloc(sizeof(int *) * \
+			(*data)->cmdline->count);
+	while (idx < (*data)->cmdline->count - 1)
+	{
+		(*data)->cmdline->pipe_fd[idx] = \
+			(int *) malloc(sizeof(int) * 2);
+		if (pipe((*data)->cmdline->pipe_fd[idx]) == -1)
+		{
+			ft_putstr_fd("Broken Pipe\n", 2);
+			exit(2);
+		}
+		idx++;
+	}
+	exe_pipe_while(data);
 	ft_ctrl_signal();
 }

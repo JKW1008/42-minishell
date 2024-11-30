@@ -12,24 +12,28 @@
 
 #include "../../includes/minishell.h"
 
-void	exe_pipe_while(t_data **data, t_pipe_info *info)
+void	exe_pipe_while(t_data **data)
 {
 	t_cmd	*cmd;
 
 	cmd = (*data)->cmdline->head;
+
 	while (cmd)
 	{
-		if (!cmd->next && cmd->is_builtin && is_special_builtin(cmd))
+		printf("나! :%d %s\n", cmd->ord, cmd->cmd);
+		/*if (!cmd->next && cmd->is_builtin && is_special_builtin(cmd))
 		{
 			ms_execute(cmd, data, 0);
 			if (!cmd->next)
 				return ;
 		}
 		else if (cmd->rdr_cnt > 0 && (!cmd->cmd || cmd->cmd[0] == '\0'))
-			handle_redirection_only(cmd, info);
-		else
-			process_command(cmd, info);
+			handle_redirection_only(cmd);
+		else*/
+			process_command(cmd);
+			ft_putnbr_fd(cmd->pid, 2);
+			write(2,"\n",1);
 		cmd = cmd->next;
 	}
-	wait_all_children();
+	wait_all_children((*data)->cmdline->head);
 }

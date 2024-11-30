@@ -12,11 +12,23 @@
 
 #include "../includes/minishell.h"
 
+void	test123(int sig)
+{
+	sig = sig;
+	return;
+}
+
 void	default_signal(void)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGTSTP, SIG_DFL);
+	struct termios  a;
+
+
+	tcgetattr(0, &a);
+	a.c_lflag &= ~(512);
+	tcsetattr(0 ,TCSANOW, &a);
+	signal(SIGINT, test123);
+	signal(SIGQUIT, test123);
+	//signal(SIGTSTP, test123);
 	return ;
 }
 

@@ -34,6 +34,8 @@ t_cmd	*ft_create_cmd(t_token **tkn, t_data **data)
 		cmd->prompt = ft_strdup((*data)->prompt);
 	if (cmd->cmd && ft_is_builtin(cmd->cmd) == 1)
 		cmd->is_builtin = 1;
+	cmd->pid = -1;
+	cmd->cmdline = (*data)->cmdline;
 	cmd->data = data;
 	return (cmd);
 }

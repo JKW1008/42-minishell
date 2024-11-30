@@ -26,8 +26,8 @@ t_cmd		*ft_create_cmd(t_token **tkn, t_data **data);
 int			ft_append_cmd(t_cmd *cmd, t_cmdline *cmdline);
 
 //	ms_command_utils.c
-void		command_child(t_cmd *cmd, t_pipe_info *info);
-void		command_parent(t_pipe_info *info, t_cmd *cmd);
+void		command_child(t_cmd *cmd);
+void		command_parent(t_cmd *cmd);
 
 //	ms_echo_utils.c
 char		*init_result(void);
@@ -53,8 +53,7 @@ void		free_envp(char **envp);
 int			env_command(t_data **data);
 
 //	ms_exe_pipe_utils.c
-void		exe_pipe_while(t_data **data, t_pipe_info *info);
-void		manage_fd(t_pipe_info *info);
+void		exe_pipe_while(t_data **data);
 
 //	ms_find_path.c
 char		*check_absolute_or_home_path(char *str);

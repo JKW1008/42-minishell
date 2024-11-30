@@ -60,10 +60,28 @@ static void	destroy_cmdline(t_data **data)
 	}
 }
 
+/*static void destroy_pipe(t_data **data)
+{
+	int			i;
+	struct stat	buf;
+
+	i = 0;
+	while (i < (*data)->cmdline->count)
+	{
+		if (!fstat((*data)->cmdline->pipe_fd[i][0], &buf))
+			close((*data)->cmdline->pipe_fd[i][0]);
+		if (!fstat((*data)->cmdline->pipe_fd[i][1], &buf))
+			close((*data)->cmdline->pipe_fd[i][1]);
+		free((*data)->cmdline->pipe_fd[i++]);
+	}
+	free((*data)->cmdline->pipe_fd);
+}*/
+
 void	ft_destroy_parser_context(t_data **data)
 {
 	if ((*data)->cmdline)
 	{
+		//destroy_pipe(data);
 		destroy_cmdline(data);
 		free((*data)->cmdline);
 		(*data)->cmdline = NULL;

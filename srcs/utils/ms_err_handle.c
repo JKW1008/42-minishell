@@ -43,5 +43,7 @@ size_t	ft_global_err(int i, int type)
 		old_err = now_err;
 		now_err = 0;
 	}
+	//ft_putnbr_fd(now_err, 2);
+	//write(2,"\n",1);
 	return (now_err);
 }
